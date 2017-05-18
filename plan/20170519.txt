@@ -12,21 +12,30 @@ Ignorance is bliss....
  Which components constitute core functionality (vs non-essential)?
  Which components are prerequisites for others?
 
- Goal # 1: Format 1 floor
+// Design:
+	1 - Decide on description of the setting(s).
+	2 - Decide on player interactions with objects on floor 1.
+	3 - Design how the player gets to the end of the game. 
+	
+// Coding:
+
+	1 - Create a character (player) that can be moved around using A, S, D, and W.
+	2 - Format 1 floor
       //if in java
       2D array in which the character interacts appropriately w/ surroundings
       symbols representing walls, doors, items on the ground, etc
       super class Floor
       sub class OCDFloor
       //if in processing
-      Goal # 0: LEARN PROCESSING
+    
  
 
 /*********************************/
 	Workload Sharing
 /*********************************/
  Which tasks can be delegated, and which must be collaboratively tackled?
-
+	- Story of the game will be collaboratively tackled. 
+	- If there is time, aesthetics of the game (eg. Background, characters) will be collaboratively tackled.
 /*********************************/
 	Chronology
 /*********************************/
