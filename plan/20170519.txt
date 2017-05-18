@@ -1,0 +1,29 @@
+Team Sanctuary
+Irene Lam, Judy Liu, Carol Pan
+Draft 1
+05/18/17
+
+Ignorance is bliss....
+
+/*********************************/
+	Prioritization
+/*********************************/
+ Which jobs are most crucial?
+ Which components constitute core functionality (vs non-essential)?
+ Which components are prerequisites for others?
+
+ Goal # 1: Format 1 floor
+ OCD floor -
+     files on the ground
+     insertion sort, 
+ 
+
+/*********************************/
+	Workload Sharing
+/*********************************/
+ Which tasks can be delegated, and which must be collaboratively tackled?
+
+/*********************************/
+	Chronology
+/*********************************/
+ What is the timeline, and how does it accommodate setbacks, course changes
