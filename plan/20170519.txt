@@ -13,9 +13,10 @@ Ignorance is bliss....
  Which components are prerequisites for others?
 
  Goal # 1: Format 1 floor
- OCD floor -
-     files on the ground
-     insertion sort, 
+      2D array in which the character interacts appropriately w/ surroundings
+      symbols representing walls, doors, items on the ground, etc
+      super class Floor
+      sub class OCDFloor
  
 
 /*********************************/
