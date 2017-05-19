@@ -40,4 +40,7 @@
 +2017-05-18 
 +--------------------------------------------------------------
 +Together :: We worked on further cementing our plan of action in addition to educational aspects of the game.
++Irene :: 
+    + Updated the Readme with a brief explanation on the project and launch instructions
+    + Created the Chronology section in the 20170519.txt file and updated it with deadlines and expectations corresponding to each date
 +==============================================================
