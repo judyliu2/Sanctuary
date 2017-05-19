@@ -8,9 +8,6 @@ Ignorance is bliss....
 /*********************************/
 	Prioritization
 /*********************************/
- Which jobs are most crucial?
- Which components constitute core functionality (vs non-essential)?
- Which components are prerequisites for others?
 
 Design:
 	1 - Decide on description of the setting(s).
@@ -18,22 +15,25 @@ Design:
 	3 - Design how the player gets to the end of the game. 
 	
 Coding:
+ Which jobs are most crucial? 
+	Priority 0: Learn processing!
+	Priority 1: Create a character (player) that can be moved around using WASD and contains an inventory
+	Priority 2: Format 1 floor
+	Character shold be able to interact appropriately with any object within in the game (e.g. entering through doors, picking up objects)
+      	
+ Which components constitute core functionality (vs non-essential)?
+       Core functionality would be anything basics required for a simplified RPG, like a map and a character. Other things, like dialogue and storyline, are not essential for the first phase of development.
 
-	1 - Create a character (player) that can be moved around using A, S, D, and W.
-	2 - Format 1 floor
-      //if in java
-      2D array in which the character interacts appropriately w/ surroundings
-      symbols representing walls, doors, items on the ground, etc
-      super class Floor
-      sub class OCDFloor
-      //if in processing
-    
- 
+ Which components are prerequisites for others?
+       Characters and Floors will be a prerequisite for the Building
 
 /*********************************/
 	Workload Sharing
 /*********************************/
  Which tasks can be delegated, and which must be collaboratively tackled?
+        - The first floor created for the game must be collaboratively tackled, so everyone is aware of the standards for subsequent floors.
+	- Any extra floors may then be delegated to a person.
+	- Character should be collaboratively tackled, but each person can write a different section of character interactions
 	- Story of the game will be collaboratively tackled. 
 	- If there is time, aesthetics of the game (eg. Background, characters) will be collaboratively tackled.
 
