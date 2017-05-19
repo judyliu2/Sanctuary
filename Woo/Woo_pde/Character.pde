@@ -1,5 +1,4 @@
 class Character {
-  String[] inventory = new String[16]; 
   String location;
   int state;
   
