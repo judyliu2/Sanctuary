@@ -1,6 +1,5 @@
 class User extends Character {
-    
-    Character() {
-      inventory = new String[16];
-    }
+  User(){
+    inventory = new String[16];
+  }
 }
