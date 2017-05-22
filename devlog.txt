@@ -44,3 +44,18 @@
     + Updated the Readme with a brief explanation on the project and launch instructions
     + Created the Chronology section in the 20170519.txt file and updated it with deadlines and expectations corresponding to each date
 +==============================================================
++2017-05-19 
++--------------------------------------------------------------
++Irene, Judy :: 
+    + Began writing the driver file (Woo_pde)
+    + Brainstormed and created files for characters and their respective instance variables 
+        + Created files for the user and NPC that extend class character
++==============================================================
++2017-05-21 
++--------------------------------------------------------------
++Irene :: 
+    + Skeleton of the homepage of the game
+        + Imports image functionality 
+        + Creates a text box with a welcoming message for the user 
+        + Upon clicking the box, the background changes
++==============================================================
