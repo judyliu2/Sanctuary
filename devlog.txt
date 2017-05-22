@@ -58,4 +58,5 @@
         + Imports image functionality 
         + Creates a text box with a welcoming message for the user 
         + Upon clicking the box, the background changes
+        + Bug: If the mouse is not hovered over the frame, the background picture changes automatically        
 +==============================================================
