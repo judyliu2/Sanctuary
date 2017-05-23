@@ -65,4 +65,4 @@
 +2017-05-22
 +--------------------------------------------------------------
 +Judy ::
-    + Added more instance variables to Character and User classes. New methods are added to User class. 
+    + Added more instance variables to Character and User classes. New methods are added to User class. Adjusted Woo_pde to      DefaultMap_pde and deleted Woo.pde so that code runs. 
