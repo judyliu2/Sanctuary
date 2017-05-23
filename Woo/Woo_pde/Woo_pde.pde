@@ -6,8 +6,8 @@ void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textFont(createFont("SourceCodePro-Regular.ttf", 60));
   textAlign(LEFT);
-  //background(loadImage("startPage.png"));
-  background(0);
+  background(loadImage("startPage.png"));
+  //background(0);
   frameRate(60);  // 60 fps
 
   fill(153, 102, 255);
@@ -55,4 +55,12 @@ public void keyPressed(){
     if (keyCode == 'd' && player.getXcor() < width){ //move right
     }
   }
+  enum PAGE {
+ START(0), 
+ HELP(1);
+ 
+ int pageNum;
+ private PAGE(int i) {
+     pageNum = i;
+ }
 }
