@@ -18,6 +18,8 @@
 
 +MID-DEVELOPMENT DESIGN CHANGES
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ Instead of having separate floors, the user now interacts on a single floor with multiple rooms (improving overall cohesiveness in logistics and storyline)
++ NPC players are part of the storyline and at some point will be played by the user
 
 +LESSONS LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,5 +66,12 @@
 +==============================================================
 +2017-05-22
 +--------------------------------------------------------------
++Irene ::
+    + Fixed bug such that the background picture changes upon click 
+    + Added dialogue!
+        + Uses lettering with font from source code
+        + Lettering appears in a text box to mimic thought processes/ dialogue
+    + Rearranged images to be more visually appealing (e.g. size of text, location of text)
 +Judy ::
     + Added more instance variables to Character and User classes. New methods are added to User class. Adjusted Woo_pde to      DefaultMap_pde and deleted Woo.pde so that code runs. 
++==============================================================    
