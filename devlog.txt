@@ -58,5 +58,11 @@
         + Imports image functionality 
         + Creates a text box with a welcoming message for the user 
         + Upon clicking the box, the background changes
-        + Bug: If the mouse is not hovered over the frame, the background picture changes automatically        
+        + Bug: If the mouse is not hovered over the frame, the background picture changes automatically  
++Judy ::
+    + Added more instance variables, new classes and skeleton for keyPressed() method. 
 +==============================================================
++2017-05-22
++--------------------------------------------------------------
++Judy ::
+    + Added more instance variables to Character and User classes. New methods are added to User class. 
