@@ -5,11 +5,16 @@ class Character {
   int state;
   float x;
   float y;
-  float dx;
-  float dy;
+  float speed;
   
   Character() {
     location = "1 Ward";
+    state = 1; // 1 = standing/idle state
+  }
+  
+  Character (float a , float b){
+    x = a;
+    y = b;
   }
   
   public void setState(int s) { 
@@ -20,5 +25,13 @@ class Character {
     return state;
   }
   
-  
+  public float getSpeed(){
+  return speed;
+  }
+  public float getXcor(){
+    return x;
+  }
+  public float getYcor(){
+    return y;
+  }
 }

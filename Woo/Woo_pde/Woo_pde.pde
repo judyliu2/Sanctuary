@@ -1,18 +1,21 @@
 int y;
+User player;
+PImage testchar;
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textFont(createFont("SourceCodePro-Regular.ttf", 60));
   textAlign(LEFT);
-  background(loadImage("startPage.png"));
+  //background(loadImage("startPage.png"));
+  background(0);
   frameRate(60);  // 60 fps
 
-  fill(170);
+  fill(153, 102, 255);
   text("Welcome to \n    Our Asylum", 75, 105);
   stroke(255);
   // rect(rectX, rectY, rectXSize, rectYSize);
-  //rect(150, 225, 90, 50);
-  //rect(400, 225, 90, 50);
+  //rect(150, 225, 90, 50, 18, 18, 18, 18);
+  //rect(400, 225, 90, 50, 18, 18, 18, 18);
   fill(0);
   textFont(createFont("SourceCodePro-Regular.ttf", 24));    
   text("Click to start", 370, 300);
@@ -47,9 +50,9 @@ public void keyPressed(){
     }
     if (keyCode == 's'){ //move down
     }
-    if (keyCode == 'a'){ //move left
+    if (keyCode == 'a' && player.getXcor() > 0){ //move left
     }
-    if (keyCode == 'd'){ //move right
+    if (keyCode == 'd' && player.getXcor() < width){ //move right
     }
   }
 }
