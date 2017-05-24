@@ -77,7 +77,14 @@
 +==============================================================    
 +2017-05-23
 +--------------------------------------------------------------
++Irene ::
+    + Added enum to allow different dialogue messages in succession
+    + Added main character functionality
+        + Displays the character appropriately front and center (after viewing the room)
+        + Images for OCD and bipolar disorder characters added
+    + Created and worked on UML diagrams
 +Judy :: 
    + Made character display 
    + Edited proposal
    + Minor changes to instance variables and methods
++============================================================== 
