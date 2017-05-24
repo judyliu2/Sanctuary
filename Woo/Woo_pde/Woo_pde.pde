@@ -1,34 +1,41 @@
-int y;
+PAGE p = PAGE.START;
 User player;
 PImage testchar;
 PImage koro;
+PImage dnChibi;
+
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
-  textFont(createFont("SourceCodePro-Regular.ttf", 60));
+  //textFont(createFont("SourceCodePro-Regular.ttf", 60));
   textAlign(LEFT);
   background(loadImage("startPage.png"));
+  koro = loadImage("koro_sensei.png");
+  dnChibi = loadImage("DNchibi.png");
   //background(0);
   // frameRate(60);  // 60 fps
+  testchar = loadImage("testchar.png");
   player = new User();
   koro = loadImage("koro_sensei.png");
 
   fill(153, 102, 255);
-  text("Welcome to \n    Our Asylum", 75, 105);
+  //text("Welcome to \n    Our Asylum", 75, 105);
   stroke(255);
   // rect(rectX, rectY, rectXSize, rectYSize);
   //rect(150, 225, 90, 50, 18, 18, 18, 18);
   //rect(400, 225, 90, 50, 18, 18, 18, 18);
   fill(0);
-  textFont(createFont("SourceCodePro-Regular.ttf", 24));    
-  text("Click to start", 370, 300);
-  testchar = loadImage("testchar.png");
-  player = new User();
+
+  textFont(createFont("SourceCodePro-Regular.ttf", 24));
+  fill(255);
+  text("Click to start", 100, 300);
+
 }
 
 void draw() {
-  player.display();
+  //player.display();
 }
+
 void mousePressed() {
   /* If Help/ Start are re-implemented 
    if( overRect(150, 225, 90, 50) ) {
@@ -71,6 +78,7 @@ public void keyPressed(){
     }
   }
 }
+
 enum PAGE {
  START(), 
  HELP("Where am I...", "Who am I...", "What am I...", "Why am I here...");
