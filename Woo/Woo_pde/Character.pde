@@ -5,7 +5,7 @@ class Character {
   int state;
   float x;
   float y;
-  float speed;
+  float dx;
   
   Character() {
     location = "1 Ward";
@@ -26,8 +26,8 @@ class Character {
     return state;
   }
   
-  public float getSpeed(){
-  return speed;
+  public float getDx(){
+  return dx;
   }
   public float getXcor(){
     return x;

@@ -3,14 +3,14 @@ class User extends Character {
   User(){
     x = 300;
     y = 270;
-    speed = 5;
+    dx = 5;
     left = false;
     right = false;
   }
   
   User (float a, float b){
     super(a,b);
-    speed = 10;
+    dx =5;
     left = false;
     right = false;
   }
@@ -28,10 +28,12 @@ class User extends Character {
   
   public void move(){
     if (left && x > 0){
-      x -= speed;
+      background(loadImage("helpPage.png"));
+      x -= dx;
     }
     if (right && x < width){
-      x += speed;
+      background(loadImage("helpPage.png"));
+      x += dx;
     }
     if (right){//change image
     }
