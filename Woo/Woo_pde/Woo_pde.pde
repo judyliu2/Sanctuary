@@ -1,6 +1,7 @@
 int y;
 User player;
 PImage testchar;
+PImage koro;
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
@@ -8,7 +9,9 @@ void setup() {
   textAlign(LEFT);
   background(loadImage("startPage.png"));
   //background(0);
-  frameRate(60);  // 60 fps
+  // frameRate(60);  // 60 fps
+  player = new User();
+  koro = loadImage("koro_sensei.png");
 
   fill(153, 102, 255);
   text("Welcome to \n    Our Asylum", 75, 105);
@@ -37,11 +40,19 @@ void mousePressed() {
    fill(220);
    text("This is for \n   Help", 75, 105);
    } else { */
-  background(loadImage("helpPage.png"));
-  rect(100,10,500,100);
-  fill(255);
-  text("Where am I...", 110, 35);
-  player = new User();
+   switch(p) {
+     case START:
+       p = PAGE.HELP;  // fall through
+     case HELP:
+       background(loadImage("helpPage.png"));
+       fill(0);
+       rect(100,10,500,100);
+       fill(255);
+       text(p.getNextString(), 110, 35);
+       if (p.getNum() > 1)
+          image(koro, 0, 0);
+         
+   }
 }
 
 boolean overRect(int x, int y, int width, int height) {
@@ -60,14 +71,20 @@ public void keyPressed(){
     }
   }
 }
-  /*
-  enum PAGE {
- START(0), 
- HELP(1);
+enum PAGE {
+ START(), 
+ HELP("Where am I...", "Who am I...", "What am I...", "Why am I here...");
  
  int pageNum;
- private PAGE(int i) {
-     pageNum = i;
+ String[] arr;
+ private PAGE(String... var) {
+     pageNum = 0;
+     arr = var;
+ }
+ String getNextString() {
+   return arr[++pageNum % arr.length];
+ }
+ int getNum() {
+   return pageNum % arr.length;
  }
 }
-*/
