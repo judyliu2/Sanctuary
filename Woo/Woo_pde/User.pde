@@ -3,7 +3,7 @@ class User extends Character {
   User(){
     x = 300;
     y = 270;
-    speed = 10;
+    speed = 5;
     left = false;
     right = false;
   }
@@ -15,6 +15,13 @@ class User extends Character {
     right = false;
   }
   
+  public void setLeft(boolean stat){
+    left = stat;
+  }
+  
+  public void setRight(boolean stat){
+    right = stat;
+  }
   public void display(){
     image(testchar, x, y);
   }
@@ -25,6 +32,10 @@ class User extends Character {
     }
     if (right && x < width){
       x += speed;
+    }
+    if (right){//change image
+    }
+    if (left){//change image
     }
   }
 }

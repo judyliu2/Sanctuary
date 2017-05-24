@@ -33,7 +33,8 @@ void setup() {
 }
 
 void draw() {
-  //player.display();
+  player.move();
+  player.display();
 }
 
 void mousePressed() {
@@ -67,16 +68,28 @@ boolean overRect(int x, int y, int width, int height) {
 }
 
 public void keyPressed(){ 
-  if (key == CODED){
-    if (keyCode == 'w'){ //move up
+   /*
+    if (key == 'w'){ //move up
     }
-    if (keyCode == 's'){ //move down
+    if (key == 's'){ //move down
     }
-    if (keyCode == 'a' && player.getXcor() > 0){ //move left
+   */
+    if (key == 'a'){ //move left
+      player.left = true;
     }
-    if (keyCode == 'd' && player.getXcor() < width){ //move right
+    if (key == 'd'){ //move right
+      player.right = true;
     }
-  }
+
+}
+
+public void keyReleased(){
+    if (key == 'a'){ //move left
+      player.left = false;
+    }
+    if (key == 'd'){ //move right
+      player.right = false;
+    }
 }
 
 enum PAGE {
