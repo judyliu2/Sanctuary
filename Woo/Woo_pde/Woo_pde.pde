@@ -68,12 +68,14 @@ boolean overRect(int x, int y, int width, int height) {
 }
 
 public void keyPressed(){ 
-   /*
+   
     if (key == 'w'){ //move up
-    }
-    if (key == 's'){ //move down
-    }
-   */
+     // player.up = true;
+  }
+    if (key == 's'){// && door){ //leave room
+      
+  }
+   
     if (key == 'a'){ //move left
       player.left = true;
     }
@@ -91,6 +93,8 @@ public void keyReleased(){
       player.right = false;
     }
 }
+
+//public boolean doorReached
 
 enum PAGE {
  START(), 
