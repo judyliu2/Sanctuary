@@ -1,9 +1,8 @@
 class User extends Character {
   boolean left, right; //if boolean is true, character is moving in corresponding direciton
   User(){
-    inventory = new String[16];
-    x = 320;
-    y = 30;
+    x = 300;
+    y = 270;
     speed = 10;
     left = false;
     right = false;
@@ -14,10 +13,10 @@ class User extends Character {
     speed = 10;
     left = false;
     right = false;
-    inventory = new String[16];
   }
   
   public void display(){
+    image(testchar, x, y);
   }
   
   public void move(){

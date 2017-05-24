@@ -19,9 +19,12 @@ void setup() {
   fill(0);
   textFont(createFont("SourceCodePro-Regular.ttf", 24));    
   text("Click to start", 370, 300);
+  testchar = loadImage("testchar.png");
+  player = new User();
 }
 
 void draw() {
+  player.display();
 }
 void mousePressed() {
   /* If Help/ Start are re-implemented 
@@ -38,6 +41,7 @@ void mousePressed() {
   rect(100,10,500,100);
   fill(255);
   text("Where am I...", 110, 35);
+  player = new User();
 }
 
 boolean overRect(int x, int y, int width, int height) {
@@ -55,6 +59,8 @@ public void keyPressed(){
     if (keyCode == 'd' && player.getXcor() < width){ //move right
     }
   }
+}
+  /*
   enum PAGE {
  START(0), 
  HELP(1);
@@ -64,3 +70,4 @@ public void keyPressed(){
      pageNum = i;
  }
 }
+*/

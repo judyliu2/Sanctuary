@@ -1,7 +1,7 @@
 class Character {
   //INSTANCE VARS
   String location;
-  String[] inventory; //Used as a stact for NPCs and used as an ArrayList for User
+  ArrayList<String> inventory; //Used as a stact for NPCs and used as an ArrayList for User
   int state;
   float x;
   float y;
@@ -10,6 +10,7 @@ class Character {
   Character() {
     location = "1 Ward";
     state = 1; // 1 = standing/idle state
+    inventory = new ArrayList<String>(10);
   }
   
   Character (float a , float b){
