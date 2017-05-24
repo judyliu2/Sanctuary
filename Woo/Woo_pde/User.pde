@@ -28,9 +28,11 @@ class User extends Character {
   
   public void move(){
     if (left && x > 0){
+      background(loadImage("helpPage.png"));
       x -= speed;
     }
     if (right && x < width){
+      background(loadImage("helpPage.png"));
       x += speed;
     }
     if (right){//change image
