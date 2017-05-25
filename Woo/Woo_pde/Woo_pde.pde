@@ -3,19 +3,26 @@ User player;
 PImage testchar;
 PImage koro;
 PImage dnChibi;
+PImage doorClosed;
+PImage doorOpen;
+PImage bg;    // use this for universal background image
 
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   //textFont(createFont("SourceCodePro-Regular.ttf", 60));
   textAlign(LEFT);
-  background(loadImage("startPage.png"));
+  bg = loadImage("startPage.png");
+  background(bg);
   koro = loadImage("koro_sensei.png");
   dnChibi = loadImage("DNchibi.png");
+  doorClosed = loadImage("doorClosed.gif");
+  doorOpen = loadImage("doorOpen.gif");
+  
   //background(0);
   // frameRate(60);  // 60 fps
   testchar = loadImage("testchar.png");
-  player = new User();
+  player = new User(true);
   koro = loadImage("koro_sensei.png");
 
   fill(153, 102, 255);
@@ -52,13 +59,33 @@ void mousePressed() {
      case START:
        p = PAGE.HELP;  // fall through
      case HELP:
-       background(loadImage("helpPage.png"));
-       fill(0);
-       rect(100,10,500,100);
-       fill(255);
-       text(p.getNextString(), 110, 35);
-       if (p.getNum() > 1)
-          image(koro, 0, 0);
+       background(bg = loadImage("helpPage.png"));
+       if (p.getNum() < p.getArrLen()) {
+         fill(0);
+         rect(100,10,500,100);
+         fill(255);
+         text(p.getNextString(), 110, 35);
+         if (p.getNum() > 1)
+            image(koro, 0, 0);
+       } else {
+           player.toHide(false);
+           if (player.getXcor() < 420)
+             image(doorClosed, 510, 240, 80, 120);
+           else {
+             image(doorOpen, 460, 240, 140, 120);
+             if (player.getXcor() > 460) {
+               p = PAGE.HOSPITAL;
+               player.setX(0);
+             }
+           }
+       }
+     case HOSPITAL:
+     
+       if (p != PAGE.HOSPITAL)
+         return;
+       bg = loadImage("Hallway_hospital.jpg");
+       background(bg);
+       
          
    }
 }
@@ -89,6 +116,7 @@ public void keyReleased(){
     if (key == 'a'){ //move left
       player.left = false;
     }
+    
     if (key == 'd'){ //move right
       player.right = false;
     }
@@ -98,7 +126,8 @@ public void keyReleased(){
 
 enum PAGE {
  START(), 
- HELP("Where am I...", "Who am I...", "What am I...", "Why am I here...");
+ HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."),
+ HOSPITAL("We are now in the hospital");
  
  int pageNum;
  String[] arr;
@@ -107,9 +136,13 @@ enum PAGE {
      arr = var;
  }
  String getNextString() {
-   return arr[++pageNum % arr.length];
+   return arr[pageNum++];
  }
  int getNum() {
-   return pageNum % arr.length;
+   return pageNum;
  }
+ int getArrLen() {
+   return arr.length;
+ }
+ 
 }
