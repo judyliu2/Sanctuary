@@ -1,6 +1,8 @@
 class User extends Character {
   boolean left, right; //if boolean is true, character is moving in corresponding direciton
   boolean hidden;
+  boolean onDoor;
+  boolean onObject;
   User(boolean hide){
     this(300, 270, hide);
   }
@@ -25,6 +27,18 @@ class User extends Character {
   }
   public void toHide(boolean hide) {
     hidden = hide;
+  }
+  
+  public void isOnDoor(float a, float b, float c, float d){
+    if (x < a + c/2 && x > a - c/2){
+      onDoor = true;
+    }
+    if (y < b + d/2 && y > b - d/2){
+      onDoor = true;
+    }
+    else{
+      onDoor = false;
+    }
   }
   
   public void display(){

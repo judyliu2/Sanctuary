@@ -85,6 +85,7 @@ void mousePressed() {
          return;
        bg = loadImage("Hallway_hospital.jpg");
        background(bg);
+       player.location = "hallway";
        
          
    }
@@ -96,11 +97,14 @@ boolean overRect(int x, int y, int width, int height) {
 
 public void keyPressed(){ 
    
-    if (key == 'w'){ //move up
+    if (key == 'w'){ //move up/ jump
      // player.up = true;
   }
-    if (key == 's'){// && door){ //leave room
-      
+    if (key == 's'){// interactable
+     if (player.onDoor == true){
+     }
+     if (player.onObject == true){
+     }
   }
    
     if (key == 'a'){ //move left
