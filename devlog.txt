@@ -88,3 +88,17 @@
    + Edited proposal
    + Minor changes to instance variables and methods
 +============================================================== 
++2017-05-23
++--------------------------------------------------------------
++Irene, Judy ::
+    + Renamed variables to better reflect their intended use
++Irene ::
+    + Terminating dialogue (instead of a cycling dialogue to allow further action e.g. exiting the door)
+    + Door functionality
+        + Three separate door images for closed door, one animated open door, and an open door
+        + Appears following dialogue
+        + Upon approaching the door, the animated door opens
+        + Loads a different screen when the user is on the door
+    + Fixed bug where two characters appeared simultaneously (with a boolean to test whether the moving character should be hidden)
++============================================================== 
+
