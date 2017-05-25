@@ -102,6 +102,7 @@ public void keyPressed(){
   }
     if (key == 's'){// interactable
      if (player.onDoor == true){
+       player.setLocation(player.nextLocation); 
      }
      if (player.onObject == true){
      }

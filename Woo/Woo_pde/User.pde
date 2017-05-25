@@ -3,6 +3,7 @@ class User extends Character {
   boolean hidden;
   boolean onDoor;
   boolean onObject;
+  String nextLocation;
   User(boolean hide){
     this(300, 270, hide);
   }
@@ -41,6 +42,9 @@ class User extends Character {
     }
   }
   
+  public void setLocation(String newLocation){
+    nextLocation = newLocation;
+  }
   public void display(){
     if (hidden)
       return;
