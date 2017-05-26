@@ -1,7 +1,13 @@
 
 PAGE p = PAGE.START;
 User player;
-Door door1 = new Door();
+Door door1 = new Door(); //p = HOSPITAL
+Door hall1 = new Door(45, 230, 70, 150); //p = HALLWAY
+Door hall2 = new Door(270, 230, 70, 150); //p = HALLWAY
+Door hall3 = new Door(); //p = HALLWAY
+Door bipolar1 = new Door(270, 230, 70, 150); //p = BIPOLAR
+
+
 PImage testchar;
 PImage koro;
 PImage dnChibi;
@@ -20,10 +26,10 @@ void setup() {
   dnChibi = loadImage("DNchibi.png");
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
-  door1.setLocation("Hallway_hospital.jpg");
+  door1.setLocation("Golden hallway.png");
   //background(0);
   // frameRate(60);  // 60 fps
-  testchar = loadImage("testchar.png");
+  testchar = loadImage("koro_sensei.png");
   player = new User(true);
   koro = loadImage("koro_sensei.png");
   fill(153, 102, 255);
@@ -52,8 +58,9 @@ void draw() {
   }*/
 
 }
-
+int i = 0;
 void mousePressed() {
+  //System.out.printf("%05d - %s\n", i++, p);
   /* If Help/ Start are re-implemented 
    if( overRect(150, 225, 90, 50) ) {
    background(loadImage("helpPage.png"));
@@ -66,8 +73,8 @@ void mousePressed() {
    } else { */
    switch(p) {
      case START:
-       p = PAGE.HELP;  // fall through
-     case HELP:
+       p = PAGE.HOSPITAL;  // fall through
+     case HOSPITAL:
        background(bg = loadImage("helpPage.png"));
        if (p.getNum() < p.getArrLen()) {
          fill(0);
@@ -89,21 +96,33 @@ void mousePressed() {
        
 
        }
-     case HOSPITAL:
-     
-       if (p != PAGE.HOSPITAL)
-         return;
-       bg = loadImage("Hallway_hospital.jpg");
+       break;
+     case HALLWAY:
+       bg = loadImage("Golden hallway.png");
        background(bg);
+       //rect(45, 230, 70, 150);
+       //rect(270, 230, 70, 150);
        player.location = "hallway";
-       
+     break;
+     
+     case HELP:
+       bg = loadImage("helpPage.png");
+     break;
+     
+     case BIPOLAR:
+       bg = loadImage("BipolarRoom.png");
+       background(bg);
+       player.location = "bipolar";
+       rect(270, 230, 70, 150);
+     break;
+     
          
    }
 }
 
-public void setBackground(String background){
-  background(loadImage(background));
-}
+//public void setBackground(String background){
+//  background(loadImage(background));
+//}
 boolean overRect(int x, int y, int width, int height) {
   return (mouseX>x && mouseX<x+width && mouseY>y && mouseY<y+height);
 }
@@ -114,11 +133,34 @@ public void keyPressed(){
      // player.up = true;
   }
     if (key == 's'){// interactable
-    
-     if (player.isOnDoor(door1)){
+    switch(p) {
+     case HOSPITAL:
+       if (player.isOnDoor(door1)){
        //bg = loadImage(door1.nextLocation);
+       p = PAGE.HALLWAY;
+     }
+     break;
+     
+     case HALLWAY:
+     if (player.isOnDoor(hall1)){
        p = PAGE.HOSPITAL;
      }
+     if (player.isOnDoor(hall2)){
+       p = PAGE.BIPOLAR;
+     }
+     if (player.isOnDoor(hall3)){
+       p = PAGE.HOSPITAL;
+     }
+     break;
+     
+     case BIPOLAR:
+     if (player.isOnDoor(bipolar1)) {
+       p = PAGE.HALLWAY;
+     }
+     break;
+      
+    }
+  
      if (player.onItem == true){
      }
   }
@@ -147,7 +189,10 @@ public void keyReleased(){
 enum PAGE {
  START(), 
  HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."),
- HOSPITAL("We are now in the hospital");
+ HOSPITAL("We are now in the hospital"),
+ HALLWAY("Do we want to go in?"),
+ BIPOLAR("Greetings. I am L.");
+ 
  
  int pageNum;
  String[] arr;
