@@ -1,5 +1,7 @@
+
 PAGE p = PAGE.START;
 User player;
+Door door1 = new Door();
 PImage testchar;
 PImage koro;
 PImage dnChibi;
@@ -18,13 +20,12 @@ void setup() {
   dnChibi = loadImage("DNchibi.png");
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
-  
+  door1.setLocation("Hallway_hospital.jpg");
   //background(0);
   // frameRate(60);  // 60 fps
   testchar = loadImage("testchar.png");
   player = new User(true);
   koro = loadImage("koro_sensei.png");
-
   fill(153, 102, 255);
   //text("Welcome to \n    Our Asylum", 75, 105);
   stroke(255);
@@ -42,13 +43,6 @@ void setup() {
 void draw() {
   player.move();
   player.display();
-/*  if (player.x > 400){
-    FileSort test = new FileSort();
-    test.displayAllFiles();
-    if (mousePressed){
-     test.toDo(); 
-    }
-  }*/
 }
 
 void mousePressed() {
@@ -74,17 +68,18 @@ void mousePressed() {
          text(p.getNextString(), 110, 35);
          if (p.getNum() > 1)
             image(koro, 0, 0);
-       } else {
+       } 
+       else {
            player.toHide(false);
-           if (player.getXcor() < 420)
-             image(doorClosed, 510, 240, 80, 120);
-           else {
-             image(doorOpen, 460, 240, 140, 120);
-             if (player.getXcor() > 460) {
-               p = PAGE.HOSPITAL;
-               player.setX(0);
-             }
-           }
+           //if (player.isOnDoor(door1)){
+             image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), door1.getLength());
+           //}
+           if(player.isOnDoor(door1)){
+               image(doorOpen, 460, 240, 140, 120);             
+     
+            }
+       
+
        }
      case HOSPITAL:
      
@@ -98,6 +93,9 @@ void mousePressed() {
    }
 }
 
+public void setBackground(String background){
+  background(loadImage(background));
+}
 boolean overRect(int x, int y, int width, int height) {
   return (mouseX>x && mouseX<x+width && mouseY>y && mouseY<y+height);
 }
@@ -108,10 +106,12 @@ public void keyPressed(){
      // player.up = true;
   }
     if (key == 's'){// interactable
-     if (player.onDoor == true){
-       player.setLocation(player.nextLocation); 
+    
+     if (player.isOnDoor(door1)){
+       //bg = loadImage(door1.nextLocation);
+       p = PAGE.HOSPITAL;
      }
-     if (player.onObject == true){
+     if (player.onItem == true){
      }
   }
    
@@ -157,4 +157,5 @@ enum PAGE {
    return arr.length;
  }
  
+
 }

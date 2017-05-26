@@ -48,7 +48,7 @@
 +==============================================================
 +2017-05-19 
 +--------------------------------------------------------------
-+Irene, Judy :: 
++Irene, Judy, Carol :: 
     + Began writing the driver file (Woo_pde)
     + Brainstormed and created files for characters and their respective instance variables 
         + Created files for the user and NPC that extend class character
@@ -87,6 +87,8 @@
    + Made character display 
    + Edited proposal
    + Minor changes to instance variables and methods
++Judy, Carol ::
+    + Worked on flow chart
 +============================================================== 
 +2017-05-23
 +--------------------------------------------------------------
@@ -101,4 +103,8 @@
         + Loads a different screen when the user is on the door
     + Fixed bug where two characters appeared simultaneously (with a boolean to test whether the moving character should be hidden)
 +============================================================== 
-
++2017-05-25
++--------------------------------------------------------------
++ Judy :: 
+    + Created new class for Doors
+    + Character is able to walk through the first door! :)
