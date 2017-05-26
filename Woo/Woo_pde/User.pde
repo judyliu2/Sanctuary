@@ -2,8 +2,7 @@ class User extends Character {
   boolean left, right; //if boolean is true, character is moving in corresponding direciton
   boolean hidden;
   boolean onDoor;
-  boolean onObject;
-  String nextLocation;
+  boolean onItem;
   User(boolean hide){
     this(300, 270, hide);
   }
@@ -30,21 +29,17 @@ class User extends Character {
     hidden = hide;
   }
   
-  public void isOnDoor(float a, float b, float c, float d){
-    if (x < a + c/2 && x > a - c/2){
-      onDoor = true;
-    }
-    if (y < b + d/2 && y > b - d/2){
+  public boolean isOnDoor(Door d){
+    //f (x == d.getXcor()){
+    if ((x < d.getXcor() + d.getWidth()/2) && (x > d.getXcor() - d.getWidth()/2) && (y < d.getYcor() + d.getLength()/2) && (y > d.getYcor() - d.getLength()/2)){
       onDoor = true;
     }
     else{
       onDoor = false;
     }
+    return onDoor;
   }
   
-  public void setLocation(String newLocation){
-    nextLocation = newLocation;
-  }
   public void display(){
     if (hidden)
       return;
