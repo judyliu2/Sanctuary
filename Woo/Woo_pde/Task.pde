@@ -1,4 +1,4 @@
-class Task{
+class Task {
   String task;
   int x;//location of task in room
   int y;//location of task in room
@@ -6,17 +6,21 @@ class Task{
   String[] hints;//hints given when Task is initialized
   boolean completed;
   Item ret;
-  
-  public Task(){
-    
+
+  public Task() {
     completed = false;
   }
-  
-  public void toDo(){
-    
+
+  public Task( String[] help ) {
+    this();
+    hints = help;
   }
   
-  public Item complete(){
+
+  public void toDo() {
+  }
+
+  public Item complete() {
     return null;
   }
 }
