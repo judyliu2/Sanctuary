@@ -96,15 +96,25 @@
     + Renamed variables to better reflect their intended use
 +Irene ::
     + Terminating dialogue (instead of a cycling dialogue to allow further action e.g. exiting the door)
-    + Door functionality
+    + Door functionality (ANIMATED)
         + Three separate door images for closed door, one animated open door, and an open door
         + Appears following dialogue
-        + Upon approaching the door, the animated door opens
-        + Loads a different screen when the user is on the door
+        + Upon approaching the door, the animated door opens/ Upon moving away from the door, the animated door closes
+        + Loads a different background when the user is on the door
     + Fixed bug where two characters appeared simultaneously (with a boolean to test whether the moving character should be hidden)
 +============================================================== 
 +2017-05-25
 +--------------------------------------------------------------
-+ Judy :: 
++Irene ::
+    + GREATER door functionality
+        + Separate rooms have interconnecting doors that are able to be entered and exited
+        + Fixed bug in which doors on one map could be accessed by the user on another map
+    + Created Bipolar room and respective location & basic dialogue
+    + Created Hallway and respective location & basic dialogue
+    + Added new backgrounds and modified images found in class to meet the screen size
+    + Renamed variables to better reflect functionality
+    + Began help page to be shown as an option on the start screen
++Judy :: 
     + Created new class for Doors
     + Character is able to walk through the first door! :)
++============================================================== 
