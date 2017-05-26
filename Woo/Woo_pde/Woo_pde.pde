@@ -43,6 +43,14 @@ void setup() {
 void draw() {
   player.move();
   player.display();
+  /*  if (player.x > 400){
+    FileSort test = new FileSort();
+    test.displayAllFiles();
+    if (mousePressed){
+     test.toDo(); 
+    }
+  }*/
+
 }
 
 void mousePressed() {
