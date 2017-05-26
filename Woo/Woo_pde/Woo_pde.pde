@@ -132,13 +132,14 @@ public void keyPressed(){
     if (key == 'w'){ //move up/ jump
      // player.up = true;
   }
-    if (key == 's'){// interactable
+    if (key == 'q'){// interactable
     switch(p) {
      case HOSPITAL:
        if (player.isOnDoor(door1)){
        //bg = loadImage(door1.nextLocation);
        p = PAGE.HALLWAY;
      }
+     
      break;
      
      case HALLWAY:
@@ -171,7 +172,12 @@ public void keyPressed(){
     if (key == 'd'){ //move right
       player.right = true;
     }
-
+    if (key == 's'){ //move down
+      player.down = true;
+    }
+    if( key == 'w'){ // move up
+      player.up = true;
+    }
 }
 
 public void keyReleased(){
@@ -181,6 +187,14 @@ public void keyReleased(){
     
     if (key == 'd'){ //move right
       player.right = false;
+    }
+    
+    if (key == 's'){
+      player.down = false;
+    }
+    
+    if (key == 'w'){
+      player.up = false;
     }
 }
 

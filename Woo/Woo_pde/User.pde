@@ -1,15 +1,17 @@
 class User extends Character {
-  boolean left, right; //if boolean is true, character is moving in corresponding direciton
+  boolean left, right, up, down; //if boolean is true, character is moving in corresponding direciton
   boolean hidden;
   boolean onDoor;
   boolean onItem;
+  float dy;
   User(boolean hide){
-    this(300, 270, hide);
+    this(300, 280, hide);
   }
   
   User (float a, float b, boolean hide){
     super(a,b);
-    dx = 5;
+    dx = 10;
+    dy = 10;
     left = false;
     right = false;
     hidden = hide;
@@ -59,9 +61,20 @@ class User extends Character {
       background(bg);
       x += dx;
     }
+    if (up && y < height){
+      background(bg);
+      y += dy;
+    }
+    if (down && y > 0){
+      background(bg);
+    }
     if (right){//change image
     }
     if (left){//change image
+    }
+    if (up){// animation for it?
+    } 
+    if (down){// animation for it?
     }
   }
 }
