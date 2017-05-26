@@ -45,7 +45,7 @@ class User extends Character {
       return;
     
     mousePressed();
-    image(testchar, x, y);
+    image(testchar, x, y-50, 150, 150);
   }
   
   public void move(){
