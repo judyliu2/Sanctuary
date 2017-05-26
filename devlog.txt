@@ -111,9 +111,10 @@
         + Fixed bug in which doors on one map could be accessed by the user on another map
     + Created Bipolar room and respective location & basic dialogue
     + Created Hallway and respective location & basic dialogue
-    + Added new backgrounds and modified images found in class to meet the screen size
     + Renamed variables to better reflect functionality
     + Began help page to be shown as an option on the start screen
+    + Added new backgrounds and modified images found in class to meet the screen size
+    + Changed image of user and modified Character display in order to appropriately display the user
 +Judy :: 
     + Created new class for Doors
     + Character is able to walk through the first door! :)
