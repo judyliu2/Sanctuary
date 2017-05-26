@@ -5,11 +5,8 @@ class Door{
   float lengthh;
   String nextLocation;
   
-  Door(){ //510.0, 240.0, 80.0, 120.0);
-  xcor = 510.0;
-  ycor = 240.0;
-  widthh = 80.0;
-  lengthh = 120.0;
+  Door(){ 
+    this(510.0, 240.0, 80.0, 120.0);
   }
   Door( float x, float y, float w, float l){
     xcor = x;
