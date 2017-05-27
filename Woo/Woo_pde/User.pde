@@ -61,7 +61,7 @@ class User extends Character {
       background(bg);
       x += dx;
     }
-    if (up && y < height){
+    if (up && y < 240){
       background(bg);
       y += dy;
     }
