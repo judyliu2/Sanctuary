@@ -56,7 +56,9 @@ void draw() {
    test.toDo(); 
    }
    }*/
+   /*
   noCursor();
+  
   PVector mouse = new PVector(mouseX, mouseY);
   history.add(mouse);
   if (history.size() > 40) {
@@ -68,6 +70,9 @@ void draw() {
     PVector position = history.get(i);
     ellipse(position.x, position.y, i, i);
   }
+  */
+  
+  
 }
 int i = 0;
 void mousePressed() {

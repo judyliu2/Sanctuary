@@ -23,15 +23,71 @@ class FileSort extends Task {
     return betical[alpha.indexOf(s)];
   }
 
-  public void swap (File[] docs, int a, int b) {
+  public void swap (File[] docs, int a, int b) { //closer to animating sorting
     //simply swap their x coordinates
-    int temp1 = docs[b].xcor;
+    int tempaX = docs[a].xcor;
+    int tempbX = docs[b].xcor;
+    
+    int xchange = 1;
+    int ychange = 1;
+    
+
+    int min = min(tempaX,tempbX);
+    int max = max(tempaX, tempbX);
+    int middle = abs(tempaX - tempbX)/2;
+    displayAllFiles();
+    
+
+      
+      while (docs[b].xcor < max ){ //when b has the minimum x cor
+        
+        if (docs[b].xcor < min + middle){
+          docs[b].ycor += ychange;
+          docs[a].ycor -= ychange;
+        }
+        else{
+          docs[b].ycor -= ychange;
+          docs[a].ycor += ychange;
+        }
+        
+        docs[b].xcor += xchange;
+        docs[a].xcor -= xchange;
+
+        displayAllFiles();
+       
+      }
+      
+       
+      
+      while(docs[a].xcor < max){ //when a hasthe minimum x cor
+        
+        if (docs[a].xcor < min + middle){
+          docs[a].ycor += ychange;
+          docs[b].ycor -= ychange;
+        }
+        else{
+          docs[a].ycor -= ychange;
+          docs[b].ycor += ychange;
+        }
+        docs[a].xcor += xchange;
+        docs[b].xcor -= xchange;
+      
+        displayAllFiles();
+      }
+
+        File temp2 = docs[a];
+  
+    docs[a] = docs[b];
+    docs[b] = temp2;
+  
+    
+   /* 
     File temp2 = docs[b];
     docs[b].xcor = docs[a].xcor;
-    docs[a].xcor = temp1;
+    docs[a].xcor = tempbX;
     docs[b] = docs[a];
     docs[a] = temp2;
-    
+   */
   }
 
   public void displayAllFiles() {
@@ -55,6 +111,7 @@ class FileSort extends Task {
         }
       }
     }
+    
     completed = true;
   }
 
@@ -81,7 +138,7 @@ private class File {
   }
 
   public void drawFile() {
-    ycor += 10;
+    //ycor += 10;
     fill(255);
     rect (xcor, ycor, w, l);
     fill(50);
