@@ -119,3 +119,21 @@
     + Created new class for Doors
     + Character is able to walk through the first door! :)
 +============================================================== 
++2017-05-26
++--------------------------------------------------------------
++Irene ::
+    + Updated README to meet requirements 
+    + Modified display to properly display user
+    + Added images (i.e. Schizophrenia)
++============================================================== 
++2017-05-27
++--------------------------------------------------------------
++Irene ::
+    + GRAVITY functionality!
+        + w key allows the user to jump
+        + The user will automatically fall at a different speed
+        + Jump functionality works with left a and d keys (a.k.a. the user can jump while moving left/ right)
+        + Bugs fixed on aggregating jumps (a.k.a. the user is not allowed to jump while in mid-air)
+    + Changed item iteraction key back to 's' for convenience/ based on natural hand position
++============================================================== 
+
