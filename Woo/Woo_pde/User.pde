@@ -3,6 +3,8 @@ class User extends Character {
   boolean hidden;
   boolean onDoor;
   boolean onItem;
+  float  gravity;
+  float  baseY;
   float dy;
   User(boolean hide){
     this(300, 280, hide);
@@ -12,6 +14,8 @@ class User extends Character {
     super(a,b);
     dx = 10;
     dy = 10;
+    gravity = - 2;
+    baseY = this.y;
     left = false;
     right = false;
     hidden = hide;
@@ -63,7 +67,7 @@ class User extends Character {
     }
     if (up && y < 240){
       background(bg);
-      y += dy;
+      //y += dy;
     }
     if (down && y > 0){
       background(bg);
