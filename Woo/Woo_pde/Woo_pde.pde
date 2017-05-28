@@ -68,11 +68,20 @@ void draw() {
     fill(153-i*5,0,0);//fill(255 - i*5);//fill(255,255,153);
     PVector position = history.get(i);
     ellipse(position.x, position.y,i,i);
-  }
+  } 
 }
 int i = 0;
 void mousePressed() {
-  //System.out.printf("%05d - %s\n", i++, p);
+  System.out.printf("%05d-%-9s %5b(%03.0f, %03.0f, %02.0f%02.0f)\n", i++, p, player.up, player.x, player.y, player.dy, player.gravity);
+  if (player.up) {
+     player.y -= player.dy;
+     player.dy += player.gravity;
+     if (player.y > player.baseY) {
+       System.out.println("DOWN FORCE, bottom reached");
+       player.up = false;
+       player.y = player.baseY;
+     }
+   }
   /* If Help/ Start are re-implemented 
    if( overRect(150, 225, 90, 50) ) {
    background(loadImage("helpPage.png"));
@@ -141,9 +150,11 @@ boolean overRect(int x, int y, int width, int height) {
 }
 
 public void keyPressed(){ 
-   
-    if (key == 'w'){ //move up/ jump
-     // player.up = true;
+    if (key == 'w' && !player.up){ //move up/ jump
+     player.up = true;
+     player.dy = 17;
+     player.gravity = -2;
+     player.y -= player.dy;
   }
     if (key == 'q'){// interactable
     switch(p) {
@@ -175,8 +186,8 @@ public void keyPressed(){
       
     }
   
-     if (player.onItem == true){
-     }
+     //if (player.onItem == true){
+     //}
   }
    
     if (key == 'a'){ //move left
@@ -207,7 +218,7 @@ public void keyReleased(){
     }
     
     if (key == 'w'){
-      player.up = false;
+      //player.up = false;
     }
 }
 
