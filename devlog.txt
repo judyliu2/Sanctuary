@@ -73,7 +73,9 @@
         + Lettering appears in a text box to mimic thought processes/ dialogue
     + Rearranged images to be more visually appealing (e.g. size of text, location of text)
 +Judy ::
-    + Added more instance variables to Character and User classes. New methods are added to User class. Adjusted Woo_pde to    DefaultMap_pde and deleted Woo.pde so that code runs. 
+    + Added more instance variables to Character and User classes. New methods are added to User class. Adjusted Woo_pde to    DefaultMap_pde and deleted Woo.pde so that code runs.
++Carol ::
+    + Modified old plan as of 5-22 to cover for newly brainstormed ideas
 +==============================================================    
 +2017-05-23
 +--------------------------------------------------------------
@@ -102,6 +104,11 @@
         + Upon approaching the door, the animated door opens/ Upon moving away from the door, the animated door closes
         + Loads a different background when the user is on the door
     + Fixed bug where two characters appeared simultaneously (with a boolean to test whether the moving character should be hidden)
++Carol ::
+    + Created class Room, to contain all the interactions for one room within one class
+    + Created class Floor, to contain all rooms and call on the hallway
+    + Created class Item, to create and display items to be picked up
+    + Modified class Task to be an individual task, rather than contain a list of tasks
 +============================================================== 
 +2017-05-25
 +--------------------------------------------------------------
@@ -118,6 +125,11 @@
 +Judy :: 
     + Created new class for Doors
     + Character is able to walk through the first door! :)
++Carol ::
+    + Created BipolarRoom using super class Room, empty as of now
+    + Created FileSort using superclass Task, which requires the computer to sort a collection of files upon triggering the task
+    + Included FileSort call in the driver for testing -- works
+    + Added new backgrounds
 +============================================================== 
 +2017-05-26
 +--------------------------------------------------------------
@@ -125,6 +137,8 @@
     + Updated README to meet requirements 
     + Modified display to properly display user
     + Added images (i.e. Schizophrenia)
++Carol ::
+    + Moved images for Bipolar case into BipolarRoom
 +============================================================== 
 +2017-05-27
 +--------------------------------------------------------------
