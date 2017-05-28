@@ -7,6 +7,7 @@ Door hall2 = new Door(270, 230, 70, 150); //p = HALLWAY
 Door hall3 = new Door(); //p = HALLWAY
 Door bipolar1 = new Door(270, 230, 70, 150); //p = BIPOLAR
 
+ArrayList<PVector> history = new ArrayList();
 
 PImage testchar;
 PImage koro;
@@ -56,7 +57,18 @@ void draw() {
      test.toDo(); 
     }
   }*/
-
+  noCursor();
+  PVector mouse = new PVector(mouseX, mouseY);
+  history.add(mouse);
+  if (history.size() > 40){
+    history.remove(0);
+  }
+  for (int i = 0; i <history.size(); i++){
+    noStroke();
+    fill(153-i*5,0,0);//fill(255 - i*5);//fill(255,255,153);
+    PVector position = history.get(i);
+    ellipse(position.x, position.y,i,i);
+  }
 }
 int i = 0;
 void mousePressed() {
@@ -76,6 +88,7 @@ void mousePressed() {
        p = PAGE.HOSPITAL;  // fall through
      case HOSPITAL:
        background(bg = loadImage("helpPage.png"));
+       fill(150,20,0);
        if (p.getNum() < p.getArrLen()) {
          fill(0);
          rect(100,10,500,100);
