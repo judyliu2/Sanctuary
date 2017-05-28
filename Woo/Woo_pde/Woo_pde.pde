@@ -156,7 +156,7 @@ public void keyPressed(){
      player.gravity = -2;
      player.y -= player.dy;
   }
-    if (key == 'q'){// interactable
+    if (key == 's'){// interactable
     switch(p) {
      case HOSPITAL:
        if (player.isOnDoor(door1)){
