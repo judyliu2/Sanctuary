@@ -12,10 +12,10 @@ class FileSort extends Task {
     hints[1] = "Compare two objects";
     hints[2] = "Swap if necessary";
     files = new File[4];
-    files[0] = new File ("c u later", 120);
-    files[1] = new File ("Aha", 160);
-    files[2] = new File ("don't", 200);
-    files[3] = new File ("baaaa", 240);
+    files[0] = new File ("c", 120);
+    files[1] = new File ("A", 160);
+    files[2] = new File ("D", 200);
+    files[3] = new File ("b", 240);
   }
 
   public int valueOf(String s) {
@@ -23,11 +23,15 @@ class FileSort extends Task {
     return betical[alpha.indexOf(s)];
   }
 
-  public void swap (File a, File b) {
+  public void swap (File[] docs, int a, int b) {
     //simply swap their x coordinates
-    int temp = b.xcor;
-    b.xcor = a.xcor;
-    a.xcor = temp;
+    int temp1 = docs[b].xcor;
+    File temp2 = docs[b];
+    docs[b].xcor = docs[a].xcor;
+    docs[a].xcor = temp1;
+    docs[b] = docs[a];
+    docs[a] = temp2;
+    
   }
 
   public void displayAllFiles() {
@@ -37,10 +41,17 @@ class FileSort extends Task {
   }
 
   public void toDo() {
+    if (player.x > 40){
+      sort();
+    }
+  }
+  public void sort(){
     for (int p = 0; p < files.length - 1; p++) {//num of passes
+      displayAllFiles();
       for (int i = 0; i < files.length - 1; i++) {
+        displayAllFiles();
         if (valueOf(files[i].firstChar) > valueOf(files[i + 1].firstChar)) {
-          swap (files[i], files[i + 1]);
+          swap (files, i, i+ 1);
         }
       }
     }
@@ -70,6 +81,7 @@ private class File {
   }
 
   public void drawFile() {
+    ycor += 10;
     fill(255);
     rect (xcor, ycor, w, l);
     fill(50);

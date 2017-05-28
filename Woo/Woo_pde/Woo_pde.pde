@@ -44,44 +44,43 @@ void setup() {
   textFont(createFont("SourceCodePro-Regular.ttf", 24));
   fill(255);
   text("Click to start", 100, 300);
-
 }
 
 void draw() {
   player.move();
   player.display();
   /*  if (player.x > 400){
-    FileSort test = new FileSort();
-    test.displayAllFiles();
-    if (mousePressed){
-     test.toDo(); 
-    }
-  }*/
+   FileSort test = new FileSort();
+   test.displayAllFiles();
+   if (mousePressed){
+   test.toDo(); 
+   }
+   }*/
   noCursor();
   PVector mouse = new PVector(mouseX, mouseY);
   history.add(mouse);
-  if (history.size() > 40){
+  if (history.size() > 40) {
     history.remove(0);
   }
-  for (int i = 0; i <history.size(); i++){
+  for (int i = 0; i <history.size(); i++) {
     noStroke();
-    fill(153-i*5,0,0);//fill(255 - i*5);//fill(255,255,153);
+    fill(153-i*5, 0, 0);//fill(255 - i*5);//fill(255,255,153);
     PVector position = history.get(i);
-    ellipse(position.x, position.y,i,i);
-  } 
+    ellipse(position.x, position.y, i, i);
+  }
 }
 int i = 0;
 void mousePressed() {
   System.out.printf("%05d-%-9s %5b(%03.0f, %03.0f, %02.0f%02.0f)\n", i++, p, player.up, player.x, player.y, player.dy, player.gravity);
   if (player.up) {
-     player.y -= player.dy;
-     player.dy += player.gravity;
-     if (player.y > player.baseY) {
-       System.out.println("DOWN FORCE, bottom reached");
-       player.up = false;
-       player.y = player.baseY;
-     }
-   }
+    player.y -= player.dy;
+    player.dy += player.gravity;
+    if (player.y > player.baseY) {
+      System.out.println("DOWN FORCE, bottom reached");
+      player.up = false;
+      player.y = player.baseY;
+    }
+  }
   /* If Help/ Start are re-implemented 
    if( overRect(150, 225, 90, 50) ) {
    background(loadImage("helpPage.png"));
@@ -92,54 +91,47 @@ void mousePressed() {
    fill(220);
    text("This is for \n   Help", 75, 105);
    } else { */
-   switch(p) {
-     case START:
-       p = PAGE.HOSPITAL;  // fall through
-     case HOSPITAL:
-       background(bg = loadImage("helpPage.png"));
-       fill(150,20,0);
-       if (p.getNum() < p.getArrLen()) {
-         fill(0);
-         rect(100,10,500,100);
-         fill(255);
-         text(p.getNextString(), 110, 35);
-         if (p.getNum() > 1)
-            image(koro, 0, 0);
-       } 
-       else {
-           player.toHide(false);
-           //if (player.isOnDoor(door1)){
-             image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), door1.getLength());
-           //}
-           if(player.isOnDoor(door1)){
-               image(doorOpen, 460, 240, 140, 120);             
-     
-            }
-       
+  switch(p) {
+  case START:
+    p = PAGE.HOSPITAL;  // fall through
+  case HOSPITAL:
+    background(bg = loadImage("helpPage.png"));
+    fill(150, 20, 0);
+    if (p.getNum() < p.getArrLen()) {
+      fill(0);
+      rect(100, 10, 500, 100);
+      fill(255);
+      text(p.getNextString(), 110, 35);
+      if (p.getNum() > 1)
+        image(koro, 0, 0);
+    } else {
+      player.toHide(false);
+      //if (player.isOnDoor(door1)){
+      image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), door1.getLength());
+      //}
+      if (player.isOnDoor(door1)) {
+        image(doorOpen, 460, 240, 140, 120);
+      }
+    }
+    break;
+  case HALLWAY:
+    bg = loadImage("Golden hallway.png");
+    background(bg);
+    //rect(45, 230, 70, 150);
+    //rect(270, 230, 70, 150);
+    player.location = "hallway";
+    break;
 
-       }
-       break;
-     case HALLWAY:
-       bg = loadImage("Golden hallway.png");
-       background(bg);
-       //rect(45, 230, 70, 150);
-       //rect(270, 230, 70, 150);
-       player.location = "hallway";
-     break;
-     
-     case HELP:
-       bg = loadImage("helpPage.png");
-     break;
-     
-     case BIPOLAR:
-       bg = loadImage("BipolarRoom.png");
-       background(bg);
-       player.location = "bipolar";
-       rect(270, 230, 70, 150);
-     break;
-     
-         
-   }
+  case HELP:
+    bg = loadImage("helpPage.png");
+    break;
+
+  case BIPOLAR:
+    BipolarRoom bipolar = new BipolarRoom();
+    bipolar.drawMe();
+    player.location = "bipolar";
+    break;
+  }
 }
 
 //public void setBackground(String background){
@@ -149,104 +141,101 @@ boolean overRect(int x, int y, int width, int height) {
   return (mouseX>x && mouseX<x+width && mouseY>y && mouseY<y+height);
 }
 
-public void keyPressed(){ 
-    if (key == 'w' && !player.up){ //move up/ jump
-     player.up = true;
-     player.dy = 17;
-     player.gravity = -2;
-     player.y -= player.dy;
+public void keyPressed() { 
+  if (key == 'w' && !player.up) { //move up/ jump
+    player.up = true;
+    player.dy = 17;
+    player.gravity = -2;
+    player.y -= player.dy;
   }
-    if (key == 's'){// interactable
+  if (key == 's') {// interactable
     switch(p) {
-     case HOSPITAL:
-       if (player.isOnDoor(door1)){
-       //bg = loadImage(door1.nextLocation);
-       p = PAGE.HALLWAY;
-     }
-     
-     break;
-     
-     case HALLWAY:
-     if (player.isOnDoor(hall1)){
-       p = PAGE.HOSPITAL;
-     }
-     if (player.isOnDoor(hall2)){
-       p = PAGE.BIPOLAR;
-     }
-     if (player.isOnDoor(hall3)){
-       p = PAGE.HOSPITAL;
-     }
-     break;
-     
-     case BIPOLAR:
-     if (player.isOnDoor(bipolar1)) {
-       p = PAGE.HALLWAY;
-     }
-     break;
-      
+    case HOSPITAL:
+      if (player.isOnDoor(door1)) {
+        //bg = loadImage(door1.nextLocation);
+        p = PAGE.HALLWAY;
+      }
+
+      break;
+
+    case HALLWAY:
+      if (player.isOnDoor(hall1)) {
+        p = PAGE.HOSPITAL;
+      }
+      if (player.isOnDoor(hall2)) {
+        p = PAGE.BIPOLAR;
+      }
+      if (player.isOnDoor(hall3)) {
+        p = PAGE.HOSPITAL;
+      }
+      break;
+
+    case BIPOLAR:
+      if (player.isOnDoor(bipolar1)) {
+        p = PAGE.HALLWAY;
+      }
+      break;
     }
-  
-     //if (player.onItem == true){
-     //}
+
+    //if (player.onItem == true){
+    //}
   }
-   
-    if (key == 'a'){ //move left
-      player.left = true;
-    }
-    if (key == 'd'){ //move right
-      player.right = true;
-    }
-    if (key == 's'){ //move down
-      player.down = true;
-    }
-    if( key == 'w'){ // move up
-      player.up = true;
-    }
+
+  if (key == 'a') { //move left
+    player.left = true;
+  }
+  if (key == 'd') { //move right
+    player.right = true;
+  }
+  if (key == 's') { //move down
+    player.down = true;
+  }
+  if ( key == 'w') { // move up
+    player.up = true;
+  }
 }
 
-public void keyReleased(){
-    if (key == 'a'){ //move left
-      player.left = false;
-    }
-    
-    if (key == 'd'){ //move right
-      player.right = false;
-    }
-    
-    if (key == 's'){
-      player.down = false;
-    }
-    
-    if (key == 'w'){
-      //player.up = false;
-    }
+public void keyReleased() {
+  if (key == 'a') { //move left
+    player.left = false;
+  }
+
+  if (key == 'd') { //move right
+    player.right = false;
+  }
+
+  if (key == 's') {
+    player.down = false;
+  }
+
+  if (key == 'w') {
+    //player.up = false;
+  }
 }
 
 //public boolean doorReached
 
 enum PAGE {
- START(), 
- HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."),
- HOSPITAL("We are now in the hospital"),
- HALLWAY("Do we want to go in?"),
- BIPOLAR("Greetings. I am L.");
- 
- 
- int pageNum;
- String[] arr;
- private PAGE(String... var) {
-     pageNum = 0;
-     arr = var;
- }
- String getNextString() {
-   return arr[pageNum++];
- }
- int getNum() {
-   return pageNum;
- }
- int getArrLen() {
-   return arr.length;
- }
- 
+  START(), 
+    HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
+    HOSPITAL("We are now in the hospital"), 
+    HALLWAY("Do we want to go in?"), 
+    BIPOLAR("Greetings. I am L.");
 
+
+  int pageNum;
+  String[] arr;
+  private PAGE(String... var) {
+    pageNum = 0;
+    arr = var;
+  }
+  String getNextString() {
+    return arr[pageNum++];
+  }
+  int getNum() {
+    return pageNum;
+  }
+  int getArrLen() {
+    return arr.length;
+  }
 }
