@@ -44,14 +44,19 @@
 +Together :: We worked on further cementing our plan of action in addition to educational aspects of the game.
 +Irene :: 
     + Updated the Readme with a brief explanation on the project and launch instructions
-    + Created the Chronology section in the 20170519.txt file and updated it with deadlines and expectations corresponding to each date
+    + Created the Chronology section in the 20170519.txt file 
+        + Contains deadlines for each task
+        + Contains expectations corresponding to each date with detailed explanations on the game run-down
+        + Contains extra functionality feature ideas
 +==============================================================
 +2017-05-19 
 +--------------------------------------------------------------
-+Irene, Judy, Carol :: 
-    + Began writing the driver file (Woo_pde)
++Irene, Judy :: 
+    + Created driver file Woo_pde.pde to run the RPG, and included basic methods (e.g. setup(), draw())
     + Brainstormed and created files for characters and their respective instance variables 
-        + Created files for the user and NPC that extend class character
+        + Created superclass Character with variables inherent to all characters (e.g. inventory, location)
+        + Created User to contain methods specific to the user, extending class Character
+        + Created NPC to contain methods specific to non-playable characters, extending class character
 +==============================================================
 +2017-05-21 
 +--------------------------------------------------------------
@@ -67,8 +72,8 @@
 +2017-05-22
 +--------------------------------------------------------------
 +Irene ::
-    + Fixed bug such that the background picture changes upon click 
-    + Added dialogue!
+    + Fixed bug such that the background picture changes upon click (and only upon click, as opposed to changing based on where the mouse hovers)
+    + Added DIALOGUE!
         + Uses lettering with font from source code
         + Lettering appears in a text box to mimic thought processes/ dialogue
     + Rearranged images to be more visually appealing (e.g. size of text, location of text)
@@ -80,11 +85,15 @@
 +2017-05-23
 +--------------------------------------------------------------
 +Irene ::
-    + Added enum to allow different dialogue messages in succession
-    + Added main character functionality
-        + Displays the character appropriately front and center (after viewing the room)
-        + Images for OCD and bipolar disorder characters added
-    + Created and worked on UML diagrams
+    + Augmented dialogue functionality
+        + Added enum to allow different dialogue messages to display in succession based on mouse click
+        + Unique dialogue based on place (which is in turn based on the user's location)
+        + Allows dialogue to cycle (to remedy the blank text box that appears after the last text box is displayed)
+    + Augmented user functionality
+        + Displays the character appropriately front and center after viewing the room
+        + More instance variables (e.g. p to record the user's place, and consequently the dialogue displayed)
+    + Images for OCD and bipolar disorder characters added
+    + Created and finished UML diagrams
 +Judy :: 
    + Made character display 
    + Edited proposal
@@ -98,10 +107,12 @@
     + Renamed variables to better reflect their intended use
 +Irene ::
     + Terminating dialogue (instead of a cycling dialogue to allow further action e.g. exiting the door)
-    + Door functionality (ANIMATED)
+    + DOOR functionality (ANIMATED)
         + Three separate door images for closed door, one animated open door, and an open door
-        + Appears following dialogue
-        + Upon approaching the door, the animated door opens/ Upon moving away from the door, the animated door closes
+        + Doors used in conjunction, in which the animations of the animated open door appears only once (as opposed to a continuously opening and closing door)
+        + Closed door appears following all dialogue 
+        + Upon approaching the door, the animated door opens (based on the user's xcor)
+        + Upon moving away from the door, the animated door closes (based on the user's xcor)
         + Loads a different background when the user is on the door
     + Fixed bug where two characters appeared simultaneously (with a boolean to test whether the moving character should be hidden)
 +Carol ::
@@ -113,11 +124,15 @@
 +2017-05-25
 +--------------------------------------------------------------
 +Irene ::
-    + GREATER door functionality
+    + Greater door functionality
         + Separate rooms have interconnecting doors that are able to be entered and exited
         + Fixed bug in which doors on one map could be accessed by the user on another map
-    + Created Bipolar room and respective location & basic dialogue
-    + Created Hallway and respective location & basic dialogue
+    + Created Bipolar room in Woo_pde, recognized as a separate place 
+        + Unique basic dialogue
+        + Unique background image
+    + Created Hallway in Woo_pde, recognized as a separate place 
+        + Unique basic dialogue
+        + Unique background image
     + Renamed variables to better reflect functionality
     + Began help page to be shown as an option on the start screen
     + Added new backgrounds and modified images found in class to meet the screen size
@@ -145,9 +160,9 @@
 +Irene ::
     + GRAVITY functionality!
         + w key allows the user to jump
-        + The user will automatically fall at a different speed
+        + The user will automatically fall at a different speed until it reaches the ground
         + Jump functionality works with left a and d keys (a.k.a. the user can jump while moving left/ right)
         + Bugs fixed on aggregating jumps (a.k.a. the user is not allowed to jump while in mid-air)
-    + Changed item iteraction key back to 's' for convenience/ based on natural hand position
+    + Changed item iteraction key back to 's' for convenience/ based on natural hand positioning
 +============================================================== 
 
