@@ -1,4 +1,3 @@
-
 PAGE p = PAGE.START;
 User player;
 Door door1 = new Door(); //p = HOSPITAL
@@ -11,25 +10,24 @@ ArrayList<PVector> history = new ArrayList();
 
 PImage testchar;
 PImage koro;
-PImage dnChibi;
+//PImage dnChibi;
 PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
 
+String bipolarText;
+int decayVar;
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
-  //textFont(createFont("SourceCodePro-Regular.ttf", 60));
   textAlign(LEFT);
   bg = loadImage("startPage.png");
   background(bg);
   koro = loadImage("koro_sensei.png");
-  dnChibi = loadImage("DNchibi.png");
+  //dnChibi = loadImage("DNchibi.png");
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
   door1.setLocation("Golden hallway.png");
-  //background(0);
-  // frameRate(60);  // 60 fps
   testchar = loadImage("koro_sensei.png");
   player = new User(true);
   koro = loadImage("koro_sensei.png");
@@ -37,8 +35,8 @@ void setup() {
   //text("Welcome to \n    Our Asylum", 75, 105);
   stroke(255);
   // rect(rectX, rectY, rectXSize, rectYSize);
-  //rect(150, 225, 90, 50, 18, 18, 18, 18);
-  //rect(400, 225, 90, 50, 18, 18, 18, 18);
+  // rect(150, 225, 90, 50, 18, 18, 18, 18);
+  // rect(400, 225, 90, 50, 18, 18, 18, 18);
   fill(0);
 
   textFont(createFont("SourceCodePro-Regular.ttf", 24));
@@ -52,50 +50,33 @@ void draw() {
   /*  if (player.x > 400){
    FileSort test = new FileSort();
    test.displayAllFiles();
-   if (mousePressed){
-   test.toDo(); 
+   if (mousePressed)
+     test.toDo(); 
    }
-   }*/
-   /*
   noCursor();
   
   PVector mouse = new PVector(mouseX, mouseY);
   history.add(mouse);
-  if (history.size() > 40) {
+  if (history.size() > 40)
     history.remove(0);
-  }
   for (int i = 0; i <history.size(); i++) {
     noStroke();
     fill(153-i*5, 0, 0);//fill(255 - i*5);//fill(255,255,153);
     PVector position = history.get(i);
     ellipse(position.x, position.y, i, i);
-  }
-  */
-  
-  
+  }  */
 }
 int i = 0;
 void mousePressed() {
-  System.out.printf("%05d-%-9s %5b(%03.0f, %03.0f, %02.0f%02.0f)\n", i++, p, player.up, player.x, player.y, player.dy, player.gravity);
-  if (player.up) {
+  System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", i++%100, p, player.x, player.y);
+  if (player.y >=  player.baseY) {
+      //System.out.println("DOWN FORCE, bottom reached");
+    player.up = false;
+    player.y = player.baseY;
+  } else {
     player.y -= player.dy;
     player.dy += player.gravity;
-    if (player.y > player.baseY) {
-      System.out.println("DOWN FORCE, bottom reached");
-      player.up = false;
-      player.y = player.baseY;
-    }
   }
-  /* If Help/ Start are re-implemented 
-   if( overRect(150, 225, 90, 50) ) {
-   background(loadImage("helpPage.png"));
-   fill(140);
-   text("This is for \n   Game Start", 75, 105);
-   } else if ( overRect(400, 225, 90, 50) ) {
-   background(loadImage("helpPage.png"));
-   fill(220);
-   text("This is for \n   Help", 75, 105);
-   } else { */
   switch(p) {
   case START:
     p = PAGE.HOSPITAL;  // fall through
@@ -111,12 +92,10 @@ void mousePressed() {
         image(koro, 0, 0);
     } else {
       player.toHide(false);
-      //if (player.isOnDoor(door1)){
-      image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), door1.getLength());
-      //}
-      if (player.isOnDoor(door1)) {
+      image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), 
+                    door1.getLength());
+      if (player.isOnDoor(door1)) 
         image(doorOpen, 460, 240, 140, 120);
-      }
     }
     break;
   case HALLWAY:
@@ -135,13 +114,45 @@ void mousePressed() {
     BipolarRoom bipolar = new BipolarRoom();
     bipolar.drawMe();
     player.location = "bipolar";
+    fill(12,23,34);
+    rect(15, 270, 100, 15);     // left platform
+    rect(130, 200, 100, 15);    // mid platform
+    
+    if (player.getXcor() < 65 && player.getYcor() < 280)
+      player.baseY = 200;
+    else 
+      player.baseY = 280;    
+    if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
+      rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
+      fill(255);
+      text(bipolarText, 295, 45);
+      player.baseY = 120;
+      
+      if (bipolarText.equals("...")) {
+        PImage img = loadImage("white.png");
+        img.loadPixels();
+        decayVar -= 0.1;
+        for (int x = 0; x < img.width; x++) 
+          for (int y = 0; y < img.height; y++ ) {
+            int loc = x + y*img.width;
+            // Calculate amount to change+constaint for brightness based on time
+            float delta = 255 * decayVar;
+            
+            img.pixels[loc] = color(delta * red(img.pixels[loc]),
+                delta * green(img.pixels[loc]), delta * blue(img.pixels[loc]));
+          }
+        if (decayVar == 0)
+          p = PAGE.BIPOLAR_PUZZLE;
+      }
+    }
+    break;
+    case BIPOLAR_PUZZLE:
+      bg = loadImage("raichu.gif");
+      player.baseY = 280;
     break;
   }
 }
 
-//public void setBackground(String background){
-//  background(loadImage(background));
-//}
 boolean overRect(int x, int y, int width, int height) {
   return (mouseX>x && mouseX<x+width && mouseY>y && mouseY<y+height);
 }
@@ -149,84 +160,76 @@ boolean overRect(int x, int y, int width, int height) {
 public void keyPressed() { 
   if (key == 'w' && !player.up) { //move up/ jump
     player.up = true;
-    player.dy = 17;
-    player.gravity = -2;
-    player.y -= player.dy;
+    player.dy = 17;          // upward velocity 
+    player.gravity = -2;     // gravity unit
+    player.y -= player.dy;   // make first change
   }
   if (key == 's') {// interactable
     switch(p) {
-    case HOSPITAL:
-      if (player.isOnDoor(door1)) {
-        //bg = loadImage(door1.nextLocation);
-        p = PAGE.HALLWAY;
-      }
-
+      case HELP:    case START:
+      // EMPTY
       break;
-
-    case HALLWAY:
-      if (player.isOnDoor(hall1)) {
-        p = PAGE.HOSPITAL;
-      }
-      if (player.isOnDoor(hall2)) {
-        p = PAGE.BIPOLAR;
-      }
-      if (player.isOnDoor(hall3)) {
-        p = PAGE.HOSPITAL;
-      }
+      case HOSPITAL:
+        if (player.isOnDoor(door1))
+          //bg = loadImage(door1.nextLocation);
+          p = PAGE.HALLWAY;
       break;
-
-    case BIPOLAR:
-      if (player.isOnDoor(bipolar1)) {
-        p = PAGE.HALLWAY;
-      }
+      case HALLWAY:
+        if (player.isOnDoor(hall1))
+          p = PAGE.HOSPITAL;
+        if (player.isOnDoor(hall2)) {
+          p = PAGE.BIPOLAR;
+          p.resetPage();
+          bipolarText = "(click 's' to start)";
+          decayVar = 1;
+        }  
+        if (player.isOnDoor(hall3))
+          p = PAGE.HOSPITAL;
       break;
+      case BIPOLAR:
+        if (player.isOnDoor(bipolar1))
+          p = PAGE.HALLWAY;
+        if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
+                        player.getXcor() < 165 && player.getYcor() < 170)
+          bipolarText = p.getNextString();
+        if (player.isOnDoor(door1)) {
+            image(doorOpen, 460, 240, 140, 120);
+            // TODO: Upon mission accomplish, leads a trophy room
+        }
+      break;
+      case BIPOLAR_PUZZLE:
+        // TODO add in movable puzzle
+      break;
+      default:
+        System.out.println("unrecongized input");
     }
-
-    //if (player.onItem == true){
-    //}
+    //if (player.onItem == true)
   }
 
-  if (key == 'a') { //move left
-    player.left = true;
-  }
-  if (key == 'd') { //move right
-    player.right = true;
-  }
-  if (key == 's') { //move down
-    player.down = true;
-  }
-  if ( key == 'w') { // move up
+  player.left   = (key == 'a');   // move left
+  player.right  = (key == 'd');   // move right
+  player.down   = (key == 's');   // move down
+  if (key == 'w')                 // move up
     player.up = true;
-  }
 }
 
 public void keyReleased() {
-  if (key == 'a') { //move left
-    player.left = false;
-  }
-
-  if (key == 'd') { //move right
-    player.right = false;
-  }
-
-  if (key == 's') {
-    player.down = false;
-  }
-
-  if (key == 'w') {
-    //player.up = false;
-  }
+  player.left = false;    // move left
+  player.right = false;   // move right
+  //player.down = false;    
+  //if (key == 'w') {
+  //  //player.up = false;
+  //}
 }
-
-//public boolean doorReached
 
 enum PAGE {
   START(), 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("We are now in the hospital"), 
     HALLWAY("Do we want to go in?"), 
-    BIPOLAR("Greetings. I am L.");
-
+    BIPOLAR("Greetings. I am L.", "This is messy", "I feel an urge to sort ",
+      "...", "Now that it's sorted, I feel so much better"),
+    BIPOLAR_PUZZLE("Move pieces \n   into order");
 
   int pageNum;
   String[] arr;
@@ -234,13 +237,16 @@ enum PAGE {
     pageNum = 0;
     arr = var;
   }
-  String getNextString() {
-    return arr[pageNum++];
+  String getNextString() {  
+    return pageNum < arr.length ? arr[pageNum++] : "";  
   }
-  int getNum() {
-    return pageNum;
+  int getNum() {            
+    return pageNum;     
   }
-  int getArrLen() {
-    return arr.length;
+  int getArrLen() {         
+    return arr.length;  
+  }
+  void resetPage()  {       
+    pageNum = 0;        
   }
 }
