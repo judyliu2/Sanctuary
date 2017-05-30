@@ -164,6 +164,8 @@
         + Jump functionality works with left a and d keys (a.k.a. the user can jump while moving left/ right)
         + Bugs fixed on aggregating jumps (a.k.a. the user is not allowed to jump while in mid-air)
     + Changed item iteraction key back to 's' for convenience/ based on natural hand positioning
++ Judy ::
+    + Changed sorting method a bit so it looks more animatable.
 +============================================================== 
 +2017-05-29
 +--------------------------------------------------------------
@@ -192,4 +194,8 @@
     + Added dialogue to explain the plotline, completion of task, etc.
         + Augmented 's' key to substitute the mouse in playing the dialogue (Currently only a feature in the Bipolar room)
     + Added more background images that meet the size of the screen
++Judy ::
+    + Added methods for intereaction between NPC, item, and User. 
+    + Worked a little bit more on animation
+   
 +============================================================== 
