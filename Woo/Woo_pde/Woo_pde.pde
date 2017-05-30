@@ -15,8 +15,13 @@ PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
 
-String bipolarText;
-int decayVar;
+String bipolarText = "";
+float decayVar;
+ArrayList<biBox> bipolarBox;  // p = BIPOLAR_PUZZLE;
+ArrayList<biBox> biSolution;  // p = BIPOLAR_PUZZLE;
+int biPick = 0;               // p = BIPOLAR_PUZZLE;
+boolean biClicked = false;    // p = BIPOLAR_PUZZLE;
+int biXOffset;                // p = BIPOLAR_PUZZLE;
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
@@ -68,7 +73,7 @@ void draw() {
 }
 int i = 0;
 void mousePressed() {
-  System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", i++%100, p, player.x, player.y);
+  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", i++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
       //System.out.println("DOWN FORCE, bottom reached");
     player.up = false;
@@ -82,7 +87,7 @@ void mousePressed() {
     p = PAGE.HOSPITAL;  // fall through
   case HOSPITAL:
     background(bg = loadImage("helpPage.png"));
-    fill(150, 20, 0);
+    //fill(150, 20, 0);
     if (p.getNum() < p.getArrLen()) {
       fill(0);
       rect(100, 10, 500, 100);
@@ -112,6 +117,7 @@ void mousePressed() {
 
   case BIPOLAR:
     BipolarRoom bipolar = new BipolarRoom();
+    player.toHide(false);
     bipolar.drawMe();
     player.location = "bipolar";
     fill(12,23,34);
@@ -127,30 +133,63 @@ void mousePressed() {
       fill(255);
       text(bipolarText, 295, 45);
       player.baseY = 120;
-      
-      if (bipolarText.equals("...")) {
-        PImage img = loadImage("white.png");
-        img.loadPixels();
-        decayVar -= 0.1;
-        for (int x = 0; x < img.width; x++) 
-          for (int y = 0; y < img.height; y++ ) {
-            int loc = x + y*img.width;
-            // Calculate amount to change+constaint for brightness based on time
-            float delta = 255 * decayVar;
-            
-            img.pixels[loc] = color(delta * red(img.pixels[loc]),
-                delta * green(img.pixels[loc]), delta * blue(img.pixels[loc]));
-          }
-        if (decayVar == 0)
-          p = PAGE.BIPOLAR_PUZZLE;
+    }  
+    if (bipolarText.equals("...")) {
+      decayVar -= 0.015;
+      tint(255, 255 - (int) (255 * decayVar));
+      image(bg = loadImage("white.png"), 0, 0);
+      if (decayVar <= 0) {
+        player.setX(0);
+        p = PAGE.BIPOLAR_PUZZLE;
+        tint(255, 255);
+        bipolarBox = new ArrayList<biBox>();
+        biSolution = new ArrayList<biBox>();
+        player.toHide(true);
+        for (int i = 0; i < 8; i++) {    // max = 8
+           bipolarBox.add(new biBox(80 * i + 20, randNoRepLetter()));
+           biSolution.add(bipolarBox.get(bipolarBox.size() -1));
+        }
+        java.util.Collections.sort(biSolution);
+        player.baseY = 280;
       }
     }
     break;
     case BIPOLAR_PUZZLE:
-      bg = loadImage("raichu.gif");
-      player.baseY = 280;
+      background(bg);
+      for (biBox b : bipolarBox)
+        b.show();
+      for (int i = 0; i <bipolarBox.size(); i++)
+        if (overRect(bipolarBox.get(i).getPos(), 200, 40, 40)){
+          biPick = i;
+          biClicked = true;
+          biXOffset = mouseX-bipolarBox.get(i).getPos(); 
+        }
     break;
   }
+}
+
+void mouseDragged() {
+  if(biClicked)
+    bipolarBox.get(biPick).setPos(mouseX - biXOffset);  
+}
+
+String randNoRepLetter() {
+  boolean inside = true;
+  String var = "A";
+  while (inside) {
+    var = "" + (char)((int)(Math.random() * 26) + 'A');
+    inside = false;
+    for (biBox b : bipolarBox)
+      if (var.equals(b.getVar()))
+        inside = true;
+  }
+  return var;
+}
+
+boolean isInOrder() {
+  //for (int i = 0; i < biSolution.size() -1; i++)
+    
+  return false;
 }
 
 boolean overRect(int x, int y, int width, int height) {
@@ -159,7 +198,7 @@ boolean overRect(int x, int y, int width, int height) {
 
 public void keyPressed() { 
   if (key == 'w' && !player.up) { //move up/ jump
-    player.up = true;
+    //player.up = true;
     player.dy = 17;          // upward velocity 
     player.gravity = -2;     // gravity unit
     player.y -= player.dy;   // make first change
@@ -180,7 +219,7 @@ public void keyPressed() {
         if (player.isOnDoor(hall2)) {
           p = PAGE.BIPOLAR;
           p.resetPage();
-          bipolarText = "(click 's' to start)";
+          bipolarText = "Greetings. I am L.";
           decayVar = 1;
         }  
         if (player.isOnDoor(hall3))
@@ -192,10 +231,10 @@ public void keyPressed() {
         if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
                         player.getXcor() < 165 && player.getYcor() < 170)
           bipolarText = p.getNextString();
-        if (player.isOnDoor(door1)) {
-            image(doorOpen, 460, 240, 140, 120);
+        //if (player.isOnDoor(door1)) {
+        //    image(doorOpen, 460, 240, 140, 120);
             // TODO: Upon mission accomplish, leads a trophy room
-        }
+        //}
       break;
       case BIPOLAR_PUZZLE:
         // TODO add in movable puzzle
@@ -227,7 +266,7 @@ enum PAGE {
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("We are now in the hospital"), 
     HALLWAY("Do we want to go in?"), 
-    BIPOLAR("Greetings. I am L.", "This is messy", "I feel an urge to sort ",
+    BIPOLAR("This is messy", "I feel an urge to sort ",
       "...", "Now that it's sorted, I feel so much better"),
     BIPOLAR_PUZZLE("Move pieces \n   into order");
 
@@ -248,5 +287,32 @@ enum PAGE {
   }
   void resetPage()  {       
     pageNum = 0;        
+  }
+}
+
+class biBox implements Comparable<biBox> {  // for BIPOLAR_PUZZLE class
+  int pos;
+  String var;
+  public biBox(int nPos, String nVar) {
+    pos = nPos;
+    var = nVar;
+  }
+  int getPos() {
+    return pos;
+  }
+  String getVar() {
+    return var;
+  }
+  void show() {
+    fill(20);
+    rect(pos, 200, 40, 40);
+    fill(220);
+    text(var, pos + 12 , 230);
+  }
+  void setPos(int nPos) {
+    pos = nPos;
+  }
+  int compareTo (biBox b2) {
+    return var.compareTo(b2.getVar());
   }
 }
