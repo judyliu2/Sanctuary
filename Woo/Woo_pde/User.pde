@@ -9,6 +9,8 @@ class User extends Character {
   boolean isSorting;
   boolean nearChar;
   boolean nearItem;
+  float reachx, reachy;
+  int state;
   User(boolean hide){
     this(300, 280, hide);
   }
@@ -22,6 +24,7 @@ class User extends Character {
     left = false;
     right = false;
     hidden = hide;
+    state = 1;
   }
   
   public void setLeft(boolean stat){
@@ -82,6 +85,14 @@ class User extends Character {
   public void move(){
     if (hidden)
       return;
+    if (state == 2){
+       if (x < reachx){
+         x += 10;
+       }
+       else{
+        state = 1; 
+       }
+    }
     if (left && x > 0){
       background(bg);
       x -= dx;

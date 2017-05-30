@@ -1,40 +1,46 @@
-class Door{
+class Door {
   float xcor;
   float ycor;
   float widthh;
   float lengthh;
   String nextLocation;
-  
-  Door(){ 
-    this(510.0, 240.0, 80.0, 120.0);
+  boolean isOpen;
+
+  Door() { 
+    this(510.0, 240.0, 80.0, 120.0, true);
   }
-  Door( float x, float y, float w, float l){
+  Door( float x, float y, float w, float l, boolean notLocked) {
     xcor = x;
     ycor = y;
     widthh = w;
     lengthh = l;
+    isOpen = notLocked;
   }
-  
-  public void setLocation(String newLocation){
+
+  Door( boolean notLocked) {
+    this();
+    isOpen = notLocked;
+  }
+  public void setLocation(String newLocation) {
     nextLocation = newLocation;
   }
-  
-  public String getNextLocation(){
+
+  public String getNextLocation() {
     return nextLocation;
   }
-  public float getXcor(){
+  public float getXcor() {
     return xcor;
   }
-  
-  public float getYcor(){
+
+  public float getYcor() {
     return ycor;
   }
-  
-  public float getWidth(){
+
+  public float getWidth() {
     return widthh;
   }
-  
-  public float getLength(){
+
+  public float getLength() {
     return lengthh;
   }
 }
