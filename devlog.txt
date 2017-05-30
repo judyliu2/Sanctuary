@@ -165,4 +165,31 @@
         + Bugs fixed on aggregating jumps (a.k.a. the user is not allowed to jump while in mid-air)
     + Changed item iteraction key back to 's' for convenience/ based on natural hand positioning
 +============================================================== 
-
++2017-05-29
++--------------------------------------------------------------
++Irene ::
+    + PLATFORM functionality!
+        + Created two platforms in the bipolar room (denoted with a different color, in the air)
+        + User is able to stand on the platform
+        + Augmented gravity such that moving off the platform drops the user onto the ground level
+        + Augmented jump to allow the user to jump from the platform
+        + Users are able to jump from one platform to another
+        + Implemented assisted jumping to help users jump between two platforms more easily
+        + Allows users to jump through platforms and land on platforms if their ycor is above the platform
+    + Bipolar PUZZLE functionality! (User interactivity)
+        + Automatically displays dialogue upon reaching the top platform
+            + Going through the dialogue allows the user to begin the task
+            + Moving the user away from the platform closes the dialogue (effectively allowing the user not to start the task yet, but will not skip the task -- completion of the task is a prerequisite to completing the game)
+        + Creates a separate room (BIPOLAR_PUZZLE) for the user to complete the puzzle
+        + Animated transition connects the BIPOLAR room page with the BIPOLAR_PUZZLE page
+        + Several "files" are displayed, evenly spaced apart
+        + Each file displays a unique alphabetical letter
+        + User is able to move files 
+        + Computer implemented sorting algorithm checks whether the files are sorted
+        + Upon being sorted, the user is automatically transported into a different room (BIPOLAR2), which recognizes that the mission is complete
+        + BIPOLAR2 prevents the user from accessing the puzzle of unsorted files again
+        + (Temporarily commented out) 'k' key reveals the answer to the puzzle 
+    + Added dialogue to explain the plotline, completion of task, etc.
+        + Augmented 's' key to substitute the mouse in playing the dialogue (Currently only a feature in the Bipolar room)
+    + Added more background images that meet the size of the screen
++============================================================== 
