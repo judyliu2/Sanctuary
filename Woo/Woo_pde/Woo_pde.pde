@@ -20,7 +20,7 @@ PImage bg;    // use this for universal background image
 String bipolarText = "";
 float decayVar;
 ArrayList<biBox> bipolarBox;  // p = BIPOLAR_PUZZLE;
-ArrayList<biBox> biSolution;  // p = BIPOLAR_PUZZLE;
+ArrayList<String> biSolution;  // p = BIPOLAR_PUZZLE;
 int biPick = 0;               // p = BIPOLAR_PUZZLE;
 boolean biClicked = false;    // p = BIPOLAR_PUZZLE;
 int biXOffset;                // p = BIPOLAR_PUZZLE;
@@ -79,9 +79,9 @@ void draw() {
     ellipse(position.x, position.y, i, i);
   }  */
 }
-int i = 0;
+int kk = 0;
 void mousePressed() {
-  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", i++%100, p, player.x, player.y);
+  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
       //System.out.println("DOWN FORCE, bottom reached");
     player.up = false;
@@ -128,12 +128,15 @@ void mousePressed() {
     player.toHide(false);
     bipolar.drawMe();
     player.location = "bipolar";
+
     ocdnpc = new NPC(150.0,290.0);
     ocdnpc.display();
     FileSort files = new FileSort();
     files.displayAllFiles(); // Maybe this is shown after you click on an item?
-    fill(12,23,34);
+
+    fill(0,100,0);
     rect(15, 270, 100, 15);     // left platform
+    fill(127,255,0);
     rect(130, 200, 100, 15);    // mid platform
     
     if (player.getXcor() < 65 && player.getYcor() < 280)
@@ -141,6 +144,7 @@ void mousePressed() {
     else 
       player.baseY = 280;    
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
+      fill(12,23,34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
       fill(255);
       text(bipolarText, 295, 45);
@@ -155,34 +159,65 @@ void mousePressed() {
         p = PAGE.BIPOLAR_PUZZLE;
         tint(255, 255);
         bipolarBox = new ArrayList<biBox>();
-        biSolution = new ArrayList<biBox>();
+        biSolution = new ArrayList<String>();
         player.toHide(true);
         for (int i = 0; i < 8; i++) {    // max = 8
-           bipolarBox.add(new biBox(80 * i + 20, randNoRepLetter()));
-           biSolution.add(bipolarBox.get(bipolarBox.size() -1));
+           String var = randNoRepLetter();
+           bipolarBox.add(new biBox(80 * i + 20, var));
+           biSolution.add(var);
         }
         java.util.Collections.sort(biSolution);
         player.baseY = 280;
       }
     }
+
     break;
     case BIPOLAR_PUZZLE:
       background(bg);
       for (biBox b : bipolarBox)
         b.show();
       for (int i = 0; i <bipolarBox.size(); i++)
-        if (overRect(bipolarBox.get(i).getPos(), 200, 40, 40)){
+        if (!biClicked && overRect(bipolarBox.get(i).getPos(), 200, 40, 40)){
           biPick = i;
           biClicked = true;
-          biXOffset = mouseX-bipolarBox.get(i).getPos(); 
-        }
+          biXOffset = mouseX-bipolarBox.get(i).getPos();
+          break;
+        } else if (!(mouseY > 200 && mouseY < 240))
+          biClicked = false;
+        
     break;
+    case BIPOLAR2:
+      bg = loadImage("BipolarRoom.png");
+      background(bg);
+      player.toHide(false);
+      fill(12,23,34);
+      rect(15, 270, 100, 15);     // left platform
+      rect(130, 200, 100, 15);    // mid platform
+      
+      rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
+      fill(255);
+      text(p.getNextString(), 265, 45);
+      fill(124,255,0);
+      rect(270, 230, 70, 150);
+      if (player.getXcor() < 65 && player.getYcor() < 280)
+        player.baseY = 200;
+      else if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170)
+        player.baseY = 120;
+      else
+        player.baseY = 280;
+     break;
   }
 }
 
 void mouseDragged() {
   if(biClicked)
     bipolarBox.get(biPick).setPos(mouseX - biXOffset);  
+}
+
+void mouseReleased() {
+  biClicked = false;
+  if (p == PAGE.BIPOLAR_PUZZLE && isInOrder())
+    p = PAGE.BIPOLAR2;
 }
 
 String randNoRepLetter() {
@@ -199,9 +234,16 @@ String randNoRepLetter() {
 }
 
 boolean isInOrder() {
-  //for (int i = 0; i < biSolution.size() -1; i++)
-    
-  return false;
+  HashMap mp = new HashMap();
+  for (biBox b : bipolarBox)
+    mp.put(b.getVar(), b.getPos());
+  int min = -1;    // pos can never get below -1
+  for (String s : biSolution)
+    if (min > (int) mp.get(s))
+      return false;
+    else 
+      min = (int) mp.get(s);
+  return true;
 }
 
 boolean overRect(int x, int y, int width, int height) {
@@ -222,7 +264,6 @@ public void keyPressed() {
       break;
       case HOSPITAL:
         if (player.isOnDoor(door1))
-          //bg = loadImage(door1.nextLocation);
           p = PAGE.HALLWAY;
       break;
       case HALLWAY:
@@ -237,27 +278,29 @@ public void keyPressed() {
         if (player.isOnDoor(hall3))
           p = PAGE.HOSPITAL;
       break;
-      case BIPOLAR:
-      if(player.isNearChar(ocdnpc)) { //DIALOGUE
-      }
-        if (player.isOnDoor(bipolar1))
-          p = PAGE.HALLWAY;
-        if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
-                        player.getXcor() < 165 && player.getYcor() < 170)
-          bipolarText = p.getNextString();
-        //if (player.isOnDoor(door1)) {
-        //    image(doorOpen, 460, 240, 140, 120);
-            // TODO: Upon mission accomplish, leads a trophy room
-        //}
+      case BIPOLAR:  case BIPOLAR2:
+      //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
+      
+      if (player.isOnDoor(bipolar1))
+        p = PAGE.HALLWAY;
+      if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
+                      player.getXcor() < 165 && player.getYcor() < 170)
+        bipolarText = p.getNextString();
       break;
       case BIPOLAR_PUZZLE:
-        // TODO add in movable puzzle
+        // NONE 
       break;
+      
       default:
         System.out.println("unrecongized input");
     }
     //if (player.onItem == true)
   }
+  //if (key == 'k') {    // ANSWER KEY FOR BIPOLAR_PUZZLE
+  //  for (String b : biSolution)
+  //    System.out.print(b + " ");
+  //  System.out.println();   
+  //}
 
   player.left   = (key == 'a');   // move left
   player.right  = (key == 'd');   // move right
@@ -282,7 +325,8 @@ enum PAGE {
     HALLWAY("Do we want to go in?"), 
     BIPOLAR("This is messy", "This pile is driving me crazy... I feel an urge to sort ",
       "...", "Now that it's sorted, I feel so much better"),
-    BIPOLAR_PUZZLE("Move pieces \n   into order");
+    BIPOLAR_PUZZLE("Move pieces \n   into order"),
+    BIPOLAR2("Congratulations. \nMission 1 of 999 Complete");
 
   int pageNum;
   String[] arr;
@@ -291,7 +335,7 @@ enum PAGE {
     arr = var;
   }
   String getNextString() {  
-    return pageNum < arr.length ? arr[pageNum++] : "";  
+    return pageNum < arr.length ? arr[pageNum++] : arr[arr.length -1];  
   }
   int getNum() {            
     return pageNum;     
@@ -324,7 +368,12 @@ class biBox implements Comparable<biBox> {  // for BIPOLAR_PUZZLE class
     text(var, pos + 12 , 230);
   }
   void setPos(int nPos) {
-    pos = nPos;
+    if (nPos <= 0)
+      pos = 0;
+    else if (nPos > width - 40)
+      pos = width - 40;
+    else 
+      pos = nPos;
   }
   int compareTo (biBox b2) {
     return var.compareTo(b2.getVar());
