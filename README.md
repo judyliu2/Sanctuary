@@ -13,5 +13,5 @@ This is a single-player educational RPG game that aims to educate the user on va
  
 ## Launch Instructions
 1. Open terminal.
-2. Change working directory to the directory containing Djaghrouri repository.
-3. Run Woo.java by typing  **_processing Woo_pde.pde_** in the terminal.
+2. Change working directory to the directory containing Sanctuary repository.
+3. Run Woo_pde.pde by typing  **_processing Woo_pde.pde_** in the terminal.
