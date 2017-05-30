@@ -1,5 +1,6 @@
 PAGE p = PAGE.START;
 User player;
+NPC ocdnpc;
 Door door1 = new Door(); //p = HOSPITAL
 Door hall1 = new Door(45, 230, 70, 150); //p = HALLWAY
 Door hall2 = new Door(270, 230, 70, 150); //p = HALLWAY
@@ -9,6 +10,7 @@ Door bipolar1 = new Door(270, 230, 70, 150); //p = BIPOLAR
 ArrayList<PVector> history = new ArrayList();
 
 PImage testchar;
+PImage npcchar;
 PImage koro;
 //PImage dnChibi;
 PImage doorClosed;
@@ -27,6 +29,7 @@ void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textAlign(LEFT);
   bg = loadImage("startPage.png");
+  npcchar = loadImage("testchar.png");
   background(bg);
   koro = loadImage("koro_sensei.png");
   //dnChibi = loadImage("DNchibi.png");
@@ -52,6 +55,11 @@ void setup() {
 void draw() {
   player.move();
   player.display();
+  //if (player.isSorting){ //If characters decide to sort 
+    //FileSort files = new FileSort();
+    //files.displayAllFiles();
+    //files.sort();
+  //}
   /*  if (player.x > 400){
    FileSort test = new FileSort();
    test.displayAllFiles();
@@ -120,6 +128,10 @@ void mousePressed() {
     player.toHide(false);
     bipolar.drawMe();
     player.location = "bipolar";
+    ocdnpc = new NPC(150.0,290.0);
+    ocdnpc.display();
+    FileSort files = new FileSort();
+    files.displayAllFiles(); // Maybe this is shown after you click on an item?
     fill(12,23,34);
     rect(15, 270, 100, 15);     // left platform
     rect(130, 200, 100, 15);    // mid platform
@@ -226,6 +238,8 @@ public void keyPressed() {
           p = PAGE.HOSPITAL;
       break;
       case BIPOLAR:
+      if(player.isNearChar(ocdnpc)) { //DIALOGUE
+      }
         if (player.isOnDoor(bipolar1))
           p = PAGE.HALLWAY;
         if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
@@ -266,7 +280,7 @@ enum PAGE {
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("We are now in the hospital"), 
     HALLWAY("Do we want to go in?"), 
-    BIPOLAR("This is messy", "I feel an urge to sort ",
+    BIPOLAR("This is messy", "This pile is driving me crazy... I feel an urge to sort ",
       "...", "Now that it's sorted, I feel so much better"),
     BIPOLAR_PUZZLE("Move pieces \n   into order");
 

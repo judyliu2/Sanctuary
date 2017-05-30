@@ -17,7 +17,11 @@ class Character {
     x = a;
     y = b;
   }
-  
+  public void display(){
+    noStroke(); 
+    image(npcchar, x,y);
+    
+  }
   public void setState(int s) { 
     state = s;
   }

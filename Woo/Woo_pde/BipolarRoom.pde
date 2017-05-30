@@ -9,14 +9,14 @@ class BipolarRoom implements Room {
   public BipolarRoom() {
     state = 1;
     assignedChar = new NPC();//should be Manic Depressive char, will work on that
-    diffTasks = new Task[4];
-    diffTasks[0] = new FileSort();
+    //diffTasks = new Task[4];
+    //diffTasks[0] = new FileSort();
     bg = loadImage("BipolarRoom.png");
   }
 
   void drawMe() {
     background(bg);
     rect(270, 230, 70, 150);
-    diffTasks[0].toDo();
+    //diffTasks[0].toDo();
   }
 }

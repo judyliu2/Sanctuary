@@ -95,12 +95,13 @@ class FileSort extends Task {
       files[i].drawFile();
     }
   }
-
+/*
   public void toDo() {
     if (player.x > 40){
       sort();
     }
   }
+  */
   public void sort(){
     for (int p = 0; p < files.length - 1; p++) {//num of passes
       displayAllFiles();

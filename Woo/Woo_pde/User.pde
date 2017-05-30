@@ -6,6 +6,9 @@ class User extends Character {
   float  gravity;
   float  baseY;
   float dy;
+  boolean isSorting;
+  boolean nearChar;
+  boolean nearItem;
   User(boolean hide){
     this(300, 280, hide);
   }
@@ -44,6 +47,28 @@ class User extends Character {
       onDoor = false;
     }
     return onDoor;
+  }
+  
+   public boolean isNearChar(NPC c){
+    int range = 30;
+  if (x < c.getXcor() + range && x > c.getXcor() - range ){
+    nearChar = true;
+  }
+  else{
+    nearChar = false;
+  }
+  return nearChar;
+  }
+  
+  public boolean isNearIem(Item i){
+    int range = 30;
+  if (x < i.getXcor() + range && x > i.getXcor() - range ){
+    nearItem = true;
+  }
+  else{
+    nearItem = false;
+  }
+  return nearItem;
   }
   
   public void display(){
