@@ -51,6 +51,7 @@ Which components are prerequisites for others?
 /*********************************/
 DUE 5/31:
 - Get animation working
+- Help button
 - Fix bug in OCD room
 - Fix placement of the doors
 
