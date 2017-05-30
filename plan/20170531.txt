@@ -1,1 +1,70 @@
+Team Sanctuary
+Irene Lam, Judy Liu, Carol Pan
+Draft 3
+05/30/17
 
+Design:
+	1 - Hallway with 2 (or more) doors
+	2 - 1 playable character
+	3 - Non-playable characters will follow a specific plotline, with dialogue and preset interactions. Current Order
+		- OCD
+		- Schizophrenia
+	4 - User must go through all all tasks to reach the end of the game
+ 
+Which jobs are most crucial?
+  1 - Animation for how to sort the files
+  2 - Make code so that user can only complete the task of the OCD room once
+  3 - Fix placement of the doors
+  4 - New Room (Schizophrenia)
+    a. NPCs in the room for user to interact with
+    b. Dialogue for NPCs (Questions)
+    c. PriorityQueue for the order of talking to NPCs
+  5 - Create an end game screen, can be accessed through the schizophrenia room's door when tasks are completed.  
+  6 - Include more comments to help understand the code
+  
+Which components constitute core functionality (vs non-essential)?
+  1 - Animation for OCD hit is essential 
+  2 - Creating a new room with interable characters for Schizophrenia 
+  3 - Make code so that user can only complete the task of the OCD room once
+  4 - Help button (if there's time)
+  
+Which components are prerequisites for others?
+
+  1 - Creating the room for schizophrenia
+  
+/*********************************/
+	Workload Sharing
+/*********************************/
+ Which tasks can be delegated, and which must be collaboratively tackled?
+ Together :: 
+  - Creating the dialogue and questions for the NPC's in the Schizophrenia room and order of which the tasks can be done in
+  - Adding comments to the code
+  - Cleaning up the code
+ Solo :: 
+  - Animation for the sorting tutorial
+  - End game screen
+  - Fixing bug in the OCD room
+
+
+/*********************************/
+	Chronology
+/*********************************/
+DUE 5/31:
+- Get animation working
+- Fix bug in OCD room
+- Fix placement of the doors
+
+DUE 6/1
+  - Basic skeleton for schizophrenia room with NPCs and PriorityQueue
+ 
+DUE 6/2
+  - Basic interaction between user and NPCs
+  - End screen
+  
+WEEKEND:
+  - Add more comments
+  - Fix any bugs
+  - Refining code
+
+Extra functionality:
+  - Background music 
