@@ -5,7 +5,7 @@ Door door1 = new Door(true); //p = HOSPITAL
 Door hall1 = new Door(20, 230, 70, 150, false); //p = HALLWAY
 Door hall2 = new Door(240, 230, 70, 150, true); //p = HALLWAY
 Door hall3 = new Door(true); //p = HALLWAY
-Door bipolar1 = new Door(270, 230, 70, 150, true); //p = BIPOLAR
+Door dementia1 = new Door(270, 230, 70, 150, true); //p = DEMENTIA
 
 ArrayList<PVector> history = new ArrayList();
 
@@ -17,21 +17,21 @@ PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
 
-String bipolarText = "";
+String dementiaText = "";
 float decayVar;
 boolean bx;
 boolean by;
 boolean overBox = false;
 boolean locked = false;
 
-ArrayList<biBox> bipolarBox;  // p = BIPOLAR_PUZZLE;
-ArrayList<String> biSolution;  // p = BIPOLAR_PUZZLE;
-int biPick = 0;               // p = BIPOLAR_PUZZLE;
-boolean biClicked = false;    // p = BIPOLAR_PUZZLE;
-int biXOffset;        // p = BIPOLAR_PUZZLE;
+ArrayList<biBox> dementiaBox;  // p = DEMENTIA_PUZZLE;
+ArrayList<String> biSolution;  // p = DEMENTIA_PUZZLE;
+int biPick = 0;               // p = DEMENTIA_PUZZLE;
+boolean biClicked = false;    // p = DEMENTIA_PUZZLE;
+int biXOffset;        // p = DEMENTIA_PUZZLE;
 int biYOffset;
 boolean lockedRoomDisplay = false;
-boolean bipolarPuzzleComplete = false;
+boolean dementiaPuzzleComplete = false;
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
@@ -168,11 +168,11 @@ void mousePressed() {
     files.sort();
     break;
 
-  case BIPOLAR:
-    BipolarRoom bipolar = new BipolarRoom();
+  case DEMENTIA:
+    DementiaRoom dementia = new DementiaRoom();
     player.toHide(false);
-    bipolar.drawMe();
-    player.location = "bipolar";
+    dementia.drawMe();
+    player.location = "dementia";
 
     ocdnpc = new NPC(150.0, 290.0);
     ocdnpc.display();
@@ -192,23 +192,23 @@ void mousePressed() {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
       fill(255);
-      text(bipolarText, 295, 45);
+      text(dementiaText, 295, 45);
       player.baseY = 120;
     }  
-    if (bipolarText.equals("...")) {
+    if (dementiaText.equals("...")) {
       decayVar -= 0.015;
       tint(255, 255 - (int) (255 * decayVar));
       image(bg = loadImage("white.png"), 0, 0);
       if (decayVar <= 0) {
         player.setX(0);
-        p = PAGE.BIPOLAR_PUZZLE;
+        p = PAGE.DEMENTIA_PUZZLE;
         tint(255, 255);
-        bipolarBox = new ArrayList<biBox>();
+        dementiaBox = new ArrayList<biBox>();
         biSolution = new ArrayList<String>();
         player.toHide(true);
         for (int i = 0; i < 8; i++) {    // max = 8
           String var = randNoRepLetter();
-          bipolarBox.add(new biBox(80 * i + 20, var));
+          dementiaBox.add(new biBox(80 * i + 20, var));
           biSolution.add(var);
         }
         java.util.Collections.sort(biSolution);
@@ -217,23 +217,23 @@ void mousePressed() {
     }
 
     break;
-  case BIPOLAR_PUZZLE:
+  case DEMENTIA_PUZZLE:
     background(bg);
-    for (biBox b : bipolarBox)
+    for (biBox b : dementiaBox)
       b.show();
-    for (int i = 0; i <bipolarBox.size(); i++)
-      if (!biClicked && overRect(bipolarBox.get(i).getPos(), 200, 40, 40)) {
+    for (int i = 0; i <dementiaBox.size(); i++)
+      if (!biClicked && overRect(dementiaBox.get(i).getPos(), 200, 40, 40)) {
         biPick = i;
         biClicked = true;
-        biXOffset = mouseX-bipolarBox.get(i).getPos();
-        //biYOffset = mouseY-bipolarBox.get(i).getPos();
+        biXOffset = mouseX-dementiaBox.get(i).getPos();
+        //biYOffset = mouseY-dementiaBox.get(i).getPos();
         break;
       } else if (!(mouseY > 200 && mouseY < 240))
         biClicked = false;
 
     break;
-  case BIPOLAR2:
-    bg = loadImage("BipolarRoom.png");
+  case DEMENTIA2:
+    bg = loadImage("DementiaRoom.png");
     background(bg);
     player.toHide(false);
     fill(12, 23, 34);
@@ -257,14 +257,14 @@ void mousePressed() {
 
 void mouseDragged() {
   if (biClicked)
-    bipolarBox.get(biPick).setPos(mouseX - biXOffset);
+    dementiaBox.get(biPick).setPos(mouseX - biXOffset);
 }
 
 void mouseReleased() {
   biClicked = false;
-  if (p == PAGE.BIPOLAR_PUZZLE && isInOrder()) {
-    p = PAGE.BIPOLAR2;
-    bipolarPuzzleComplete = true;
+  if (p == PAGE.DEMENTIA_PUZZLE && isInOrder()) {
+    p = PAGE.DEMENTIA2;
+    dementiaPuzzleComplete = true;
   }
 }
 
@@ -274,7 +274,7 @@ String randNoRepLetter() {
   while (inside) {
     var = "" + (char)((int)(Math.random() * 26) + 'A');
     inside = false;
-    for (biBox b : bipolarBox)
+    for (biBox b : dementiaBox)
       if (var.equals(b.getVar()))
         inside = true;
   }
@@ -283,7 +283,7 @@ String randNoRepLetter() {
 
 boolean isInOrder() {
   HashMap mp = new HashMap();
-  for (biBox b : bipolarBox)
+  for (biBox b : dementiaBox)
     mp.put(b.getVar(), b.getPos());
   int min = -1;    // pos can never get below -1
   for (String s : biSolution)
@@ -329,30 +329,30 @@ public void keyPressed() {
         }
       }
       if (player.isOnDoor(hall2)) {
-        if (bipolarPuzzleComplete)
-          p = PAGE.BIPOLAR2;
+        if (dementiaPuzzleComplete)
+          p = PAGE.DEMENTIA2;
         else 
-          p = PAGE.BIPOLAR;
-        //p = bipolarPuzzleComplete ? PAGE.BIPOLAR2 : PAGE.BIPOLAR;
+          p = PAGE.DEMENTIA;
+        //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
-        bipolarText = "Greetings. I am L.";
+        dementiaText = "Greetings. I am L.";
         decayVar = 1;
       }  
       if (player.isOnDoor(hall3))
         p = PAGE.HOSPITAL;
       break;
-    case BIPOLAR:  
-    case BIPOLAR2:
-      //bipolarPuzzleComplete = true; ====================================
+    case DEMENTIA:  
+    case DEMENTIA2:
+      //dementiaPuzzleComplete = true; ====================================
       //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
 
-      if (player.isOnDoor(bipolar1))
+      if (player.isOnDoor(dementia1))
         p = PAGE.HALLWAY;
       if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
         player.getXcor() < 165 && player.getYcor() < 170)
-        bipolarText = p.getNextString();
+        dementiaText = p.getNextString();
       break;
-    case BIPOLAR_PUZZLE:
+    case DEMENTIA_PUZZLE:
       // NONE 
       break;
 
@@ -361,7 +361,7 @@ public void keyPressed() {
     }
     //if (player.onItem == true)
   }
-  if (key == 'k') {    // ANSWER KEY FOR BIPOLAR_PUZZLE
+  if (key == 'k') {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
     System.out.println();   
@@ -388,10 +388,10 @@ enum PAGE {
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("We are now in the hospital"), 
     HALLWAY("Do we want to go in?"), 
-    BIPOLAR("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
+    DEMENTIA("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
     "...", "Now that it's sorted, I feel so much better"), 
-    BIPOLAR_PUZZLE("Move pieces \n   into order"), 
-    BIPOLAR2("Congratulations. \nMission 1 of 999 Complete");
+    DEMENTIA_PUZZLE("Move pieces \n   into order"), 
+    DEMENTIA2("Congratulations. \nMission 1 of 999 Complete");
 
   int pageNum;
   String[] arr;
@@ -413,7 +413,7 @@ enum PAGE {
   }
 }
 
-class biBox implements Comparable<biBox> {  // for BIPOLAR_PUZZLE class
+class biBox implements Comparable<biBox> {  // for DEMENTIA_PUZZLE class
   int pos;
   String var;
   public biBox(int nPos, String nVar) {

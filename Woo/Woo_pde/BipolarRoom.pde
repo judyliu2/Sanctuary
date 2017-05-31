@@ -1,4 +1,4 @@
-class BipolarRoom implements Room {
+class DementiaRoom implements Room {
   int state;// state changes depending on which character is user
   Task[] diffTasks;
   NPC assignedChar;// char may show up
@@ -6,12 +6,12 @@ class BipolarRoom implements Room {
   int y;//of npc
   PImage bg;
 
-  public BipolarRoom() {
+  public DementiaRoom() {
     state = 1;
     assignedChar = new NPC();//should be Manic Depressive char, will work on that
     //diffTasks = new Task[4];
     //diffTasks[0] = new FileSort();
-    bg = loadImage("BipolarRoom.png");
+    bg = loadImage("DementiaRoom.png");
   }
 
   void drawMe() {
