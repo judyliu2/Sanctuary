@@ -7,7 +7,7 @@ class Door {
   boolean isOpen;
 
   Door() { 
-    this(510.0, 240.0, 80.0, 120.0, true);
+    this(490.0, 240.0, 80.0, 120.0, true);
   }
   Door( float x, float y, float w, float l, boolean notLocked) {
     xcor = x;

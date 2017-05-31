@@ -2,8 +2,8 @@ PAGE p = PAGE.START;
 User player;
 NPC ocdnpc;
 Door door1 = new Door(true); //p = HOSPITAL
-Door hall1 = new Door(45, 230, 70, 150, false); //p = HALLWAY
-Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY
+Door hall1 = new Door(20, 230, 70, 150, false); //p = HALLWAY
+Door hall2 = new Door(240, 230, 70, 150, true); //p = HALLWAY
 Door hall3 = new Door(true); //p = HALLWAY
 Door bipolar1 = new Door(270, 230, 70, 150, true); //p = BIPOLAR
 
@@ -243,8 +243,8 @@ void mousePressed() {
     rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
     fill(255);
     text(p.getNextString(), 265, 45);
-    fill(124, 255, 0);
-    rect(270, 230, 70, 150);
+    fill(124, 255, 0); //door
+    rect(290, 230, 70, 150);
     if (player.getXcor() < 65 && player.getYcor() < 280)
       player.baseY = 200;
     else if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170)
