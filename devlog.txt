@@ -199,3 +199,10 @@
     + Worked a little bit more on animation
    
 +============================================================== 
++2017-05-29
++All ::
+    + Discussed and planned for what player does in new rooms
++Judy ::
+    + Tried working on animation using different methods but its not working properly
+    + Added 'help' button
+    + 20170531.txt
