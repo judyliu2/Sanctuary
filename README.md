@@ -17,7 +17,7 @@ Keep in mind that the RPG is experienced in first person - that is, completion o
 ## Launch Instructions
 1. Open terminal.
 2. Change working directory into the directory you wish to have this game.
-3. Enter the following command **git clone git@github.com:judyliu2/Sanctuary.git** to copy the repository
-4. Change working directory the Sanctuary repository.
+3. Enter the following command **git clone git@github.com:judyliu2/Sanctuary.git** to copy the repository.
+4. Change working directory to Sanctuary repository.
 5. Run the RPG by typing  **_processing Woo_pde.pde_** in the terminal.
 6. Best of luck and have fun!
