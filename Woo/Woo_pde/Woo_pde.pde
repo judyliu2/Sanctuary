@@ -216,6 +216,7 @@ void mousePressed() {
         biPick = i;
         biClicked = true;
         biXOffset = mouseX-bipolarBox.get(i).getPos();
+        //biYOffset = mouseY-bipolarBox.get(i).getPos();
         break;
       } else if (!(mouseY > 200 && mouseY < 240))
         biClicked = false;
