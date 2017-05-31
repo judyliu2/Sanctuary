@@ -19,11 +19,19 @@ PImage bg;    // use this for universal background image
 
 String bipolarText = "";
 float decayVar;
+boolean bx;
+boolean by;
+boolean overBox = false;
+boolean locked = false;
+
 ArrayList<biBox> bipolarBox;  // p = BIPOLAR_PUZZLE;
 ArrayList<String> biSolution;  // p = BIPOLAR_PUZZLE;
 int biPick = 0;               // p = BIPOLAR_PUZZLE;
 boolean biClicked = false;    // p = BIPOLAR_PUZZLE;
-int biXOffset;                // p = BIPOLAR_PUZZLE;
+int biXOffset;        // p = BIPOLAR_PUZZLE;
+int biYOffset;
+//int ltime;
+//static final short speed = 0200; // pixels per second
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
@@ -55,10 +63,24 @@ void setup() {
 void draw() {
   player.move();
   player.display();
+  int color1 = 255;
+    int wordColor = 0;
+    fill(color1);
+    rect(550, 20, 75, 40,18,18,18,18); //Help button
+    fill(wordColor);
+    text("Help", 558, 45);
+    if (mouseX > 625 && mouseX < 475 && mouseY > 20 && mouseY < 60){ //if help is clicked
+    }
+     // p = PAGE.HELP;
+    }
+
   //if (player.isSorting){ //If characters decide to sort 
-  //FileSort files = new FileSort();
-  //files.displayAllFiles();
-  //files.sort();
+  /*
+  FileSort files = new FileSort();
+  files.displayAllFiles();
+  files.sort();
+  }
+  */
   //}
   /*  if (player.x > 400){
    FileSort test = new FileSort();
@@ -78,9 +100,16 @@ void draw() {
    PVector position = history.get(i);
    ellipse(position.x, position.y, i, i);
    }  */
-}
+
 int kk = 0;
 void mousePressed() {
+  if(overBox) { 
+    locked = true; 
+    fill(255, 255, 255);
+    p = PAGE.HELP;
+  } else {
+    locked = false;
+  }
   //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
     //System.out.println("DOWN FORCE, bottom reached");
@@ -122,6 +151,11 @@ void mousePressed() {
 
   case HELP:
     bg = loadImage("helpPage.png");
+    String text = "Organize the cards in alphabetical order";
+    text(text, 40, 40);
+    FileSort files = new FileSort();
+    files.displayAllFiles(); 
+    files.sort();
     break;
 
   case BIPOLAR:
@@ -132,8 +166,8 @@ void mousePressed() {
 
     ocdnpc = new NPC(150.0, 290.0);
     ocdnpc.display();
-    FileSort files = new FileSort();
-    files.displayAllFiles(); // Maybe this is shown after you click on an item?
+    
+    
 
     fill(0, 100, 0);
     rect(15, 270, 100, 15);     // left platform
