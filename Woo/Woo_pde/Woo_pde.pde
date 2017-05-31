@@ -262,8 +262,10 @@ void mouseDragged() {
 
 void mouseReleased() {
   biClicked = false;
-  if (p == PAGE.BIPOLAR_PUZZLE && isInOrder())
+  if (p == PAGE.BIPOLAR_PUZZLE && isInOrder()) {
     p = PAGE.BIPOLAR2;
+    bipolarPuzzleComplete = true;
+  }
 }
 
 String randNoRepLetter() {
@@ -318,7 +320,7 @@ public void keyPressed() {
         fill(0);
         rect(100, 10, 500, 100);
         fill(255);
-        text("The door is locked. \n Is my room locked?", 110, 35);
+        text("The door is locked. \nIs my room locked?", 110, 35);
         lockedRoomDisplay = true;
         player.state = 2;
         player.reachx = hall3.xcor;
@@ -327,7 +329,11 @@ public void keyPressed() {
         }
       }
       if (player.isOnDoor(hall2)) {
-        p = bipolarPuzzleComplete ? PAGE.BIPOLAR2 : PAGE.BIPOLAR;
+        if (bipolarPuzzleComplete)
+          p = PAGE.BIPOLAR2;
+        else 
+          p = PAGE.BIPOLAR;
+        //p = bipolarPuzzleComplete ? PAGE.BIPOLAR2 : PAGE.BIPOLAR;
         p.resetPage();
         bipolarText = "Greetings. I am L.";
         decayVar = 1;
@@ -337,7 +343,7 @@ public void keyPressed() {
       break;
     case BIPOLAR:  
     case BIPOLAR2:
-      bipolarPuzzleComplete = true;
+      //bipolarPuzzleComplete = true; ====================================
       //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
 
       if (player.isOnDoor(bipolar1))
