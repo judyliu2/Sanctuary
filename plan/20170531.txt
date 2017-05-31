@@ -4,33 +4,35 @@ Draft 3
 05/30/17
 
 Design:
-	1 - Hallway with 2 (or more) doors
+	1 - Hallway with 2 (or 3 if there's time) doors
 	2 - 1 playable character
 	3 - Non-playable characters will follow a specific plotline, with dialogue and preset interactions. Current Order
 		- OCD
 		- Schizophrenia
+		- Dementia
 	4 - User must go through all all tasks to reach the end of the game
  
 Which jobs are most crucial?
-  1 - Animation for how to sort the files
-  2 - Make code so that user can only complete the task of the OCD room once
-  3 - Fix placement of the doors
-  4 - New Room (Schizophrenia)
+  
+  1 - Make code so that user can only complete the task of the OCD room once
+  2 - New Room (Dementia)
+  3 - New Room (Schizophrenia)
     a. NPCs in the room for user to interact with
     b. Dialogue for NPCs (Questions)
     c. PriorityQueue for the order of talking to NPCs
-  5 - Create an end game screen, can be accessed through the schizophrenia room's door when tasks are completed.  
-  6 - Include more comments to help understand the code
+  4 - Create an end game screen, can be accessed through the schizophrenia room's door when tasks are completed.  
+  5 - Include more comments to help understand the code
+  6 - Animation for how to sort the files
   
 Which components constitute core functionality (vs non-essential)?
-  1 - Animation for OCD hit is essential 
-  2 - Creating a new room with interable characters for Schizophrenia 
-  3 - Make code so that user can only complete the task of the OCD room once
-  4 - Help button (if there's time)
+  1 - Creating a new room with interable characters for Schizophrenia and Dementia
+  2 - Make code so that user can only complete the task of the OCD room once
+  3 - Help button (if there's time)
+  4 - Animation for OCD
   
 Which components are prerequisites for others?
 
-  1 - Creating the room for schizophrenia
+  1 - Creating the room for schizophrenia and dementia
   
 /*********************************/
 	Workload Sharing
@@ -50,7 +52,6 @@ Which components are prerequisites for others?
 	Chronology
 /*********************************/
 DUE 5/31:
-- Get animation working
 - Help button
 - Fix bug in OCD room
 - Fix placement of the doors
@@ -63,6 +64,7 @@ DUE 6/2
   - End screen
   
 WEEKEND:
+  - Animation
   - Add more comments
   - Fix any bugs
   - Refining code
