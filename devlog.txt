@@ -200,8 +200,11 @@
    
 +============================================================== 
 +2017-05-29
-+All ::
-    + Discussed and planned for what player does in new rooms
++Irene ::
+    + Updated UML diagrams to match current state of the repository
+    + Fixed dialogue bug where the text box displays very, very briefly (making the text display while the user moves)
+    + Fixed bipolar rooms such that upon completing the bipolar puzzle, the user will not be able to go back to the original bipolar room
+    + Updated Readme with more descriptions and accurate information
 +Judy ::
     + Tried working on animation using different methods but its not working properly
     + Added 'help' button
