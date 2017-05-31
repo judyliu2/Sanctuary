@@ -199,7 +199,7 @@
     + Worked a little bit more on animation
    
 +============================================================== 
-+2017-05-29
++2017-05-30
 +Irene ::
     + Updated UML diagrams to match current state of the repository
     + Fixed dialogue bug where the text box displays very, very briefly (making the text display while the user moves)
@@ -209,3 +209,6 @@
     + Tried working on animation using different methods but its not working properly
     + Added 'help' button
     + 20170531.txt
++Carol :: 
+    + Prompted movement when interacting with locked door with OCD character.
++============================================================== 
