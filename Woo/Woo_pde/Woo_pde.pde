@@ -30,6 +30,8 @@ int biPick = 0;               // p = BIPOLAR_PUZZLE;
 boolean biClicked = false;    // p = BIPOLAR_PUZZLE;
 int biXOffset;        // p = BIPOLAR_PUZZLE;
 int biYOffset;
+boolean lockedRoomDisplay = false;
+boolean bipolarPuzzleComplete = false;
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
@@ -107,9 +109,8 @@ void mousePressed() {
     locked = true; 
     fill(255, 255, 255);
     p = PAGE.HELP;
-  } else {
+  } else
     locked = false;
-  }
   //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
     //System.out.println("DOWN FORCE, bottom reached");
@@ -147,6 +148,15 @@ void mousePressed() {
     //rect(45, 230, 70, 150);
     //rect(270, 230, 70, 150);
     player.location = "hallway";
+    if (lockedRoomDisplay) {
+      fill(0);
+      rect(100, 10, 500, 100);
+      fill(255);
+      text("The door is locked. \n Is my room locked?", 110, 35);
+      if (player.getXcor() > 350)
+        lockedRoomDisplay = false;
+    }
+      
     break;
 
   case HELP:
@@ -309,6 +319,7 @@ public void keyPressed() {
         rect(100, 10, 500, 100);
         fill(255);
         text("The door is locked. \n Is my room locked?", 110, 35);
+        lockedRoomDisplay = true;
         player.state = 2;
         player.reachx = hall3.xcor;
         if (hall1.isOpen) {
@@ -316,7 +327,7 @@ public void keyPressed() {
         }
       }
       if (player.isOnDoor(hall2)) {
-        p = PAGE.BIPOLAR;
+        p = bipolarPuzzleComplete ? PAGE.BIPOLAR2 : PAGE.BIPOLAR;
         p.resetPage();
         bipolarText = "Greetings. I am L.";
         decayVar = 1;
@@ -326,6 +337,7 @@ public void keyPressed() {
       break;
     case BIPOLAR:  
     case BIPOLAR2:
+      bipolarPuzzleComplete = true;
       //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
 
       if (player.isOnDoor(bipolar1))
@@ -343,11 +355,11 @@ public void keyPressed() {
     }
     //if (player.onItem == true)
   }
-  //if (key == 'k') {    // ANSWER KEY FOR BIPOLAR_PUZZLE
-  //  for (String b : biSolution)
-  //    System.out.print(b + " ");
-  //  System.out.println();   
-  //}
+  if (key == 'k') {    // ANSWER KEY FOR BIPOLAR_PUZZLE
+    for (String b : biSolution)
+      System.out.print(b + " ");
+    System.out.println();   
+  }
 
   player.left   = (key == 'a');   // move left
   player.right  = (key == 'd');   // move right
