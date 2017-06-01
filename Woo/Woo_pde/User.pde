@@ -94,11 +94,11 @@ class User extends Character {
         state = 1;
       }
     }
-    if (left && x > 0) {
+    if (left && x > -40){
       background(bg);
       x -= dx;
     }
-    if (right && x < width - 50) {
+    if (right && x < width -100){
       background(bg);
       x += dx;
     }
