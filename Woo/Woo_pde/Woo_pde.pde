@@ -35,6 +35,10 @@ boolean dementiaPuzzleComplete = false;
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
+
+//ROOMS
+Room dementia;
+
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textAlign(LEFT);
@@ -60,52 +64,56 @@ void setup() {
   textFont(createFont("SourceCodePro-Regular.ttf", 24));
   fill(255);
   text("Click to start", 100, 300);
+  dementia = new DementiaRoom();
 }
 
 void draw() {
+  if (player.location == "dementia") {
+    dementia.drawMe();
+  }
   player.move();
   player.display();
   int color1 = 255;
-    int wordColor = 0;
-    fill(color1);
-    rect(550, 20, 75, 40,18,18,18,18); //Help button
-    fill(wordColor);
-    text("Help", 558, 45);
-    if (mouseX > 625 && mouseX < 475 && mouseY > 20 && mouseY < 60){ //if help is clicked
-    }
-     // p = PAGE.HELP;
-    }
-
-  //if (player.isSorting){ //If characters decide to sort 
-  /*
-  FileSort files = new FileSort();
-  files.displayAllFiles();
-  files.sort();
+  int wordColor = 0;
+  fill(color1);
+  rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
+  fill(wordColor);
+  text("Help", 558, 45);
+  if (mouseX > 625 && mouseX < 475 && mouseY > 20 && mouseY < 60) { //if help is clicked
   }
-  */
-  //}
-  /*  if (player.x > 400){
-   FileSort test = new FileSort();
-   test.displayAllFiles();
-   if (mousePressed)
-   test.toDo(); 
-   }
-   noCursor();
-   
-   PVector mouse = new PVector(mouseX, mouseY);
-   history.add(mouse);
-   if (history.size() > 40)
-   history.remove(0);
-   for (int i = 0; i <history.size(); i++) {
-   noStroke();
-   fill(153-i*5, 0, 0);//fill(255 - i*5);//fill(255,255,153);
-   PVector position = history.get(i);
-   ellipse(position.x, position.y, i, i);
-   }  */
+  // p = PAGE.HELP;
+}
+
+//if (player.isSorting){ //If characters decide to sort 
+/*
+  FileSort files = new FileSort();
+ files.displayAllFiles();
+ files.sort();
+ }
+ */
+//}
+/*  if (player.x > 400){
+ FileSort test = new FileSort();
+ test.displayAllFiles();
+ if (mousePressed)
+ test.toDo(); 
+ }
+ noCursor();
+ 
+ PVector mouse = new PVector(mouseX, mouseY);
+ history.add(mouse);
+ if (history.size() > 40)
+ history.remove(0);
+ for (int i = 0; i <history.size(); i++) {
+ noStroke();
+ fill(153-i*5, 0, 0);//fill(255 - i*5);//fill(255,255,153);
+ PVector position = history.get(i);
+ ellipse(position.x, position.y, i, i);
+ }  */
 
 int kk = 0;
 void mousePressed() {
-  if(overBox) { 
+  if (overBox) { 
     locked = true; 
     fill(255, 255, 255);
     p = PAGE.HELP;
@@ -156,7 +164,7 @@ void mousePressed() {
       if (player.getXcor() > 350)
         lockedRoomDisplay = false;
     }
-      
+
     break;
 
   case HELP:
@@ -169,15 +177,14 @@ void mousePressed() {
     break;
 
   case DEMENTIA:
-    DementiaRoom dementia = new DementiaRoom();
     player.toHide(false);
     dementia.drawMe();
     player.location = "dementia";
 
     ocdnpc = new NPC(150.0, 290.0);
     ocdnpc.display();
-    
-    
+
+
 
     fill(0, 100, 0);
     rect(15, 270, 100, 15);     // left platform
@@ -332,7 +339,7 @@ public void keyPressed() {
         if (dementiaPuzzleComplete)
           p = PAGE.DEMENTIA2;
         else 
-          p = PAGE.DEMENTIA;
+        p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings. I am L.";
@@ -364,7 +371,7 @@ public void keyPressed() {
   if (key == 'k') {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
-    System.out.println();   
+    System.out.println();
   }
 
   player.left   = (key == 'a');   // move left
