@@ -88,7 +88,7 @@ class User extends Character {
       return;
     if (state == 2){
        if (Math.abs(x - reachx) > 10){
-         x += (x - reachx) < 0 ? dy : -dy/2;
+        x += (x - reachx) < 0 ? -dy/2 : dy;
        }
        else{
         state = 1; 
