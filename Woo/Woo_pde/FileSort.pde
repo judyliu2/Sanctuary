@@ -1,10 +1,9 @@
 class FileSort extends Task {
   PFont f;
-  final String alpha = "ABCDEFGHIJKLM";
-  final int[] betical = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+  final String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   File[] files;
   //track pass and position
-  int pass = 0;
+  int pass = -1;
   int pos = 0;
   //final int cTime = millis();
   //final float eTime = 1e-3*(cTime - ltime);
@@ -15,17 +14,23 @@ class FileSort extends Task {
     hints[0] = "Heavier bubbles move to the right";
     hints[1] = "Compare two objects";
     hints[2] = "Swap if necessary";
-    files = new File[4];
-    files[0] = new File ("c", 100);
-    files[1] = new File ("A", 200);
-    files[2] = new File ("D", 300);
-    files[3] = new File ("b", 400);
+    files = new File[10];
+    files[0] = new File ("B", 80);
+    files[1] = new File ("u", 120);
+    files[2] = new File ("b", 160);
+    files[3] = new File ("b", 200);
+    files[4] = new File ("l", 240);
+    files[5] = new File ("e", 280);
+    files[6] = new File ("S", 320);
+    files[7] = new File ("o", 360);
+    files[8] = new File ("r", 400);
+    files[9] = new File ("t", 440);
   }
 
 
   public int valueOf(String s) {
     s = s.toUpperCase();
-    return betical[alpha.indexOf(s)];
+    return alpha.indexOf(s) + 1;
   }
 
   public int fileLength() {
@@ -47,7 +52,7 @@ class FileSort extends Task {
     docs[a].dx = 1;
     docs[b].state = 1;
     docs[a].state = 1;
- 
+
     File temp2 = docs[a];
 
     docs[a] = docs[b];
@@ -65,6 +70,9 @@ class FileSort extends Task {
   }
 
   public void sort() {
+    if (pass == -1){
+     return; 
+    }
     displayAllFiles();
     if (pass < files.length) {//while still in reasonable num of passes
       if (files[pos].state == 0) {//if we're not moving
