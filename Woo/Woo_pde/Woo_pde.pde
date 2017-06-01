@@ -437,7 +437,7 @@ public void keyReleased() {
 enum PAGE {
   START(), 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("We are now in the hospital"), 
+    HOSPITAL("Greetings","The tentacles spoke to me, ask what I wanted to be. \nTo be weak I said, to be flawed, \nvulnerable.","To perceive weakness in others \nnot to exploit but to protect.", "To be a guide, \nto be a teacher.","Welcome to LET ME OUT\nand enjoy the learning experience!"), 
     HALLWAY("Do we want to go in?"), 
     DEMENTIA("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
     "...", "Now that it's sorted, I feel so much better"), 
