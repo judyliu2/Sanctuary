@@ -32,6 +32,8 @@ int biXOffset;        // p = DEMENTIA_PUZZLE;
 int biYOffset;
 boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
+boolean loadOCD = (p == PAGE.DEMENTIA2);
+boolean disableControls = false;
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
@@ -119,7 +121,7 @@ void mousePressed() {
     p = PAGE.HELP;
   } else
     locked = false;
-  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
+  System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
     //System.out.println("DOWN FORCE, bottom reached");
     player.up = false;
@@ -134,21 +136,21 @@ void mousePressed() {
   case HOSPITAL:
     background(bg = loadImage("helpPage.png"));
     //fill(150, 20, 0);
-    if (p.getNum() < p.getArrLen()) {
+    //if (p.getNum() < p.getArrLen()) {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
       text(p.getNextString(), 110, 35);
-      if (p.getNum() > 1)
-        image(koro, 0, 0);
-    } else {
+      //if (p.getNum() > 1)
+      //  image(koro, 0, 0);
+    //} else {
       player.toHide(false);
       image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), 
         door1.getLength());
       if (player.isOnDoor(door1)) {
         image(doorOpen, 460, 240, 140, 120);
       }
-    }
+    //}
     break;
   case HALLWAY:
     bg = loadImage("Golden hallway.png");
@@ -164,7 +166,21 @@ void mousePressed() {
       if (player.getXcor() > 350)
         lockedRoomDisplay = false;
     }
+    if (dementiaPuzzleComplete) {
+      fill(255, 0, 0);
+      textFont(createFont("SourceCodePro-Regular.ttf", 12));
+      text("Obsessive\n Compulsive\nDisorder", 525, 280);
 
+      textFont(createFont("SourceCodePro-Regular.ttf", 24));
+    }
+    if (loadOCD) {
+       player.state = 2;
+       player.reachx = hall3.xcor;
+       if (player.getXcor() >= hall3.xcor - 11) {
+         p = PAGE.OCD;
+         loadOCD = false;
+       }
+    }
     break;
 
   case HELP:
@@ -184,8 +200,6 @@ void mousePressed() {
     ocdnpc = new NPC(150.0, 290.0);
     ocdnpc.display();
 
-
-
     fill(0, 100, 0);
     rect(15, 270, 100, 15);     // left platform
     fill(127, 255, 0);
@@ -203,11 +217,12 @@ void mousePressed() {
       player.baseY = 120;
     }  
     if (dementiaText.equals("...")) {
+      player.toHide(true);
       decayVar -= 0.015;
       tint(255, 255 - (int) (255 * decayVar));
       image(bg = loadImage("white.png"), 0, 0);
       if (decayVar <= 0) {
-        player.setX(0);
+        player.setX((int)hall3.xcor);
         p = PAGE.DEMENTIA_PUZZLE;
         tint(255, 255);
         dementiaBox = new ArrayList<biBox>();
@@ -233,16 +248,27 @@ void mousePressed() {
         biPick = i;
         biClicked = true;
         biXOffset = mouseX-dementiaBox.get(i).getPos();
-        //biYOffset = mouseY-dementiaBox.get(i).getPos();
         break;
-      } else if (!(mouseY > 200 && mouseY < 240))
+      } else if (mouseY < 200 || mouseY > 240)
         biClicked = false;
 
     break;
   case DEMENTIA2:
-    bg = loadImage("DementiaRoom.png");
-    background(bg);
+    background(bg = loadImage("DementiaRoom.png"));
     player.toHide(false);
+    if (loadOCD) {
+      if (decayVar == 1) {
+        try {Thread.sleep(500);}        
+        catch(Exception e) {}
+        decayVar -= 0.001;
+      }
+      disableControls = true;
+      player.state = 2;
+      player.reachx = hall2.xcor;
+      if (player.getXcor() < hall2.xcor + 11)
+        p = PAGE.HALLWAY;
+      decayVar = 1;
+    }
     fill(12, 23, 34);
     rect(15, 270, 100, 15);     // left platform
     rect(130, 200, 100, 15);    // mid platform
@@ -259,6 +285,20 @@ void mousePressed() {
     else
       player.baseY = 280;
     break;
+    case OCD:
+      decayVar -= 0.01;
+      if (decayVar > 0) {
+        player.toHide(true);
+        tint(255, 255 - (int) (255 * decayVar));
+        image(loadImage("black.png"), 0, 0);
+      } else {
+        bg = loadImage("white.png");
+        disableControls = false;
+        tint(255, 255);
+      }
+      
+      
+    break;
   }
 }
 
@@ -272,6 +312,7 @@ void mouseReleased() {
   if (p == PAGE.DEMENTIA_PUZZLE && isInOrder()) {
     p = PAGE.DEMENTIA2;
     dementiaPuzzleComplete = true;
+    loadOCD = true;
   }
 }
 
@@ -297,7 +338,7 @@ boolean isInOrder() {
     if (min > (int) mp.get(s))
       return false;
     else 
-    min = (int) mp.get(s);
+      min = (int) mp.get(s);
   return true;
 }
 
@@ -306,7 +347,7 @@ boolean overRect(int x, int y, int width, int height) {
 }
 
 public void keyPressed() { 
-  if (key == 'w' && !player.up) { //move up/ jump
+  if (key == 'w' && !player.up && !disableControls) { //move up/ jump
     //player.up = true;
     player.dy = 17;          // upward velocity 
     player.gravity = -2;     // gravity unit
@@ -316,7 +357,7 @@ public void keyPressed() {
     switch(p) {
     case HELP:    
     case START:
-      // EMPTY
+      p = PAGE.HOSPITAL;
       break;
     case HOSPITAL:
       if (player.isOnDoor(door1) && door1.isOpen)
@@ -339,7 +380,7 @@ public void keyPressed() {
         if (dementiaPuzzleComplete)
           p = PAGE.DEMENTIA2;
         else 
-        p = PAGE.DEMENTIA;
+          p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings. I am L.";
@@ -348,9 +389,9 @@ public void keyPressed() {
       if (player.isOnDoor(hall3))
         p = PAGE.HOSPITAL;
       break;
-    case DEMENTIA:  
     case DEMENTIA2:
-      //dementiaPuzzleComplete = true; ====================================
+      dementiaPuzzleComplete = true;
+    case DEMENTIA:
       //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
 
       if (player.isOnDoor(dementia1))
@@ -362,18 +403,21 @@ public void keyPressed() {
     case DEMENTIA_PUZZLE:
       // NONE 
       break;
-
+    case OCD:
+      player.toHide(false);
+      
+    break;
     default:
       System.out.println("unrecongized input");
     }
     //if (player.onItem == true)
   }
-  if (key == 'k') {    // ANSWER KEY FOR DEMENTIA_PUZZLE
+  if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
     System.out.println();
   }
-
+  
   player.left   = (key == 'a');   // move left
   player.right  = (key == 'd');   // move right
   player.down   = (key == 's');   // move down
@@ -398,7 +442,8 @@ enum PAGE {
     DEMENTIA("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
     "...", "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
-    DEMENTIA2("Congratulations. \nMission 1 of 999 Complete");
+    DEMENTIA2("CONGRATULATIONS. Mission Complete"),
+    OCD();
 
   int pageNum;
   String[] arr;
