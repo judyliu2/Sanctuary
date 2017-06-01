@@ -213,5 +213,15 @@
     + Prompted movement when interacting with locked door with OCD character.
 +==============================================================
 +2017-05-31
++Irene, Carol :: 
+    + Changed all occurrences of bipolar to dementia
++Irene :: 
+    + Modified 's' key such that the key can transition through dialogue
+    + Added animations following Dementia puzzle completion
+        + User automatically moves towards the door while congradulation message is displayed
+        + User automatically moves towards door3, in which "Obsessive Compulsive Disorder" is displayed on the door (and will be displayed henceforth)
+        + Black background (newly added) shows upon reaching door3, absent the User to demonstrate transition
+        + User reappears with a new background once 's' is clicked
+    + Fixed bug where bubblesort animations prevented the puzzle from being played
 +Carol ::
     + Animated bubblesorting file
