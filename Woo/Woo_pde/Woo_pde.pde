@@ -21,8 +21,11 @@ String dementiaText = "";
 float decayVar;
 boolean bx;
 boolean by;
+
+//for Help button
 boolean overBox = false;
 boolean locked = false;
+boolean overExit = false;
 
 ArrayList<biBox> dementiaBox;  // p = DEMENTIA_PUZZLE;
 ArrayList<String> biSolution;  // p = DEMENTIA_PUZZLE;
@@ -34,6 +37,8 @@ boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
 boolean loadOCD = (p == PAGE.DEMENTIA2);
 boolean disableControls = false;
+
+String place = "HOSPITAL";
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
@@ -70,7 +75,7 @@ void setup() {
 }
 
 void draw() {
-  if (player.location == "dementia") {
+  if (player.location == "DEMENTIA") {
     dementia.drawMe();
   }
   player.move();
@@ -81,25 +86,24 @@ void draw() {
   rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
   fill(wordColor);
   text("Help", 558, 45);
-  if (mouseX > 625 && mouseX < 475 && mouseY > 20 && mouseY < 60) { //if help is clicked
+  if (overRect(550,20,75,40)) { //if help is clicked
+  overBox = true;
+
   }
-  // p = PAGE.HELP;
+  else{
+    overBox = false;
+  }
+  if (overRect(570,300,40,40)){ // if exit is clicked player is moved back to previous map
+    overExit = true;
+  }
+  else{ 
+    overExit = false;
+  }
+
 }
 
-//if (player.isSorting){ //If characters decide to sort 
+
 /*
-  FileSort files = new FileSort();
- files.displayAllFiles();
- files.sort();
- }
- */
-//}
-/*  if (player.x > 400){
- FileSort test = new FileSort();
- test.displayAllFiles();
- if (mousePressed)
- test.toDo(); 
- }
  noCursor();
  
  PVector mouse = new PVector(mouseX, mouseY);
@@ -115,10 +119,17 @@ void draw() {
 
 int kk = 0;
 void mousePressed() {
-  if (overBox) { 
-    locked = true; 
-    fill(255, 255, 255);
+  // HELP BUTTON
+  if (overExit){
+    //return to previous page
+    p = PAGE.HALLWAY;
+  }
+  if (overBox) {
     p = PAGE.HELP;
+    //locked = true; 
+    //rect(30,30,580,320);
+    //fill(255, 255, 255);
+  
   } else
     locked = false;
   System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
@@ -135,6 +146,7 @@ void mousePressed() {
     p = PAGE.HOSPITAL;  // fall through
   case HOSPITAL:
     background(bg = loadImage("helpPage.png"));
+    player.location = "HOSPITAL";
     //fill(150, 20, 0);
     //if (p.getNum() < p.getArrLen()) {
       fill(0);
@@ -154,6 +166,7 @@ void mousePressed() {
     break;
   case HALLWAY:
     bg = loadImage("Golden hallway.png");
+    player.location = "HALLWAY";
     background(bg);
     //rect(45, 230, 70, 150);
     //rect(270, 230, 70, 150);
@@ -184,18 +197,28 @@ void mousePressed() {
     break;
 
   case HELP:
+    player.location = "HELP";
     bg = loadImage("helpPage.png");
-    String text = "Organize the cards in alphabetical order";
-    text(text, 40, 40);
+   
+    fill(250);
+    background(bg);
+    String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
+    text(text, 40, 80);
     FileSort files = new FileSort();
     files.displayAllFiles(); 
     files.sort();
+    fill(255);
+    rect( 570, 300, 40, 40, 18,18,18,18);
+    fill(0);
+    text("X", 582, 328);
+    
+    
     break;
 
   case DEMENTIA:
     player.toHide(false);
     dementia.drawMe();
-    player.location = "dementia";
+    player.location = "DEMENTIA";
 
     ocdnpc = new NPC(150.0, 290.0);
     ocdnpc.display();
@@ -240,6 +263,7 @@ void mousePressed() {
 
     break;
   case DEMENTIA_PUZZLE:
+    player.location = "DEMENTIA_PUZZLE";
     background(bg);
     for (biBox b : dementiaBox)
       b.show();
@@ -254,6 +278,7 @@ void mousePressed() {
 
     break;
   case DEMENTIA2:
+    player.location = "DEMENTIA2";
     background(bg = loadImage("DementiaRoom.png"));
     player.toHide(false);
     if (loadOCD) {
@@ -314,6 +339,7 @@ void mouseReleased() {
     dementiaPuzzleComplete = true;
     loadOCD = true;
   }
+
 }
 
 String randNoRepLetter() {
