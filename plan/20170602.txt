@@ -1,0 +1,55 @@
+Team Sanctuary
+Irene Lam, Judy Liu, Carol Pan
+Draft 4
+06/01/17
+
+Design:
+	1 - Hallway with 2 (or 3 if there's time) doors
+	2 - 1 playable character
+	3 - Non-playable characters will have dialogue and preset interactions
+	Current Order of playable character:
+		- OCD
+		- Dementia
+		- Schizophrenia
+	4 - User must go through all all tasks to reach the end of the game
+Which jobs are most crucial?
+  
+  1 - [x] Make code so that user can only complete the task of the OCD room once
+  2 - [x] New Room (Dementia)
+  3 - [ ] New Room (Schizophrenia)
+    a.[x] NPCs in the room for user to interact with
+    b.[x] Dialogue for NPCs (Questions)
+    c.[ ] PriorityQueue for the order of talking to NPCs
+  4 - [ ] Create an end game screen, can be accessed through the schizophrenia room's door when tasks are completed.  
+  5 - [~]Include more comments to help understand the code
+  6 - [x]Animation for how to sort the files
+
+Non-essentials:
+  1 - Creating a new room with interable characters for Schizophrenia and Dementia
+  2 - Make code so that user can only complete the task of the OCD room once
+  3 - Help button (if there's time)
+  4 - Animation for OCD
+  
+Which components are prerequisites for others?
+  1 - Creating the room for schizophrenia and dementia
+
+Which components constitute core functionality (vs non-essential)?
+  1 - Creating a new room with interable characters for Schizophrenia and Dementia
+  2 - Make code so that user can only complete the task of the OCD room once
+  3 - Help button (if there's time)
+  4 - Animation for OCD
+  
+Which components are prerequisites for others?
+
+  1 - Creating the room for schizophrenia and dementia
+
+DUE 6/2
+  - Basic skeleton for schizophrenia room with NPCs and PriorityQueue
+  - Basic interaction between user and NPCs
+  - End screen
+  
+WEEKEND:
+  - Animation
+  - Add more comments
+  - Fix any bugs
+  - Refining code
