@@ -224,4 +224,8 @@
         + User reappears with a new background once 's' is clicked
     + Fixed bug where bubblesort animations prevented the puzzle from being played
 +Carol ::
-    + Animated bubblesorting file
+    + Animated bubblesorting file - SORTS BubbleSort - very meta
++==============================================================
++2017-06-01
++Carol ::
+    + When guided by a computer, player always moves in appropriate direction
