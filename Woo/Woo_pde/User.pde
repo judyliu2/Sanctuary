@@ -75,10 +75,11 @@ class User extends Character {
   }
   
   public void display(){
+    if (p != PAGE.START)
+      mousePressed();
     if (hidden)
       return;
     
-    mousePressed();
     image(testchar, x, y-50, 150, 150);
   }
   
@@ -86,8 +87,8 @@ class User extends Character {
     if (hidden)
       return;
     if (state == 2){
-       if (x < reachx){
-         x += 10;
+       if (Math.abs(x - reachx) > 10){
+         x += (x - reachx) < 0 ? dy : -dy/2;
        }
        else{
         state = 1; 
