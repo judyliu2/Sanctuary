@@ -1,14 +1,18 @@
+//~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
 PAGE p = PAGE.START;
 User player;
 NPC ocdnpc;
-Door door1 = new Door(true); //p = HOSPITAL
-Door hall1 = new Door(20, 230, 70, 150, false); //p = HALLWAY
-Door hall2 = new Door(240, 230, 70, 150, true); //p = HALLWAY
-Door hall3 = new Door(true); //p = HALLWAY
-Door dementia1 = new Door(270, 230, 70, 150, true); //p = DEMENTIA
+
+//~~~~~~~~~~~~~~doors~~~~~~~~~~~~~~~~~~
+Door door1 = new Door(true); //p = HOSPITAL to HALLWAY
+Door hall1 = new Door(35, 230, 70, 150, false); //p = HALLWAY to SCHIZOPHRENIA
+Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY to DEMENTIA
+Door hall3 = new Door(520, 230, 70, 150, true); //p = HALLWAY to HOSPITAL (OCD)
+Door dementia1 = new Door(270, 230, 70, 150, true); //p = DEMENTIA to HALLWAY
 
 ArrayList<PVector> history = new ArrayList();
 
+//~~~~~~~~~~~~~~images~~~~~~~~~~~~~~~~~
 PImage testchar;
 PImage npcchar;
 PImage koro;
@@ -16,6 +20,10 @@ PImage koro;
 PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
+
+//~~~~~~~~~Rooms~~~~~~~~~~~
+Room dementia;
+
 
 String dementiaText = "";
 float decayVar = 0;
@@ -43,10 +51,6 @@ boolean presentAppear = true;
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
-
-//ROOMS
-Room dementia;
-
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textAlign(LEFT);
@@ -57,7 +61,7 @@ void setup() {
   //dnChibi = loadImage("DNchibi.png");
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
-  door1.setLocation("Golden hallway.png");
+  door1.setLocation("HALLWAY");
   testchar = loadImage("koro_sensei.png");
   player = new User(true);
   koro = loadImage("koro_sensei.png");
@@ -87,9 +91,9 @@ void draw() {
   rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
   fill(wordColor);
   text("Help", 558, 45);
-  overBox = overRect(550,20,75,40); //if help is clicked
+  overBox = overRect(550, 20, 75, 40); //if help is clicked
   // if exit is clicked player is moved back to previous map
-  overExit = overRect(570,300,40,40);
+  overExit = overRect(570, 300, 40, 40);
 }
 
 
@@ -110,7 +114,7 @@ void draw() {
 int kk = 0;
 void mousePressed() {
   // HELP BUTTON
-  if (overExit){
+  if (overExit) {
     //return to previous page
     p = PAGE.HALLWAY;
   }
@@ -119,7 +123,6 @@ void mousePressed() {
     //locked = true; 
     //rect(30,30,580,320);
     //fill(255, 255, 255);
-  
   } else
     locked = false;
   System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
@@ -139,22 +142,22 @@ void mousePressed() {
     player.location = "HOSPITAL";
     //fill(150, 20, 0);
     //if (p.getNum() < p.getArrLen()) {
-      fill(0);
-      rect(100, 10, 500, 100);
-      fill(255);
-      text(p.getNextString(), 110, 35);
-      player.toHide(false);
-      image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), 
-        door1.getLength());
-      if (player.isOnDoor(door1)) {
-        image(doorOpen, 460, 240, 140, 120);
-      }
+    fill(0);
+    rect(100, 10, 500, 100);
+    fill(255);
+    text(p.getNextString(), 110, 35);
+    player.toHide(false);
+    door1.displayDoor();
     //}
     break;
   case HALLWAY:
     bg = loadImage("Golden hallway.png");
     player.location = "HALLWAY";
     background(bg);
+    //shows all the doors
+    hall1.displayDoor();
+    hall2.displayDoor();
+    hall3.displayDoor();
     //rect(45, 230, 70, 150);
     //rect(270, 230, 70, 150);
     if (lockedRoomDisplay) {
@@ -172,17 +175,17 @@ void mousePressed() {
       textFont(createFont("SourceCodePro-Regular.ttf", 24));
     }
     if (loadOCD) {
-       player.state = 2;
-       player.reachx = hall3.xcor;
-       if (player.getXcor() >= hall3.xcor - 11)
-         p = PAGE.OCD;
+      player.state = 2;
+      player.reachx = hall3.xcor;
+      if (player.getXcor() >= hall3.xcor - 11)
+        p = PAGE.OCD;
     }
     break;
 
   case HELP:
     player.location = "HELP";
     bg = loadImage("helpPage.png");
-   
+
     fill(250);
     background(bg);
     String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
@@ -191,7 +194,7 @@ void mousePressed() {
     files.displayAllFiles(); 
     files.sort();
     fill(255);
-    rect( 570, 300, 40, 40, 18,18,18,18);
+    rect( 570, 300, 40, 40, 18, 18, 18, 18);
     fill(0);
     text("X", 582, 328);
     break;
@@ -199,6 +202,7 @@ void mousePressed() {
   case DEMENTIA:
     player.toHide(false);
     dementia.drawMe();
+    dementia1.displayDoor();
     player.location = "DEMENTIA";
 
     ocdnpc = new NPC(150.0, 290.0);
@@ -212,7 +216,7 @@ void mousePressed() {
     if (player.getXcor() < 65 && player.getYcor() < 280)
       player.baseY = 200;
     else 
-      player.baseY = 280;    
+    player.baseY = 280;    
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
@@ -264,8 +268,11 @@ void mousePressed() {
     player.toHide(false);
     if (loadOCD) {
       if (decayVar == 1) {
-        try {Thread.sleep(500);}        
-        catch(Exception e) {}
+        try {
+          Thread.sleep(500);
+        }        
+        catch(Exception e) {
+        }
         decayVar -= 0.001;
       }
       disableControls = true;
@@ -283,8 +290,9 @@ void mousePressed() {
     rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
     fill(255);
     text(p.getNextString(), 265, 45);
-    fill(124, 255, 0); //door
-    rect(290, 230, 70, 150);
+    dementia1.displayDoor();
+    //fill(124, 255, 0); //door
+    //rect(290, 230, 70, 150);
     if (player.getXcor() < 65 && player.getYcor() < 280)
       player.baseY = 200;
     else if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170)
@@ -292,7 +300,7 @@ void mousePressed() {
     else
       player.baseY = 280;
     break;
-    case OCD:
+  case OCD:
     if (loadOCD) {
       decayVar -= 0.01;
       if (decayVar > 0) {
@@ -314,7 +322,7 @@ void mousePressed() {
       if (player.getXcor() < 115 && player.getYcor() < 280)
         player.baseY = 200;
       else 
-        player.baseY = 280;    
+      player.baseY = 280;    
       if (player.getXcor()>25 && player.getXcor()<165 && player.getYcor()<170) {
         fill(12, 23, 34);
         rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
@@ -325,10 +333,9 @@ void mousePressed() {
       if (presentAppear)
         image(loadImage("present.png"), 0, 120);
     }  
-        
-        
-      break;
-    
+
+
+    break;
   }
 }
 
@@ -344,7 +351,6 @@ void mouseReleased() {
     dementiaPuzzleComplete = true;
     loadOCD = true;
   }
-
 }
 
 String randNoRepLetter() {
@@ -369,7 +375,7 @@ boolean isInOrder() {
     if (min > (int) mp.get(s))
       return false;
     else 
-      min = (int) mp.get(s);
+    min = (int) mp.get(s);
   return true;
 }
 
@@ -411,7 +417,7 @@ public void keyPressed() {
         if (dementiaPuzzleComplete)
           p = PAGE.DEMENTIA2;
         else 
-          p = PAGE.DEMENTIA;
+        p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings. I am L.";
@@ -424,7 +430,6 @@ public void keyPressed() {
       dementiaPuzzleComplete = true;
     case DEMENTIA:
       //if(player.isNearChar(ocdnpc)) {} //DIALOGUE
-
       if (player.isOnDoor(dementia1))
         p = PAGE.HALLWAY;
       if (p.getNum() < p.getArrLen() - 1 && player.getXcor() > 75 && 
@@ -438,8 +443,8 @@ public void keyPressed() {
       player.toHide(false);
       if (presentAppear && player.getXcor() < 41 && player.getYcor() > 269)
         presentAppear = false;
-      
-    break;
+
+      break;
     default:
       System.out.println("unrecongized input");
     }
@@ -450,7 +455,7 @@ public void keyPressed() {
       System.out.print(b + " ");
     System.out.println();
   }
-  
+
   player.left   = (key == 'a');   // move left
   player.right  = (key == 'd');   // move right
   player.down   = (key == 's');   // move down
@@ -470,12 +475,12 @@ public void keyReleased() {
 enum PAGE {
   START(), 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("Greetings","The tentacles spoke to me, ask what I wanted to be. \nTo be weak I said, to be flawed, \nvulnerable.","To perceive weakness in others \nnot to exploit but to protect.", "To be a guide, \nto be a teacher.","Welcome to LET ME OUT\nand enjoy the learning experience!"), 
+    HOSPITAL("Greetings", "The tentacles spoke to me, ask what I wanted to be. \nTo be weak I said, to be flawed, \nvulnerable.", "To perceive weakness in others \nnot to exploit but to protect.", "To be a guide, \nto be a teacher.", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
     HALLWAY("Do we want to go in?"), 
     DEMENTIA("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
     "...", "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
-    DEMENTIA2("CONGRATULATIONS. Mission Complete"),
+    DEMENTIA2("CONGRATULATIONS. Mission Complete"), 
     OCD();
 
   int pageNum;

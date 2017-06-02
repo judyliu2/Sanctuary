@@ -7,7 +7,7 @@ class Door {
   boolean isOpen;
 
   Door() { 
-    this(490.0, 240.0, 80.0, 120.0, true);
+    this(490.0, 230.0, 70.0, 150.0, true);
   }
   Door( float x, float y, float w, float l, boolean notLocked) {
     xcor = x;
@@ -21,6 +21,15 @@ class Door {
     this();
     isOpen = notLocked;
   }
+
+  void displayDoor() {
+    if (player.isOnDoor(this) && isOpen) {
+      image(doorOpen, xcor - 30, ycor, widthh + 60, lengthh);
+    } else {
+      image(doorClosed, xcor, ycor, widthh, lengthh);
+    }
+  }
+
   public void setLocation(String newLocation) {
     nextLocation = newLocation;
   }
