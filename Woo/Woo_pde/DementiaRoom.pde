@@ -15,7 +15,9 @@ class DementiaRoom implements Room {
   }
 
   void drawMe() {
+    //set a background
     background(bg);
+    //draw a door
     rect(270, 230, 70, 150);
     diffTasks[0].toDo();
   }

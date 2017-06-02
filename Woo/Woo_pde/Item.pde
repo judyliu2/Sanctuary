@@ -1,17 +1,17 @@
-class Item{
- PImage item; 
- int id;
+class Item {
+  PImage item; 
+  int id;
   float x;
- float y;
- float dx;
-  
-    public float getDx(){
-  return dx;
+  float y;
+  float dx;
+
+  public float getDx() {
+    return dx;
   }
-  public float getXcor(){
+  public float getXcor() {
     return x;
   }
-  public float getYcor(){
+  public float getYcor() {
     return y;
   }
 }

@@ -14,6 +14,7 @@ class FileSort extends Task {
     hints[0] = "Heavier bubbles move to the right";
     hints[1] = "Compare two objects";
     hints[2] = "Swap if necessary";
+    //list of files
     files = new File[10];
     files[0] = new File ("B", 80);
     files[1] = new File ("u", 120);
