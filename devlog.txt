@@ -223,15 +223,21 @@
         + Black background (newly added) shows upon reaching door3, absent the User to demonstrate transition
         + User reappears with a new background once 's' is clicked
     + Fixed bug where bubblesort animations prevented the puzzle from being played
-+Carol ::
-    + Animated bubblesorting file - SORTS BubbleSort - very meta
 +Judy ::
     + Fixed the coordinate of the doors so that when the player is on top of the door, he/she can enter a room.
++Carol ::
+    + Animated bubblesorting file - SORTS BubbleSort - very meta
 +==============================================================
 +2017-06-01
++Irene ::
+    + Added new user and background image for part II of the RPG (dementia user)
+    + User changes from Koro-sensei to Haku (currently can only be seen when p = PAGE.OCD)
+    + Created our first interactable NPC character (e.g. able to converse)
+    + More dialogue to enhance the plotline
++Judy ::
+    + Fixed coordinates so that character does not move out of the map
+    + Added Help button functionality 
 +Carol ::
     + When guided by a computer, player always moves in appropriate direction
     + 20170602.txt
-+Judy ::
-    + Fixed coordinates so that character does not move out of the map
-    + Added Help button functionality
++==============================================================
