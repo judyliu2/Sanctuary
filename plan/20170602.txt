@@ -44,12 +44,22 @@ Which components are prerequisites for others?
   1 - Creating the room for schizophrenia and dementia
 
 DUE 6/2
-  - Basic skeleton for schizophrenia room with NPCs and PriorityQueue
-  - Basic interaction between user and NPCs
-  - End screen
+  - Fix bugs involving HELP button
+  	- Bug: Hovering over "X" brings the user to a hallway that isn't interactable
+	- Bug: Clicking on "X" returns the user to the hospital page
+	- Bug: Hovering over help brings the user to the bubblesort animation page (inefficient, especially if by accident)
+	- Bug: The help page can be accessed regardless of what room the user is in
+	- Bug: Bubblesort is not animated
+  - Dementia room and corresponding tasks
+  	- New user should bring the present to the OCD room
+	- OCD room task involves knight's tour (should be interactable)
+	- Upon completion of the task, the Schizophrenia room is unlocked
   
 WEEKEND:
-  - Animation
-  - Add more comments
-  - Fix any bugs
+  - Schizophrenia room
+  	- New user and new background 
+  	- Final task includes multiple questions and priority queue
+	- End scene with a conclusive (hopeful) message
+  - Add more in-line comments
+  - Beautify (e.g. animations, smoother user movement)
   - Refining code
