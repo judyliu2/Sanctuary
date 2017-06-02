@@ -225,7 +225,13 @@
     + Fixed bug where bubblesort animations prevented the puzzle from being played
 +Carol ::
     + Animated bubblesorting file - SORTS BubbleSort - very meta
++Judy ::
+    + Fixed the coordinate of the doors so that when the player is on top of the door, he/she can enter a room.
 +==============================================================
 +2017-06-01
 +Carol ::
     + When guided by a computer, player always moves in appropriate direction
+    + 20170602.txt
++Judy ::
+    + Fixed coordinates so that character does not move out of the map
+    + Added Help button functionality
