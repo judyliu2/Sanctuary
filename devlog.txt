@@ -234,6 +234,7 @@
     + User changes from Koro-sensei to Haku (currently can only be seen when p = PAGE.OCD)
     + Created our first interactable NPC character (e.g. able to converse)
     + More dialogue to enhance the plotline
+    + 20170602.txt plans for 6/2 and the weekend
 +Judy ::
     + Fixed coordinates so that character does not move out of the map
     + Added Help button functionality 
