@@ -18,7 +18,7 @@ PImage doorOpen;
 PImage bg;    // use this for universal background image
 
 String dementiaText = "";
-float decayVar;
+float decayVar = 0;
 boolean bx;
 boolean by;
 
@@ -35,10 +35,11 @@ int biXOffset;        // p = DEMENTIA_PUZZLE;
 int biYOffset;
 boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
-boolean loadOCD = (p == PAGE.DEMENTIA2);
+boolean loadOCD = (p == PAGE.DEMENTIA2 || p == PAGE.OCD);
 boolean disableControls = false;
+boolean presentAppear = true;
 
-String place = "HOSPITAL";
+//String place = "HOSPITAL";
 //int ltime;
 //static final short speed = 0200; // pixels per second
 
@@ -75,7 +76,7 @@ void setup() {
 }
 
 void draw() {
-  if (player.location == "DEMENTIA") {
+  if (p == PAGE.DEMENTIA) {
     dementia.drawMe();
   }
   player.move();
@@ -86,20 +87,9 @@ void draw() {
   rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
   fill(wordColor);
   text("Help", 558, 45);
-  if (overRect(550,20,75,40)) { //if help is clicked
-  overBox = true;
-
-  }
-  else{
-    overBox = false;
-  }
-  if (overRect(570,300,40,40)){ // if exit is clicked player is moved back to previous map
-    overExit = true;
-  }
-  else{ 
-    overExit = false;
-  }
-
+  overBox = overRect(550,20,75,40); //if help is clicked
+  // if exit is clicked player is moved back to previous map
+  overExit = overRect(570,300,40,40);
 }
 
 
@@ -153,9 +143,6 @@ void mousePressed() {
       rect(100, 10, 500, 100);
       fill(255);
       text(p.getNextString(), 110, 35);
-      //if (p.getNum() > 1)
-      //  image(koro, 0, 0);
-    //} else {
       player.toHide(false);
       image(doorClosed, door1.getXcor(), door1.getYcor(), door1.getWidth(), 
         door1.getLength());
@@ -170,7 +157,6 @@ void mousePressed() {
     background(bg);
     //rect(45, 230, 70, 150);
     //rect(270, 230, 70, 150);
-    player.location = "hallway";
     if (lockedRoomDisplay) {
       fill(0);
       rect(100, 10, 500, 100);
@@ -183,16 +169,13 @@ void mousePressed() {
       fill(255, 0, 0);
       textFont(createFont("SourceCodePro-Regular.ttf", 12));
       text("Obsessive\n Compulsive\nDisorder", 525, 280);
-
       textFont(createFont("SourceCodePro-Regular.ttf", 24));
     }
     if (loadOCD) {
        player.state = 2;
        player.reachx = hall3.xcor;
-       if (player.getXcor() >= hall3.xcor - 11) {
+       if (player.getXcor() >= hall3.xcor - 11)
          p = PAGE.OCD;
-         loadOCD = false;
-       }
     }
     break;
 
@@ -211,8 +194,6 @@ void mousePressed() {
     rect( 570, 300, 40, 40, 18,18,18,18);
     fill(0);
     text("X", 582, 328);
-    
-    
     break;
 
   case DEMENTIA:
@@ -231,7 +212,7 @@ void mousePressed() {
     if (player.getXcor() < 65 && player.getYcor() < 280)
       player.baseY = 200;
     else 
-    player.baseY = 280;    
+      player.baseY = 280;    
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
@@ -278,7 +259,7 @@ void mousePressed() {
 
     break;
   case DEMENTIA2:
-    player.location = "DEMENTIA2";
+    //player.location = "DEMENTIA2";
     background(bg = loadImage("DementiaRoom.png"));
     player.toHide(false);
     if (loadOCD) {
@@ -293,6 +274,7 @@ void mousePressed() {
       if (player.getXcor() < hall2.xcor + 11)
         p = PAGE.HALLWAY;
       decayVar = 1;
+      loadOCD = false;
     }
     fill(12, 23, 34);
     rect(15, 270, 100, 15);     // left platform
@@ -311,19 +293,42 @@ void mousePressed() {
       player.baseY = 280;
     break;
     case OCD:
+    if (loadOCD) {
       decayVar -= 0.01;
       if (decayVar > 0) {
         player.toHide(true);
         tint(255, 255 - (int) (255 * decayVar));
         image(loadImage("black.png"), 0, 0);
       } else {
-        bg = loadImage("white.png");
-        disableControls = false;
         tint(255, 255);
+        background(bg = loadImage("spirited_away.jpg"));
+        disableControls = false;
+        testchar = loadImage("haku.png");
+        loadOCD = false;
       }
-      
-      
-    break;
+    } else {
+      fill(0, 100, 0);
+      rect(65, 270, 100, 15);     // left platform
+      fill(127, 255, 0);
+      rect(180, 200, 120, 15);    // mid platform
+      if (player.getXcor() < 115 && player.getYcor() < 280)
+        player.baseY = 200;
+      else 
+        player.baseY = 280;    
+      if (player.getXcor()>25 && player.getXcor()<165 && player.getYcor()<170) {
+        fill(12, 23, 34);
+        rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
+        fill(255);
+        text(dementiaText, 295, 45);
+        player.baseY = 120;
+      }
+      if (presentAppear)
+        image(loadImage("present.png"), 0, 120);
+    }  
+        
+        
+      break;
+    
   }
 }
 
@@ -431,6 +436,8 @@ public void keyPressed() {
       break;
     case OCD:
       player.toHide(false);
+      if (presentAppear && player.getXcor() < 41 && player.getYcor() > 269)
+        presentAppear = false;
       
     break;
     default:
