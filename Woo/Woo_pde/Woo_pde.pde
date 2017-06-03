@@ -81,9 +81,11 @@ void setup() {
 
 void draw() {
   update();
+  /*
   if (p == PAGE.DEMENTIA) {
     dementia.drawMe();
   }
+  */
   player.move();
   player.display();
   int color1 = 255;
@@ -193,21 +195,31 @@ void mousePressed() {
     break;
 
   case HELP:
-    player.location = "HELP";
+
     bg = loadImage("helpPage.png");
-    player.x = 300;
-    player.y = 280; 
+
     fill(250);
     background(bg);
+    if (player.location == "DEMENTIA"){
+      
     String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
     text(text, 40, 80);
+    
+    //sorting animation
     FileSort files = new FileSort();
-    files.displayAllFiles(); 
     files.sort();
+    
+    }
+    else{
+      String text = "Keys: \n W - Jump \n S - Walk through doors or \n interact with others \n A - Move left \n D - Move right";
+      text(text, 40, 80);
+    }
+    
     fill(255);
     rect( 570, 300, 40, 40, 18, 18, 18, 18);
     fill(0);
     text("X", 582, 328);
+    
     break;
 
   case DEMENTIA:
@@ -396,7 +408,7 @@ boolean overRect(int x, int y, int width, int height) {
 
 public void keyPressed() { 
   if (key == 'w' && !player.up && !disableControls) { //move up/ jump
-    //player.up = true;
+    player.up = true;
     player.dy = 17;          // upward velocity 
     player.gravity = -2;     // gravity unit
     player.y -= player.dy;   // make first change

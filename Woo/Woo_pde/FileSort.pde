@@ -3,7 +3,7 @@ class FileSort extends Task {
   final String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   File[] files;
   //track pass and position
-  int pass = -1;
+  int pass = 0;
   int pos = 0;
   //final int cTime = millis();
   //final float eTime = 1e-3*(cTime - ltime);

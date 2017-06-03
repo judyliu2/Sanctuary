@@ -12,6 +12,7 @@ class DementiaRoom implements Room {
     diffTasks = new Task[4];
     diffTasks[0] = new FileSort();
     bg = loadImage("DementiaRoom.png");
+   
   }
 
   void drawMe() {
@@ -21,4 +22,5 @@ class DementiaRoom implements Room {
     rect(270, 230, 70, 150);
     diffTasks[0].toDo();
   }
+  
 }
