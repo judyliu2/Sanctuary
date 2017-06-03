@@ -242,3 +242,10 @@
     + When guided by a computer, player always moves in appropriate direction
     + 20170602.txt
 +==============================================================
++2017-06-01
++Carol, Judy ::
+    + Worked on changes with the help button and its sorting animation
++==============================================================
++2017-06-03
++Judy ::
+    + Help button is now clickable
