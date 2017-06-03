@@ -195,7 +195,8 @@ void mousePressed() {
   case HELP:
     player.location = "HELP";
     bg = loadImage("helpPage.png");
-
+    player.x = 300;
+    player.y = 280; 
     fill(250);
     background(bg);
     String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
