@@ -80,6 +80,7 @@ void setup() {
 }
 
 void draw() {
+  update();
   if (p == PAGE.DEMENTIA) {
     dementia.drawMe();
   }
@@ -93,7 +94,7 @@ void draw() {
   text("Help", 558, 45);
   overBox = overRect(550, 20, 75, 40); //if help is clicked
   // if exit is clicked player is moved back to previous map
-  overExit = overRect(570, 300, 40, 40);
+ overExit = overRect(570, 300, 40, 40);
 }
 
 
@@ -110,7 +111,16 @@ void draw() {
  PVector position = history.get(i);
  ellipse(position.x, position.y, i, i);
  }  */
+void update(){
+  if( overRect(550,20, 75, 40)){
+    overBox = false;
+    overExit = false;
+  }
 
+  else{
+    overBox = overExit = false;
+  }
+}
 int kk = 0;
 void mousePressed() {
   // HELP BUTTON
