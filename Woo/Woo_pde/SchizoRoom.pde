@@ -10,6 +10,9 @@ public class SchizoRoom implements Room {
   
   }
   
+  void startTask(){
+    
+  }
   void drawMe(){
     
   }
