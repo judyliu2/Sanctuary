@@ -12,6 +12,10 @@
 
 +UNRESOLVED ISSUES
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ First puzzle (played by Yubaba in the dementia room) is not smooth
+    + Moving a letter may be dropped without intention
+    + A different letter may be moved instead if the mouse does not first hover over a white space (preferrably above or below the tiles)
+    + Letters may cover one another by accident if the user moves a letter
 
 +COOL STUFF LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,6 +24,11 @@
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 + Instead of having separate floors, the user now interacts on a single floor with multiple rooms (improving overall cohesiveness in logistics and storyline)
 + NPC players are part of the storyline and at some point will be played by the user
++ Storyline changes based on Spirited Away to tie the plot together better
+    + Yubaba diagnosed with obsessive compulsive disorder
+    + Haku diagnosed with dementia
+    + Chihiro diagnosed with schizophrenia
+    + Changes to background images, items, tasks, dialogue/storyline changed accordingly
 
 +LESSONS LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,7 +241,6 @@
 +Irene ::
     + Added new user and background image for part II of the RPG (dementia user)
     + User changes from Koro-sensei to Haku (currently can only be seen when p = PAGE.OCD)
-    + Created our first interactable NPC character (e.g. able to converse)
     + More dialogue to enhance the plotline
     + 20170602.txt plans for 6/2 and the weekend
 +Judy ::
@@ -242,11 +250,25 @@
     + When guided by a computer, player always moves in appropriate direction
     + 20170602.txt
 +==============================================================
-+2017-06-01
++2017-06-02
 +Carol, Judy ::
     + Worked on changes with the help button and its sorting animation
 +==============================================================
 +2017-06-03
++Irene ::
+    + Fixed bug preventing the user from seeing the animations after completing dementia room puzzle
+    + Resolved (major) lag issues in dementia room with user Haku
+    + Present appears in dementia room with Haku, that is able to be taken and recorded
+    + Swapped dementia room images (and corresponding door location and where user appears from entering/exiting doors)
+    + SCHIZOPHRENIA room task! (intentions of priority queue)
+        + Room can now be unlocked upon having previously picked up a present
+        + Unique images (User changes to Chihiro, background changes to finale scene -- newly imported and resized accordingly)
+        + Overarching question is displayed
+        + Created our first (four) interactable NPC characters
+        + Moving the User over each character displays four unique choices (in semi-eliptical semi-rectangular boxes) 
+    + Modified mid-development design changes in devlog
+    + Modified unresolved issues in devlog
 +Judy ::
     + Help button is now clickable
     + Help button has helpful instuctions 
++==============================================================    
