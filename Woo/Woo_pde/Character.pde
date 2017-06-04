@@ -6,6 +6,8 @@ class Character {
   int state;
   float x;
   float y;
+  int widthh;
+  int lengthh;
   float dx;
   PImage character;
   //~~~~~~~~~~~~~~~~~~~~~
@@ -29,7 +31,7 @@ class Character {
   
   public void display(){
     noStroke(); 
-    image(npcchar, x, y);
+    image(character, x, y);
     
   }
   public void setState(int s) { 
