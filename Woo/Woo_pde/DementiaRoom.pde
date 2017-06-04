@@ -11,7 +11,7 @@ class DementiaRoom implements Room {
     assignedChar = new NPC();//should be Manic Depressive char, will work on that
     diffTasks = new Task[4];
     diffTasks[0] = new FileSort();
-    bg = loadImage("DementiaRoom.png");
+    bg = loadImage("spirited_away.jpg");
    
   }
 
