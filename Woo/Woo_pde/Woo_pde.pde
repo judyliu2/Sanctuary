@@ -420,7 +420,7 @@ void mousePressed() {
       hall2.displayDoor();
       fill(0);
       rect(100, 10, 500, 100);
-      fill(255);
+      fill(175,238,238);
       if (presentAppear) {
         image(present, 20, 160, 100, 100);
         text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
@@ -437,7 +437,7 @@ void mousePressed() {
     for (NPC npp : sczNPC)
       npp.display();
     rect(200, 20, 450, 80);
-    fill(255);
+    fill(250,128,114);
     text("Which is the real me??", 210, 45);
     fill(0);
     for (NPC n : sczNPC)
