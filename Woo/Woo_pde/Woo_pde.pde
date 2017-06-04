@@ -31,6 +31,7 @@ Room dementia;
 
 
 String dementiaText = "";
+String hakuText = "";
 float decayVar = 0;
 boolean bx;
 boolean by;
@@ -53,10 +54,8 @@ boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
 boolean loadOCD = (p == PAGE.DEMENTIA2 || p == PAGE.OCD);
 boolean disableControls = false;
-boolean presentAppear = true;
-
-
-
+boolean presentAppear = false;
+boolean isHaku = false;
 
 
 void setup() {
@@ -89,7 +88,7 @@ void setup() {
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
   door1.setLocation("HALLWAY");
-  testchar = loadImage("koro_sensei.png");
+  testchar = loadImage("yubaba.png");
   player = new User(true);
   present = loadImage("present.png");
   fill(153, 102, 255);
@@ -200,9 +199,8 @@ void mousePressed() {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("Disgusting! Somebody sacked my room!\n Hurry and clean it!", 110, 35);
-    }
-    else if (player.isNearChar(witch) && puzzle2Solved){
+      text("Disgusting! Somebody sacked my \n room! Hurry and clean it!", 110, 35);
+    } else if (player.isNearChar(witch) && puzzle2Solved) {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
@@ -219,6 +217,7 @@ void mousePressed() {
     }
     if (objectsToClean.size() == 0) {
       puzzle2Solved = true;
+      presentAppear = true;
     }
 
     if (puzzle2Solved) { //////////////////////////////////
@@ -401,6 +400,7 @@ void mousePressed() {
         loadOCD = false;
       }
     } else {
+      dementia.drawMe();
       fill(0, 100, 0);
       rect(65, 270, 100, 15);     // left platform
       fill(127, 255, 0);
@@ -417,13 +417,17 @@ void mousePressed() {
         player.baseY = 120;
       }
       //System.out.println("PRESENT " + presentAppear);
-      if (presentAppear)
-        image(present, 20, 160, 100, 100);
-      hall3.displayDoor();
+      hall2.displayDoor();
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("Please take the present in \n order to leave the room", 110, 35);
+      if (presentAppear) {
+        image(present, 20, 160, 100, 100);
+        text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
+      }
+      else if (!presentAppear && !puzzle2Solved){
+        text(hakuText, 110, 35);
+      }
     }  
 
 
@@ -472,6 +476,7 @@ void mouseReleased() {
     p = PAGE.DEMENTIA2;
     dementiaPuzzleComplete = true;
     loadOCD = true;
+    isHaku = true;
   }
 }
 
@@ -548,13 +553,17 @@ public void keyPressed() {
       }
 
       if (player.isOnDoor(hall2)) {
-        if (dementiaPuzzleComplete)
-          p = PAGE.DEMENTIA2;
-        else 
-        p = PAGE.DEMENTIA;
+        if (!dementiaPuzzleComplete)
+          p = PAGE.DEMENTIA;
+        else if (dementiaPuzzleComplete && isHaku) {
+          p = PAGE.OCD;
+        } else {
+          p = PAGE.DEMENTIA;
+        }
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings, Ms. Yubaba.\n How can I help you?";
+        hakuText = "How long have I been here";
         decayVar = 1;
       }  
       if (player.isOnDoor(hall3)) {
@@ -580,11 +589,12 @@ public void keyPressed() {
       break;
     case OCD:
       player.toHide(false);
-
+      hakuText = p.getNextString();
       if (presentAppear && player.getXcor() < 41 && player.getYcor() < 269)
         presentAppear = false;
 
-      if (player.isOnDoor(hall3) && !presentAppear) {
+      if (player.isOnDoor(hall2) && !presentAppear
+        && (hakuText.equals("I should see if Yubaba needs\n anything") || puzzle2Solved)) {
 
         player.setX((int)hall2.xcor);
         p = PAGE.HALLWAY;
@@ -635,14 +645,15 @@ enum PAGE {
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("Well hello there", "What might your name be?", " I'm a colllector of them. \n Names, I mean.", 
     "I like to keep everyone close. \n I feel more secure.", "No one makes a mess when \nI know their names", 
-    "And, once you've met someone, \n you never really forget them", "And, once you've met someone, \n you never really forget them", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
+    "And, once you've met someone, \n you never really forget them.", "And, once you've met someone, \n you never really forget them", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
     HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
     DEMENTIA("How distasteful", "This pile is a mess \n... I need to clean\n this up ", 
     "I'd hate to lose\n my names", "...", "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
     DEMENTIA2("CONGRATULATIONS \n Mission Complete"), 
-    OCD(), 
+    OCD("I don't know how long \n I've been without a name.", "I still want one.", "Not 'Haku,' but who I used \nto be", 
+    "I should see if Yubaba needs\n anything."), 
     SCHIZOPHRENIA();
 
 
