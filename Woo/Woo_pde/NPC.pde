@@ -11,6 +11,7 @@ class NPC extends Character {
     super(p, a, b);
   }
   void display() {
-    image(character, x, y, 120, 100);
+    image(character, x, y, 80, 100);
+    //image(character, x, y, 120, 100);
   }
 }

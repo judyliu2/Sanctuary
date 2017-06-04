@@ -1,23 +1,24 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
 PAGE p = PAGE.START;
 User player;
-NPC ocdnpc;
 NPC witch;
+NPC haku;
+
 
 //~~~~~~~~~~~~~~doors~~~~~~~~~~~~~~~~~~
 Door door1 = new Door(true); //p = HOSPITAL to HALLWAY
 Door hall1 = new Door(35, 230, 70, 150, false); //p = HALLWAY to SCHIZOPHRENIA
 Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY to DEMENTIA
 Door hall3 = new Door(520, 230, 70, 150, true); //p = HALLWAY to HOSPITAL (OCD)
-Door dementia1 = new Door(480, 210, 70, 150, true); //p = DEMENTIA to HALLWAY
+Door dementia1 = new Door(270, 210, 70, 150, true); //p = DEMENTIA to HALLWAY
 
 
 //ArrayList<PVector> history = new ArrayList();
 
 //~~~~~~~~~~~~~~images~~~~~~~~~~~~~~~~~
 PImage testchar;
-PImage npcchar;
-PImage koro;
+PImage witchchar;
+PImage hakuchar;
 PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
@@ -62,36 +63,34 @@ void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textAlign(LEFT);
   bg = loadImage("startPage.jpg");
-  npcchar = loadImage("testchar.png");
   background(bg);
-  koro = loadImage("koro_sensei.png");
   sczNPC = new NPC[] {
-      new NPC(loadImage("DNchibi.png"), 20, 260), 
-      new NPC(loadImage("DNchibi.png"), 170, 260),
-      new NPC(loadImage("DNchibi.png"), 320, 260),
-      new NPC(loadImage("DNchibi.png"), 470, 260)
+    new NPC(loadImage("DNchibi.png"), 20, 260), 
+    new NPC(loadImage("DNchibi.png"), 170, 260), 
+    new NPC(loadImage("DNchibi.png"), 320, 260), 
+    new NPC(loadImage("DNchibi.png"), 470, 260)
   };
   objectsToClean = new ArrayList<Item>();
   objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40,40 ));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
   objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150 , 100));
   objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40,40 ));
+  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
   objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150 , 100));
+  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
   objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
   objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40,40 ));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40,40 ));
-      
-  witch = new NPC(loadImage("yubaba.png"),350, 260);
+  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
+
+  witch = new NPC(loadImage("yubaba.png"), 350, 260);
+  haku = new NPC(loadImage("haku.png"), 175, 115);
   doorClosed = loadImage("doorClosed.gif");
   doorOpen = loadImage("doorOpen.gif");
   door1.setLocation("HALLWAY");
   testchar = loadImage("koro_sensei.png");
   player = new User(true);
-  koro = loadImage("koro_sensei.png");
   present = loadImage("present.png");
   fill(153, 102, 255);
   //text("Welcome to \n    Our Asylum", 75, 105);
@@ -119,7 +118,7 @@ void draw() {
   text("Help", 558, 45);
   overBox = overRect(550, 20, 75, 40); //if help is clicked
   // if exit is clicked player is moved back to previous map
- overExit = overRect(570, 300, 40, 40);
+  overExit = overRect(570, 300, 40, 40);
 }
 
 
@@ -136,11 +135,11 @@ void draw() {
  PVector position = history.get(i);
  ellipse(position.x, position.y, i, i);
  }  */
-void update(){
-  if( overRect(550,20, 75, 40)){
+void update() {
+  if ( overRect(550, 20, 75, 40)) {
     overBox = false;
     overExit = false;
-  } else{
+  } else {
     overBox = overExit = false;
   }
 }
@@ -149,7 +148,11 @@ void mousePressed() {
   // HELP BUTTON
   if (overExit) {
     //return to previous page
-    p = PAGE.HALLWAY;
+    if (player.location.equals("DEMENTIA_PUZZLE")) {
+      p = PAGE.DEMENTIA;
+    } else {
+      p = PAGE.HALLWAY;
+    }
   }
   if (overBox) {
     p = PAGE.HELP;
@@ -170,57 +173,55 @@ void mousePressed() {
   case START: 
     p = PAGE.HOSPITAL;  // fall through
     break;
- 
+
   case HOSPITAL:
     background(bg = loadImage("helpPage.png"));
     player.location = "HOSPITAL";
     //fill(150, 20, 0);
     //if (p.getNum() < p.getArrLen()) {
 
-      fill(0);
-      rect(100, 10, 500, 100);
-      fill(255);
-  
-      text(p.getNextString(), 110, 35);
-      p.stallIfDialogue();
-      player.toHide(false);
-      
+    fill(0);
+    rect(100, 10, 500, 100);
+    fill(255);
+
+    text(p.getNextString(), 110, 35);
+    p.stallIfDialogue();
+    player.toHide(false);
+
     door1.displayDoor();
-  
+
     break;
   case HOSPITAL2:
     background(bg = loadImage("helpPage.png"));
     player.location = "HOSPITAL2";
     witch.display();
-    if (player.isNearChar(witch) && !puzzle2Solved){
-      
+    if (player.isNearChar(witch) && !puzzle2Solved) {
+
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-  
-      text("THIS ROOM IS DISGUSTING!\n PLEASE CLEAN IT!", 110, 35);
-
+      text("Disgusting! Somebody sacked my room!\n Hurry and clean it!", 110, 35);
     }
-    else{
+    else if (player.isNearChar(witch) && puzzle2Solved){
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
       text("Thank you! You may now procede.", 110, 35);
     }
-    
-    for (Item trash : objectsToClean){
+
+    for (Item trash : objectsToClean) {
       trash.display();
     }
-    for (int i = 0; i < objectsToClean.size() ; i++){
-    if (mouseX> objectsToClean.get(i).x && mouseX< objectsToClean.get(i).x+ objectsToClean.get(i).wdth && mouseY> objectsToClean.get(i).y && mouseY<objectsToClean.get(i).y+objectsToClean.get(i).hght){
+    for (int i = 0; i < objectsToClean.size(); i++) {
+      if (mouseX> objectsToClean.get(i).x && mouseX< objectsToClean.get(i).x+ objectsToClean.get(i).wdth && mouseY> objectsToClean.get(i).y && mouseY<objectsToClean.get(i).y+objectsToClean.get(i).hght) {
         objectsToClean.remove(i);
-      }  
+      }
     }
-    if (objectsToClean.size() == 0){
+    if (objectsToClean.size() == 0) {
       puzzle2Solved = true;
     }
-    
-    if (puzzle2Solved){ //////////////////////////////////
+
+    if (puzzle2Solved) { //////////////////////////////////
       door1.displayDoor();
     }
     break;
@@ -257,31 +258,26 @@ void mousePressed() {
     break;
 
   case HELP:
-
-    bg = loadImage("helpPage.png");
-
-    fill(250);
-    background(bg);
-    if (player.location == "DEMENTIA"){
-      
-    String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
-    text(text, 40, 80);
-    
-    //sorting animation
-    FileSort files = new FileSort();
-    files.sort();
-    
-    }
-    else{
+    if (player.location == "DEMENTIA_PUZZLE") {
+      dementia.startTask();
+      dementia.drawMe();
+      String text = "Organize the cards in alphabetical order"; // maybe put instructions of how the user can move the character
+      fill(255);
+      text(text, 40, 80);
+      //sorting animation
+    } else {
+      bg = loadImage("helpPage.png");
+      fill(250);
+      background(bg);
       String text = "Keys: \n W - Jump \n S - Walk through doors or \n interact with others \n A - Move left \n D - Move right";
       text(text, 40, 80);
     }
-    
+
     fill(255);
     rect( 570, 300, 40, 40, 18, 18, 18, 18);
     fill(0);
     text("X", 582, 328);
-    
+
     break;
 
   case DEMENTIA:
@@ -290,7 +286,7 @@ void mousePressed() {
     dementia1.displayDoor();
     player.location = "DEMENTIA";
 
-    ocdnpc = new NPC(150.0, 290.0);
+    haku.display();
     //ocdnpc.display(100,100);
 
     fill(0, 100, 0);
@@ -305,7 +301,11 @@ void mousePressed() {
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
-      fill(255);
+      if (dementiaText.equals("Greetings, Ms. Yubaba.\n How can I help you?")) {
+        fill(175, 238, 238);//turquoise
+      } else {
+        fill(255);//white
+      }
       text(dementiaText, 295, 45);
       player.baseY = 120;
     }  
@@ -356,7 +356,8 @@ void mousePressed() {
         try {
           Thread.sleep(50);
         }        
-        catch(Exception e) { }
+        catch(Exception e) {
+        }
         decayVar -= 0.001;
       }
       disableControls = true;
@@ -365,7 +366,6 @@ void mousePressed() {
       if (player.getXcor() == dementia1.xcor) //===================================
         p = PAGE.HALLWAY;
       decayVar = 1;
-      
     }
     fill(12, 23, 34);
     rect(15, 270, 100, 15);     // left platform
@@ -373,7 +373,7 @@ void mousePressed() {
 
     rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
     fill(255);
-    
+
     text(p.getNextString(), 265, 45);
     dementia1.displayDoor();
     //fill(124, 255, 0); //door
@@ -393,7 +393,6 @@ void mousePressed() {
         //player.toHide(true);
         tint(255, 255 - (int) (255 * decayVar));
         image(loadImage("black.png"), 0, 0);
-        
       } else {
         tint(255, 255);
         background(bg = loadImage("spirited_away.jpg"));
@@ -420,44 +419,44 @@ void mousePressed() {
       //System.out.println("PRESENT " + presentAppear);
       if (presentAppear)
         image(present, 20, 160, 100, 100);
-       hall3.displayDoor();
-       fill(0);
-       rect(100, 10, 500, 100);
-       fill(255);
-       text("Please take the present in \n order to leave the room", 110, 35);
+      hall3.displayDoor();
+      fill(0);
+      rect(100, 10, 500, 100);
+      fill(255);
+      text("Please take the present in \n order to leave the room", 110, 35);
     }  
 
 
     break;
-    case SCHIZOPHRENIA:
-      //background(bg);
-      for (NPC npp : sczNPC)
-        npp.display();
-      rect(200, 20, 450, 80);
-      fill(255);
-      text("Which is the real me??", 210, 45);
-      fill(0);
-      for (NPC n : sczNPC)
-        if (player.isNearChar(n)) {
-          rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
-          fill(255);
-          text("Choice 1", n.getXcor() + 15, n.getYcor() - 123);
-          fill(0);
-          rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
-          fill(255);
-          text("Choice 2", n.getXcor() + 15, n.getYcor() - 88);
-          fill(0);
-          rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
-          fill(255);
-          text("Choice 3", n.getXcor() + 15, n.getYcor() - 53);
-          fill(0);
-          rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
-          fill(255);
-          text("Choice 4", n.getXcor() + 15, n.getYcor() - 18);
-          fill(0);
-        }
-        
-      
+  case SCHIZOPHRENIA:
+    //background(bg);
+    for (NPC npp : sczNPC)
+      npp.display();
+    rect(200, 20, 450, 80);
+    fill(255);
+    text("Which is the real me??", 210, 45);
+    fill(0);
+    for (NPC n : sczNPC)
+      if (player.isNearChar(n)) {
+        rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
+        fill(255);
+        text("Choice 1", n.getXcor() + 15, n.getYcor() - 123);
+        fill(0);
+        rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
+        fill(255);
+        text("Choice 2", n.getXcor() + 15, n.getYcor() - 88);
+        fill(0);
+        rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
+        fill(255);
+        text("Choice 3", n.getXcor() + 15, n.getYcor() - 53);
+        fill(0);
+        rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
+        fill(255);
+        text("Choice 4", n.getXcor() + 15, n.getYcor() - 18);
+        fill(0);
+      }
+
+
     break;
   }
 }
@@ -519,26 +518,25 @@ public void keyPressed() {
     case START:
       p = PAGE.HOSPITAL;
       break;
-   
+
     case HOSPITAL:
       if (player.isOnDoor(door1) && door1.isOpen)
         p = PAGE.HALLWAY;
       break;
-      
+
     case HOSPITAL2:
-    if (player.isOnDoor(door1) && door1.isOpen && puzzle2Solved )
+      if (player.isOnDoor(door1) && door1.isOpen && puzzle2Solved )
         p = PAGE.HALLWAY;
       break;
-    
-    
+
+
     case HALLWAY:
       if (player.isOnDoor(hall1) ) {
         if (!presentAppear && puzzle2Solved) {
           testchar = loadImage("Boss.gif");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
-        } 
-        else if (!puzzle2Solved){
+        } else if (!puzzle2Solved) {
           fill(0);
           rect(100, 10, 500, 100);
           fill(255);
@@ -547,8 +545,8 @@ public void keyPressed() {
           player.state = 2;
           player.reachx = hall3.xcor;
         }
-    }
-      
+      }
+
       if (player.isOnDoor(hall2)) {
         if (dementiaPuzzleComplete)
           p = PAGE.DEMENTIA2;
@@ -556,14 +554,13 @@ public void keyPressed() {
         p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
-        dementiaText = "Greetings. I am L.";
+        dementiaText = "Greetings, Ms. Yubaba.\n How can I help you?";
         decayVar = 1;
       }  
-      if (player.isOnDoor(hall3)){
-        if (!dementiaPuzzleComplete ){
+      if (player.isOnDoor(hall3)) {
+        if (!dementiaPuzzleComplete ) {
           p = PAGE.HOSPITAL;
-        }
-        else {
+        } else {
           p = PAGE.HOSPITAL2;
         }
       }
@@ -583,12 +580,12 @@ public void keyPressed() {
       break;
     case OCD:
       player.toHide(false);
-      
+
       if (presentAppear && player.getXcor() < 41 && player.getYcor() < 269)
         presentAppear = false;
-      
+
       if (player.isOnDoor(hall3) && !presentAppear) {
-          
+
         player.setX((int)hall2.xcor);
         p = PAGE.HALLWAY;
       }
@@ -602,9 +599,9 @@ public void keyPressed() {
           rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
           rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
         }
-          
-    
-    break;
+
+
+      break;
     default:
       System.out.println("unrecongized input (p:" + p + ")");
     }
@@ -636,18 +633,18 @@ enum PAGE {
   START(), 
 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("Greetings", "The tentacles spoke to me, ask what I wanted to be. \nTo be weak I said, to be flawed, \nvulnerable.", 
-      "To perceive weakness in others \nnot to exploit but to protect.", 
-      "To be a guide, \nto be a teacher.", "", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
-    HOSPITAL2(),
+    HOSPITAL("Well hello there", "What might your name be?", " I'm a colllector of them. \n Names, I mean.", 
+    "I like to keep everyone close. \n I feel more secure.", "No one makes a mess when \nI know their names", 
+    "And, once you've met someone, \n you never really forget them", "And, once you've met someone, \n you never really forget them", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
+    HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
-    DEMENTIA("This is messy", "This pile is driving me \ncrazy... I feel an urge\n to sort ", 
-      "...", "Now that it's sorted, I feel so much better"), 
+    DEMENTIA("How distasteful", "This pile is a mess \n... I need to clean\n this up ", 
+    "I'd hate to lose\n my names", "...", "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
     DEMENTIA2("CONGRATULATIONS \n Mission Complete"), 
-    OCD(),
+    OCD(), 
     SCHIZOPHRENIA();
-    
+
 
   int pageNum;
   String[] arr;
@@ -676,7 +673,9 @@ enum PAGE {
       if (pageNum < arr.length)
         Thread.sleep(2000);
       delay = false;
-     }  catch (Exception ignored) {} 
+    }  
+    catch (Exception ignored) {
+    }
   }
 }
 
