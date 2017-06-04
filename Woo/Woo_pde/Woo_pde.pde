@@ -1,5 +1,5 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
-PAGE p = PAGE.OCD;
+PAGE p = PAGE.START;
 User player;
 NPC ocdnpc;
 
