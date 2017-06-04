@@ -11,6 +11,7 @@ class User extends Character {
   boolean nearItem;
   float reachx, reachy;
   int state;
+  int fatness = 150;
   User(boolean hide) {
     this(300, 280, hide);
   }
@@ -51,7 +52,7 @@ class User extends Character {
     return onDoor;
   }
 
-  public boolean isNearChar(NPC c) {
+  public boolean isNearChar(Character c) {
     int range = 30;
     if (x < c.getXcor() + range && x > c.getXcor() - range ) {
       nearChar = true;
@@ -77,7 +78,7 @@ class User extends Character {
     if (hidden)
       return;
 
-    image(testchar, x, y-50, 150, 150);
+    image(testchar, x, y-50, fatness, 150);
   }
 
   public void move() {
@@ -118,4 +119,9 @@ class User extends Character {
     if (down) {// animation for it?
     }
   }
+  
+  void setThickness(int newThickness) {
+    fatness = newThickness;
+  }
+  
 }
