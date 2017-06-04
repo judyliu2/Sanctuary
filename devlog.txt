@@ -258,14 +258,15 @@
 +Irene ::
     + Fixed bug preventing the user from seeing the animations after completing dementia room puzzle
     + Resolved (major) lag issues in dementia room with user Haku
+    + Modified inital dialogue such that there is a time gap (as opposed to rapid succession of text)
     + Present appears in dementia room with Haku, that is able to be taken and recorded
     + Swapped dementia room images (and corresponding door location and where user appears from entering/exiting doors)
     + SCHIZOPHRENIA room task! (intentions of priority queue)
         + Room can now be unlocked upon having previously picked up a present
-        + Unique images (User changes to Chihiro, background changes to finale scene -- newly imported and resized accordingly)
         + Overarching question is displayed
         + Created our first (four) interactable NPC characters
         + Moving the User over each character displays four unique choices (in semi-eliptical semi-rectangular boxes) 
+    + Unique images (Chihiro, Yubaba, start page, Yubaba's room -- newly imported and resized accordingly)
     + Modified mid-development design changes in devlog
     + Modified unresolved issues in devlog
 +Judy ::
