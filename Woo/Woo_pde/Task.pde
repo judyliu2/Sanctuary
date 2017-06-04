@@ -10,6 +10,10 @@ class Task {
   public Task() {
     completed = false;
   }
+  
+  public void start(){
+    
+  }
 
   public Task( String[] help ) {
     this();

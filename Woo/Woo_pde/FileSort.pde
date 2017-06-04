@@ -3,7 +3,7 @@ class FileSort extends Task {
   final String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   File[] files;
   //track pass and position
-  int pass = 0;
+  int pass = -1;
   int pos = 0;
   //final int cTime = millis();
   //final float eTime = 1e-3*(cTime - ltime);
@@ -28,7 +28,11 @@ class FileSort extends Task {
     files[9] = new File ("t", 440);
   }
 
-
+  public void start() {
+    if (pass == -1){
+      pass = 0;
+    }
+  }
   public int valueOf(String s) {
     s = s.toUpperCase();
     return alpha.indexOf(s) + 1;
@@ -71,8 +75,8 @@ class FileSort extends Task {
   }
 
   public void sort() {
-    if (pass == -1){
-     return; 
+    if (pass == -1) {
+      return;
     }
     displayAllFiles();
     if (pass < files.length) {//while still in reasonable num of passes
