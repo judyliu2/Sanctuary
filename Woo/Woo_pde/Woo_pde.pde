@@ -8,7 +8,8 @@ Door door1 = new Door(true); //p = HOSPITAL to HALLWAY
 Door hall1 = new Door(35, 230, 70, 150, false); //p = HALLWAY to SCHIZOPHRENIA
 Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY to DEMENTIA
 Door hall3 = new Door(520, 230, 70, 150, true); //p = HALLWAY to HOSPITAL (OCD)
-Door dementia1 = new Door(270, 230, 70, 150, true); //p = DEMENTIA to HALLWAY
+Door dementia1 = new Door(480, 210, 70, 150, true); //p = DEMENTIA to HALLWAY
+
 
 //ArrayList<PVector> history = new ArrayList();
 
@@ -55,7 +56,7 @@ boolean presentAppear = true;
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
   textAlign(LEFT);
-  bg = loadImage("startPage.png");
+  bg = loadImage("startPage.jpg");
   npcchar = loadImage("testchar.png");
   background(bg);
   koro = loadImage("koro_sensei.png");
@@ -229,7 +230,7 @@ void mousePressed() {
     player.location = "DEMENTIA";
 
     ocdnpc = new NPC(150.0, 290.0);
-    ocdnpc.display();
+    //ocdnpc.display(100,100);
 
     fill(0, 100, 0);
     rect(15, 270, 100, 15);     // left platform
@@ -287,7 +288,7 @@ void mousePressed() {
     break;
   case DEMENTIA2:
     //player.location = "DEMENTIA2";
-    background(bg = loadImage("DementiaRoom.png"));
+    background(bg = loadImage("spirited_away.jpg"));
     player.toHide(false);
     if (loadOCD) {
       if (decayVar == 1) {
@@ -299,8 +300,8 @@ void mousePressed() {
       }
       disableControls = true;
       player.state = 2;
-      player.reachx = hall2.xcor ;
-      if (player.getXcor() == hall2.xcor) 
+      player.reachx = dementia1.xcor ;
+      if (player.getXcor() == dementia1.xcor) //===================================
         p = PAGE.HALLWAY;
       decayVar = 1;
       
@@ -327,9 +328,10 @@ void mousePressed() {
       decayVar -= 0.01;
       player.setThickness(120);
       if (decayVar > 0) {
-        player.toHide(true);
+        //player.toHide(true);
         tint(255, 255 - (int) (255 * decayVar));
         image(loadImage("black.png"), 0, 0);
+        
       } else {
         tint(255, 255);
         background(bg = loadImage("spirited_away.jpg"));
