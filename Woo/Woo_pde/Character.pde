@@ -10,6 +10,11 @@ class Character {
   PImage character;
   //~~~~~~~~~~~~~~~~~~~~~
   
+  Character(PImage img, int locx, int locy) {
+    character = img;
+    x = locx;
+    y = locy;
+  }
   Character() {
     location = "1 Ward";
     state = 1; // 1 = standing/idle state
