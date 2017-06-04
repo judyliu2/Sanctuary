@@ -53,7 +53,7 @@ class User extends Character {
   }
 
   public boolean isNearChar(Character c) {
-    int range = 30;
+    int range = 200;
     if (x < c.getXcor() + range && x > c.getXcor() - range ) {
       nearChar = true;
     } else {
