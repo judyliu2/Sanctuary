@@ -272,4 +272,12 @@
 +Judy ::
     + Help button is now clickable
     + Help button has helpful instuctions 
-+==============================================================    
++==============================================================   
++2017-06-04
++Judy :: 
+    + Finished germophobia room:
+        + Witch NPC is added to the room and interacts with the player when the player is nearby
+        + New items are added to the room that the player has to clean up using the mouse
+        + Player can only leave when the task is complete
+    + Player can only enter schizophrenia room when he or she is finished with tasks from the other two rooms
+    + Player can only leave the OCD room when he or she gets the present from the platform
