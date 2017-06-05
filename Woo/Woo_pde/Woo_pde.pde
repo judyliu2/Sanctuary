@@ -1,9 +1,8 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
-PAGE p = PAGE.START;
+PAGE p = PAGE.START;  //DEMENTIA2
 User player;
 NPC witch;
 NPC haku;
-
 
 //~~~~~~~~~~~~~~doors~~~~~~~~~~~~~~~~~~
 Door door1 = new Door(true); //p = HOSPITAL to HALLWAY
@@ -11,7 +10,6 @@ Door hall1 = new Door(35, 230, 70, 150, false); //p = HALLWAY to SCHIZOPHRENIA
 Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY to DEMENTIA
 Door hall3 = new Door(520, 230, 70, 150, true); //p = HALLWAY to HOSPITAL (OCD)
 Door dementia1 = new Door(270, 210, 70, 150, true); //p = DEMENTIA to HALLWAY
-
 
 //ArrayList<PVector> history = new ArrayList();
 
@@ -24,12 +22,12 @@ PImage doorOpen;
 PImage bg;    // use this for universal background image
 PImage present;
 NPC[] sczNPC;
+NPC sczCurr;    // current NPC selection in scz room
 boolean ch1, ch2, ch3, ch4;
 ArrayList<Item> objectsToClean;
 
 //~~~~~~~~~Rooms~~~~~~~~~~~
 Room dementia;
-
 
 String dementiaText = "";
 String hakuText = "";
@@ -38,7 +36,7 @@ boolean bx;
 boolean by;
 
 //Germophobia
-boolean puzzle2Solved = false;
+boolean puzzle2Solved = p == PAGE.DEMENTIA2;
 
 //for Help button
 boolean overBox = false;
@@ -55,9 +53,9 @@ boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
 boolean loadOCD = (p == PAGE.DEMENTIA2 || p == PAGE.OCD);
 boolean disableControls = false;
-boolean presentAppear = false;
-boolean isHaku = false;
-
+boolean presentAppear = p == PAGE.DEMENTIA2;
+boolean isHaku = p == PAGE.DEMENTIA2;
+int sczVar = 0;        // number of correct answers in scz  0=none  4=all
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
@@ -65,13 +63,17 @@ void setup() {
   bg = loadImage("startPage.jpg");
   background(bg);
   sczNPC = new NPC[] {
-    new NPC(loadImage("DNchibi.png"), 20, 260), 
-    new NPC(loadImage("DNchibi.png"), 170, 260), 
-    new NPC(loadImage("DNchibi.png"), 320, 260), 
-    new NPC(loadImage("DNchibi.png"), 470, 260)
+    new NPC(loadImage("DNchibi.png"), 20, 260, "Which one is the real me?",
+      new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
+    new NPC(loadImage("DNchibi.png"), 170, 260, "What is my name?",
+      new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
+    new NPC(loadImage("DNchibi.png"), 320, 260, "What is Reddit's mascot",
+      new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
+    new NPC(loadImage("DNchibi.png"), 470, 260, "QQ",
+      new String[] {"AA", "BB", "CC", "DD"}, 1)
   };
-  ch1 = false;
-  ch2 = false;
+  ch1 = false;    // What are these?
+  ch2 = false;    // Explain please?
   ch3 = false;
   ch4 = false;
   objectsToClean = new ArrayList<Item>();
@@ -105,8 +107,8 @@ void setup() {
   fill(0);
 
   textFont(createFont("SourceCodePro-Regular.ttf", 24));
-  fill(255);
-  text("Click to start", 100, 300);
+  fill(0);
+  text("Click to start", 80, 320);
   dementia = new DementiaRoom();
 }
 
@@ -165,7 +167,7 @@ void mousePressed() {
     //fill(255, 255, 255);
   } else
     locked = false;
-  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
+  System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
     player.up = false;
     player.y = player.baseY;
@@ -204,12 +206,12 @@ void mousePressed() {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("Disgusting! Somebody sacked my \n room! Hurry and clean it!", 110, 35);
+      text("Disgusting! Somebody sacked my \nroom! Hurry and clean it!", 110, 35);
     } else if (player.isNearChar(witch) && puzzle2Solved) {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("Thank you! You may now procede.", 110, 35);
+      text("Hmph, you may now procede.", 110, 35);
     }
 
     for (Item trash : objectsToClean) {
@@ -243,7 +245,7 @@ void mousePressed() {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("The door is locked. \n Is my room locked?", 110, 35);
+      text("The door is locked. \nIs my room locked?", 110, 35);
       //if (player.getXcor() > 350)
       //  lockedRoomDisplay = false;
     }
@@ -421,7 +423,6 @@ void mousePressed() {
         text(dementiaText, 295, 45);
         player.baseY = 120;
       }
-      //System.out.println("PRESENT " + presentAppear);
       hall2.displayDoor();
       fill(0);
       rect(100, 10, 500, 100);
@@ -438,33 +439,42 @@ void mousePressed() {
     break;
   case SCHIZOPHRENIA:
     //background(bg);
-    for (NPC npp : sczNPC)
-      npp.display();
-    rect(200, 20, 450, 80);
-    fill(250, 128, 114);
-    text("Which is the real me??", 210, 45);
-    fill(0);
+    if (sczVar < 4)
+      for (NPC npp : sczNPC)
+        npp.display();
     for (NPC n : sczNPC)
-      if (player.isNearChar(n)) {
-        rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
-        fill(255);
-        text("Choice 1", n.getXcor() + 15, n.getYcor() - 123);
-        fill(0);
-        rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
-        fill(255);
-        text("Choice 2", n.getXcor() + 15, n.getYcor() - 88);
-        fill(0);
-        rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
-        fill(255);
-        text("Choice 3", n.getXcor() + 15, n.getYcor() - 53);
-        fill(0);
-        rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
-        fill(255);
-        text("Choice 4", n.getXcor() + 15, n.getYcor() - 18);
-        fill(0);
+      if (player.isNearChar(n)) { 
+        sczCurr = n;
+        rect(200, 20, 450, 80);
+        fill(250, 128, 114);
+        if (n.hasQuestion) {
+          text(n.getQuestion(), 210, 45);
+          fill(0, 0, 220);
+          rect (n.getXcor() - 2, n.getYcor() - 145 + n.curr * 35, 154, 36, 16, 16, 16, 16);
+          
+          fill(0);
+          rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
+          rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
+          rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
+          rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
+          fill(255);
+          text(n.getChoices(0), n.getXcor() + 15, n.getYcor() - 123);
+          text(n.getChoices(1), n.getXcor() + 15, n.getYcor() - 88);
+          text(n.getChoices(2), n.getXcor() + 15, n.getYcor() - 53);
+          text(n.getChoices(3), n.getXcor() + 15, n.getYcor() - 18);
+          fill(0);
+        } else {
+          text("Question Solved", 210, 45);
+          continue;
+        }
       }
+    if (sczVar >= 4)
+      hall3.displayDoor();
 
-
+    break;
+    case END:
+      background(bg = loadImage("end.jpg"));
+      player.toHide(true);
     break;
   }
 }
@@ -538,7 +548,6 @@ public void keyPressed() {
         p = PAGE.HALLWAY;
       break;
 
-
     case HALLWAY:
       if (player.isOnDoor(hall1)) {
         if (!isHaku) {
@@ -555,7 +564,7 @@ public void keyPressed() {
           fill(175, 238, 238);
           text("The door is locked. \nWho's inside?", 110, 35);
         } else if (!presentAppear && puzzle2Solved) {
-          testchar = loadImage("Boss.gif");
+          testchar = loadImage("Boss.png");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
         } else{
@@ -569,24 +578,18 @@ public void keyPressed() {
       if (player.isOnDoor(hall2)) {
         if (!dementiaPuzzleComplete)
           p = PAGE.DEMENTIA;
-        else if (dementiaPuzzleComplete && isHaku) {
+        else if (dementiaPuzzleComplete && isHaku) 
           p = PAGE.OCD;
-        } else {
+        else 
           p = PAGE.DEMENTIA;
-        }
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
-        dementiaText = "Greetings, Ms. Yubaba.\n How can I help you?";
+        dementiaText = "Greetings, Ms. Yubaba.\nHow can I help you?";
         hakuText = "How long have I been here";
         decayVar = 1;
       }  
-      if (player.isOnDoor(hall3)) {
-        if (!dementiaPuzzleComplete ) {
-          p = PAGE.HOSPITAL;
-        } else {
-          p = PAGE.HOSPITAL2;
-        }
-      }
+      if (player.isOnDoor(hall3)) 
+        p = dementiaPuzzleComplete ? PAGE.HOSPITAL2 : PAGE.HOSPITAL;
       break;
     case DEMENTIA2:
       dementiaPuzzleComplete = true;
@@ -617,14 +620,14 @@ public void keyPressed() {
       break;
     case SCHIZOPHRENIA:
       //sczDisplay = true;
-      for (NPC n : sczNPC) {
-        if (player.isNearChar(n)) {
-          rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
-        }
-      }
+      //for (NPC n : sczNPC) {
+      //  if (player.isNearChar(n)) {
+      //    rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
+      //    rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
+      //    rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
+      //    rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
+      //  }
+      //}
       if (player.isNearChar(sczNPC[0])) {
         //text("We were moving. I \nfinally get a bouquet and it's \n a goodbye present. Depressing.",
         //sczNPC[0].getXcor() + 15, sczNPC[0].getYcor() - 123);
@@ -659,11 +662,23 @@ public void keyPressed() {
       }
 
       break;
+    case END:
+      
+    break;
     default:
-      System.out.println("unrecongized input (p:" + p + ")");
+      System.out.println("WARNING: unrecongized input (p:" + p + ")");
     }
-    //if (player.onItem == true)
   }
+  if (p == PAGE.SCHIZOPHRENIA)
+      if(key == 'z')
+        sczCurr.dec(sczCurr);
+      else if (key == 'x')
+        sczCurr.inc(sczCurr);
+      else if (key == '\n')
+        sczCurr.isCorrect();
+  if (sczVar >= 4)
+    p = PAGE.END;
+    
   if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
@@ -690,18 +705,24 @@ enum PAGE {
   START(), 
 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("Well hello there", "What might your name be?", " I'm a colllector of them. \n Names, I mean.", 
-    "I like to keep everyone close. \n I feel more secure.", "No one makes a mess when \nI know their names", 
-    "And, once you've met someone, \n you never really forget them.", "And, once you've met someone, \n you never really forget them", "Welcome to LET ME OUT\nand enjoy the learning experience!"), 
+    HOSPITAL("Well hello there", "What might your name be?", "I'm a colllector of them. \nNames, I mean.", 
+    "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
+    "And, once you've met someone, \nyou never really forget them.","That being said, I should \ncheck on my name list",
+    "Wouldn't want any of them \n*cough to go missing, would we?"), 
     HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
-    DEMENTIA("How distasteful", "This pile is a mess \n... I need to clean\n this up ", 
-    "I'd hate to lose\n my names", "...", "Now that it's sorted, I feel so much better"), 
+    DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up",  
+    "I'd hate to lose\nmy names", "Ko- nevermind,", "Wouldn't want him\ntouching my names anyway", "...", 
+    "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
-    DEMENTIA2("CONGRATULATIONS \n Mission Complete"), 
-    OCD("I don't know how long \n I've been without a name.", "I still want one.", "Not 'Haku,' but who I used \nto be", 
-    "I should see if Yubaba needs\n anything."), 
-    SCHIZOPHRENIA();
+    DEMENTIA2("So it's sorted. Hmph. \nCan't trust anyone these days","That reminds me, I got\na new girl the other day",
+    "Ch- Sen was it","I really do love names","It's getting late, I need\nto get my beauty sleep",
+    "Wouldn't want to look like my sister after all"), 
+    OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be", 
+    "I feel weighted, drowned even","My memory flees me","My past...","I can't remember",
+    "But no matter, my life is here","I should see if Yubaba needs\nanything."), 
+    SCHIZOPHRENIA(),
+    END("SYSTEM END");
 
 
   int pageNum;
