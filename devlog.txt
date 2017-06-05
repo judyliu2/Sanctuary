@@ -275,8 +275,26 @@
     + Generated plot/theme to go with the game
 +==============================================================   
 +2017-06-04
++Irene ::
+    + Finished Schizophrenia room task 
+    	+ Unique questions and answers by each NPC character
+	+ Only by arriving at the NPC (approximately the same x coordinate) will the questions and answers be displayed
+	+ Colored line highlights the choice is the User is currently on (one of four choices)
+	+ More control functionality
+	    + 'z' allows the user to select a choice one higher than the choice previously on
+	    + 'x' allows the user to select a choice on lower than the choice previously on
+	    + 'Enter' allows the user to confirm their choice
+	+ A right answer prompts a satisfied response by Chihiro
+	+ A right answer prevents the User from seeing the question and answers again
+	+ Answering all four answers correctly prompts a customized hope/ thank you message
+    + Fixed bug where User could not exit Dementia room
+    + Changed word placement and formatting to make the game more visually appealing
+    + Added character-appropriate interactive dialogue
+    	+ Yubaba is much more obsessed with names
+	+ Haku emphasizes his unknown past/ nonexistant memory
+    + Added more images specific to the movie (e.g. the mouse, charcoal creatures, No-Face) + resized accordingly
 +Judy :: 
-    + Finished germophobia room:
+    + Finished OCD task:
         + Witch NPC is added to the room and interacts with the player when the player is nearby
         + New items are added to the room that the player has to clean up using the mouse
         + Player can only leave when the task is complete
@@ -294,4 +312,4 @@
    + Debugged entry and exit from dementia room
         + Character can now re-enter without resetting the room back to the first character
    + Characters are changed to appropriate images
-   + Created final puzzle
+   + Worked on final puzzle
