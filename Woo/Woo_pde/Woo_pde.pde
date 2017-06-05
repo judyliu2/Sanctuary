@@ -78,18 +78,18 @@ void setup() {
   ch3 = false;
   ch4 = false;
   objectsToClean = new ArrayList<Item>();
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
-  objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
-  objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
-  objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("poop.png"), random(width), 300, 40, 40));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
-  objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
+  objectsToClean.add(new Item(loadImage("roach.gif"), 30, 200, 160, 160));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), 80, 200, 100, 140 ));
+  objectsToClean.add(new Item(loadImage("poop.png"), 100, 310, 120, 70));
+  objectsToClean.add(new Item(loadImage("roach.gif"), 140, 200, 160, 160));
+  objectsToClean.add(new Item(loadImage("roach.gif"), 200, 200, 160, 160));
+  objectsToClean.add(new Item(loadImage("garbage1.png"),240 , 200, 100, 140 ));
+  objectsToClean.add(new Item(loadImage("poop.png"), 280, 310, 120, 70));
+  objectsToClean.add(new Item(loadImage("roach.gif"), 300, 200, 160, 160));
+  objectsToClean.add(new Item(loadImage("poop.png"), 400, 310, 120, 60));
+  objectsToClean.add(new Item(loadImage("poop.png"), 440, 310, 120, 60));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), 500, 200, 100, 140 ));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), 550, 200, 100, 140 ));
 
   witch = new NPC(loadImage("yubaba.png"), 350, 260);
   haku = new NPC(loadImage("haku.png"), 175, 115);
@@ -207,7 +207,12 @@ void mousePressed() {
   case HOSPITAL2:
     background(bg = loadImage("helpPage.png"));
     player.location = "HOSPITAL2";
-    witch.display();
+    witch.x = 340;
+    witch.y = 220;
+    witch.lengthh = 150;
+    witch.widthh = 150;
+    witch.display2();
+    
     if (player.isNearChar(witch) && !puzzle2Solved) {
 
       fill(0);
@@ -218,7 +223,7 @@ void mousePressed() {
       fill(0);
       rect(100, 10, 500, 100);
       fill(255);
-      text("Hmph, you may now procede.", 110, 35);
+      text("Hmph, you may now proceed.", 110, 35);
     }
 
     for (Item trash : objectsToClean) {

@@ -34,6 +34,9 @@ class Character {
     image(character, x, y);
     
   }
+  public void display2(){
+    image(character,x,y,widthh,lengthh);
+  }
   public void setState(int s) { 
     state = s;
   }
