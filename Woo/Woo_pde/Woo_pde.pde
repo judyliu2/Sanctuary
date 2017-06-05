@@ -97,6 +97,7 @@ void setup() {
   door1.setLocation("HALLWAY");
   testchar = loadImage("yubaba.png");
   player = new User(true);
+  player.location = "START";
   present = loadImage("present.png");
   fill(153, 102, 255);
   //text("Welcome to \n    Our Asylum", 75, 105);
@@ -116,6 +117,7 @@ void draw() {
   update();
   player.move();
   player.display();
+  if (!(player.location == "START")){
   int color1 = 255;
   int wordColor = 0;
   fill(color1);
@@ -125,6 +127,7 @@ void draw() {
   overBox = overRect(550, 20, 75, 40); //if help is clicked
   // if exit is clicked player is moved back to previous map
   overExit = overRect(570, 300, 40, 40);
+  }
 }
 
 
@@ -161,7 +164,10 @@ void mousePressed() {
     }
   }
   if (overBox) {
+    if (! (player.location == "START")){
+      
     p = PAGE.HELP;
+    }
     //locked = true; 
     //rect(30,30,580,320);
     //fill(255, 255, 255);
