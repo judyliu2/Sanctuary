@@ -24,6 +24,7 @@ PImage doorOpen;
 PImage bg;    // use this for universal background image
 PImage present;
 NPC[] sczNPC;
+boolean ch1, ch2, ch3, ch4;
 ArrayList<Item> objectsToClean;
 
 //~~~~~~~~~Rooms~~~~~~~~~~~
@@ -69,6 +70,10 @@ void setup() {
     new NPC(loadImage("DNchibi.png"), 320, 260), 
     new NPC(loadImage("DNchibi.png"), 470, 260)
   };
+  ch1 = false;
+  ch2 = false;
+  ch3 = false;
+  ch4 = false;
   objectsToClean = new ArrayList<Item>();
   objectsToClean.add(new Item(loadImage("roach.gif"), random(width), 300, 150, 100));
   objectsToClean.add(new Item(loadImage("garbage1.png"), random(width), 300, 40, 40 ));
@@ -420,12 +425,11 @@ void mousePressed() {
       hall2.displayDoor();
       fill(0);
       rect(100, 10, 500, 100);
-      fill(175,238,238);
+      fill(175, 238, 238);
       if (presentAppear) {
         image(present, 20, 160, 100, 100);
         text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
-      }
-      else if (!presentAppear && !puzzle2Solved){
+      } else if (!presentAppear && !puzzle2Solved) {
         text(hakuText, 110, 35);
       }
     }  
@@ -437,7 +441,7 @@ void mousePressed() {
     for (NPC npp : sczNPC)
       npp.display();
     rect(200, 20, 450, 80);
-    fill(250,128,114);
+    fill(250, 128, 114);
     text("Which is the real me??", 210, 45);
     fill(0);
     for (NPC n : sczNPC)
@@ -536,12 +540,8 @@ public void keyPressed() {
 
 
     case HALLWAY:
-      if (player.isOnDoor(hall1) ) {
-        if (!presentAppear && puzzle2Solved) {
-          testchar = loadImage("Boss.gif");
-          p = PAGE.SCHIZOPHRENIA;
-          background(bg = loadImage("white.png"));
-        } else if (!puzzle2Solved) {
+      if (player.isOnDoor(hall1)&& !(hall1.isOpen)) {
+        if (!isHaku) {
           fill(0);
           rect(100, 10, 500, 100);
           fill(255);
@@ -549,6 +549,15 @@ public void keyPressed() {
           //lockedRoomDisplay = true;
           player.state = 2;
           player.reachx = hall3.xcor;
+        } else if (!puzzle2Solved) {
+          fill(0);
+          rect(100, 10, 500, 100);
+          fill(175, 238, 238);
+          text("The door is locked. \nWho's inside?", 110, 35);
+        } else if (!presentAppear && puzzle2Solved) {
+          testchar = loadImage("Boss.gif");
+          p = PAGE.SCHIZOPHRENIA;
+          background(bg = loadImage("white.png"));
         }
       }
 
@@ -590,9 +599,10 @@ public void keyPressed() {
     case OCD:
       player.toHide(false);
       hakuText = p.getNextString();
-      if (presentAppear && player.getXcor() < 41 && player.getYcor() < 269)
+      if (presentAppear && player.getXcor() < 41 && player.getYcor() < 269) {
         presentAppear = false;
-
+        hall1.isOpen = true;
+      }
       if (player.isOnDoor(hall2) && !presentAppear
         && (hakuText.equals("I should see if Yubaba needs\n anything") || puzzle2Solved)) {
 
@@ -602,14 +612,46 @@ public void keyPressed() {
       break;
     case SCHIZOPHRENIA:
       //sczDisplay = true;
-      for (NPC n : sczNPC)
+      for (NPC n : sczNPC) {
         if (player.isNearChar(n)) {
           rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
           rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
           rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
           rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
         }
-
+      }
+      if (player.isNearChar(sczNPC[0])) {
+        //text("We were moving. I \nfinally get a bouquet and it's \n a goodbye present. Depressing.",
+        //sczNPC[0].getXcor() + 15, sczNPC[0].getYcor() - 123);
+        ch1 = true;
+      }
+      if (player.isNearChar(sczNPC[1])) {
+        if (ch1) {
+          //text("Being here--all these pigs and talking \n monsters. It's like a dream",
+          //sczNPC[1].getXcor() + 15, sczNPC[1].getYcor() - 123);
+          ch2 = true;
+        } else {
+          //text("Not yet", sczNPC[1].getXcor() + 15, sczNPC[1].getYcor() - 123);
+        }
+      }
+      if (player.isNearChar(sczNPC[2])) {
+        if (ch2) {
+          //text("But I got to meet you. \n You're familiar, you know."
+          //sczNPC[2].getXcor() + 15, sczNPC[2].getYcor() - 123);
+          ch3 = true;
+        } else {
+          //text("Not yet", sczNPC[2].getXcor() + 15, sczNPC[2].getYcor() - 123);
+        }
+      }
+      if (player.isNearChar(sczNPC[3])) {
+        if (ch3) {
+          //text("Your real name is Kohaku. \n You saved me, before. You're \n saving me again.",
+          //sczNPC[3].getXcor() + 15, sczNPC[3].getYcor() - 123);
+          ch4 = true;
+        } else {
+          //text("Not yet", sczNPC[3].getXcor() + 15, sczNPC[3].getYcor() - 123);
+        }
+      }
 
       break;
     default:
