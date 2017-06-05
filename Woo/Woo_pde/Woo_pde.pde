@@ -167,7 +167,7 @@ void mousePressed() {
     //fill(255, 255, 255);
   } else
     locked = false;
-  System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
+  //System.out.printf("%02d-%-8s (%03.0f,%03.0f)\n", kk++%100, p, player.x, player.y);
   if (player.y >=  player.baseY) {
     player.up = false;
     player.y = player.baseY;
@@ -307,7 +307,7 @@ void mousePressed() {
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
-      if (dementiaText.equals("Greetings, Ms. Yubaba.\n How can I help you?")) {
+      if (dementiaText.equals("Greetings, Yubaba-sama.\n How can I help you?")) {
         fill(175, 238, 238);//turquoise
       } else {
         fill(255);//white
@@ -612,7 +612,7 @@ public void keyPressed() {
         hall1.isOpen = true;
       }
       if (player.isOnDoor(hall2) && !presentAppear
-        && (hakuText.equals("I should see if Yubaba needs\n anything.") || puzzle2Solved)) {
+        && (hakuText.equals("I should see if Yubaba needs\nanything.") || puzzle2Solved)) {
 
         player.setX((int)hall2.xcor);
         p = PAGE.HALLWAY;
@@ -708,7 +708,7 @@ enum PAGE {
     HOSPITAL("Well hello there", "What might your name be?", "I'm a colllector of them. \nNames, I mean.", 
     "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
     "And, once you've met someone, \nyou never really forget them.","That being said, I should \ncheck on my name list",
-    "Wouldn't want any of them \n*cough to go missing, would we?"), 
+    "That being said, I should \ncheck on my name list","Wouldn't want any of them \n*cough to go missing, would we?"), 
     HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
     DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up",  
