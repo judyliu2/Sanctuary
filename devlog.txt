@@ -282,3 +282,16 @@
         + Player can only leave when the task is complete
     + Player can only enter schizophrenia room when he or she is finished with tasks from the other two rooms
     + Player can only leave the OCD room when he or she gets the present from the platform
++Carol ::
+   + Added character-appropriate interactive dialogue
+     	+ Yubaba now talks about names
+	+ Haku now wants to find his own
+	+ Prompts now tell Haku to visit Yubaba
+   + Modified help button to specifically help out user with sorting
+     	+ FileSort now starts upon button press
+   + Reset chronology - clean room before collecting present
+   + Color coded conversations
+   + Debugged entry and exit from dementia room
+        + Character can now re-enter without resetting the room back to the first character
+   + Characters are changed to appropriate images
+   + Created final puzzle
