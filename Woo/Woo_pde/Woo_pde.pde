@@ -31,6 +31,7 @@ Room dementia;
 
 String dementiaText = "";
 String hakuText = "";
+String lockedRoomText = "";
 float decayVar = 0;
 boolean bx;
 boolean by;
@@ -247,13 +248,16 @@ void mousePressed() {
     //hall3.displayDoor();
     //rect(45, 230, 70, 150);
     //rect(270, 230, 70, 150);
-    if (lockedRoomDisplay) {
+    if (lockedRoomDisplay ) {
       fill(0);
       rect(100, 10, 500, 100);
-      fill(255);
-      text("The door is locked. \nIs my room locked?", 110, 35);
-      //if (player.getXcor() > 350)
-      //  lockedRoomDisplay = false;
+      if (isHaku)
+        fill(175,238,238);
+      else
+        fill(255);
+      text(lockedRoomText, 110, 35);
+      if (player.getXcor() > 300)
+       lockedRoomDisplay = false;
     }
     if (dementiaPuzzleComplete) {
       fill(255, 0, 0);
@@ -313,7 +317,7 @@ void mousePressed() {
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
-      if (dementiaText.equals("Greetings, Yubaba-sama.\n How can I help you?")) {
+      if (dementiaText.equals("Greetings, Yubaba-sama.\nHow can I help you?")) {
         fill(175, 238, 238);//turquoise
       } else {
         fill(255);//white
@@ -557,27 +561,22 @@ public void keyPressed() {
     case HALLWAY:
       if (player.isOnDoor(hall1)) {
         if (!isHaku) {
-          fill(0);
-          rect(100, 10, 500, 100);
-          fill(255);
-          text("The door is locked. \nIs my room locked?", 110, 35);
-          //lockedRoomDisplay = true;
+          lockedRoomText = "The door is locked. \nIs my room locked?";
+          lockedRoomDisplay = true;
           player.state = 2;
           player.reachx = hall3.xcor;
         } else if (!puzzle2Solved) {
-          fill(0);
-          rect(100, 10, 500, 100);
           fill(175, 238, 238);
-          text("The door is locked. \nWho's inside?", 110, 35);
+          lockedRoomText = "The door is locked. \nWhat am I here for?";
+          lockedRoomDisplay = true;
         } else if (!presentAppear && puzzle2Solved) {
           testchar = loadImage("Boss.png");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
         } else{
-          fill(0);
-          rect(100, 10, 500, 100);
           fill(175, 238, 238);
-          text("Not yet", 110, 35);
+          lockedRoomText = "Not yet";
+          lockedRoomDisplay = true;
         }
       }
 
@@ -590,7 +589,7 @@ public void keyPressed() {
           p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
-        dementiaText = "Greetings, Ms. Yubaba.\nHow can I help you?";
+        dementiaText = "Greetings, Yubaba-sama.\nHow can I help you?";
         hakuText = "How long have I been here";
         decayVar = 1;
       }  
