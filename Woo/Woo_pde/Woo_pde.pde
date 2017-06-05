@@ -1,5 +1,5 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
-PAGE p = PAGE.START;  //DEMENTIA2
+PAGE p = PAGE.DEMENTIA;  //DEMENTIA2
 User player;
 NPC witch;
 NPC haku;
@@ -64,14 +64,14 @@ void setup() {
   bg = loadImage("startPage.jpg");
   background(bg);
   sczNPC = new NPC[] {
-    new NPC(loadImage("DNchibi.png"), 20, 260, "Which one is the real me?",
-      new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
-    new NPC(loadImage("DNchibi.png"), 170, 260, "What is my name?",
-      new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
-    new NPC(loadImage("DNchibi.png"), 320, 260, "What is Reddit's mascot",
-      new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
-    new NPC(loadImage("DNchibi.png"), 470, 260, "QQ",
-      new String[] {"AA", "BB", "CC", "DD"}, 1)
+    new NPC(loadImage("DNchibi.png"), 20, 260, "Which one is the real me?", 
+    new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
+    new NPC(loadImage("DNchibi.png"), 170, 260, "What is my name?", 
+    new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
+    new NPC(loadImage("DNchibi.png"), 320, 260, "What is Reddit's mascot", 
+    new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
+    new NPC(loadImage("DNchibi.png"), 470, 260, "QQ", 
+    new String[] {"AA", "BB", "CC", "DD"}, 1)
   };
   ch1 = false;    // What are these?
   ch2 = false;    // Explain please?
@@ -118,16 +118,16 @@ void draw() {
   update();
   player.move();
   player.display();
-  if (!(player.location == "START")){
-  int color1 = 255;
-  int wordColor = 0;
-  fill(color1);
-  rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
-  fill(wordColor);
-  text("Help", 558, 45);
-  overBox = overRect(550, 20, 75, 40); //if help is clicked
-  // if exit is clicked player is moved back to previous map
-  overExit = overRect(570, 300, 40, 40);
+  if (!(player.location == "START")) {
+    int color1 = 255;
+    int wordColor = 0;
+    fill(color1);
+    rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
+    fill(wordColor);
+    text("Help", 558, 45);
+    overBox = overRect(550, 20, 75, 40); //if help is clicked
+    // if exit is clicked player is moved back to previous map
+    overExit = overRect(570, 300, 40, 40);
   }
 }
 
@@ -165,9 +165,9 @@ void mousePressed() {
     }
   }
   if (overBox) {
-    if (! (player.location == "START")){
-      
-    p = PAGE.HELP;
+    if (! (player.location == "START")) {
+
+      p = PAGE.HELP;
     }
     //locked = true; 
     //rect(30,30,580,320);
@@ -252,12 +252,12 @@ void mousePressed() {
       fill(0);
       rect(100, 10, 500, 100);
       if (isHaku)
-        fill(175,238,238);
+        fill(175, 238, 238);
       else
         fill(255);
       text(lockedRoomText, 110, 35);
       if (player.getXcor() > 300)
-       lockedRoomDisplay = false;
+        lockedRoomDisplay = false;
     }
     if (dementiaPuzzleComplete) {
       fill(255, 0, 0);
@@ -314,7 +314,7 @@ void mousePressed() {
       player.baseY = 200;
     else 
     player.baseY = 280;    
-    if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170) {
+    if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170 && !isHaku) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
       if (dementiaText.equals("Greetings, Yubaba-sama.\nHow can I help you?")) {
@@ -426,11 +426,7 @@ void mousePressed() {
         player.baseY = 200;
       else 
       player.baseY = 280;    
-      if (player.getXcor()>25 && player.getXcor()<165 && player.getYcor()<170) {
-        fill(12, 23, 34);
-        rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
-        fill(255);
-        text(dementiaText, 295, 45);
+      if (player.getXcor()>25 && player.getXcor()<165&& player.getYcor()<170) {
         player.baseY = 120;
       }
       hall2.displayDoor();
@@ -461,7 +457,7 @@ void mousePressed() {
           text(n.getQuestion(), 210, 45);
           fill(0, 0, 220);
           rect (n.getXcor() - 2, n.getYcor() - 145 + n.curr * 35, 154, 36, 16, 16, 16, 16);
-          
+
           fill(0);
           rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
           rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
@@ -482,9 +478,9 @@ void mousePressed() {
       hall3.displayDoor();
 
     break;
-    case END:
-      background(bg = loadImage("end.jpg"));
-      player.toHide(true);
+  case END:
+    background(bg = loadImage("end.jpg"));
+    player.toHide(true);
     break;
   }
 }
@@ -573,7 +569,7 @@ public void keyPressed() {
           testchar = loadImage("Boss.png");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
-        } else{
+        } else {
           fill(175, 238, 238);
           lockedRoomText = "Not yet";
           lockedRoomDisplay = true;
@@ -586,7 +582,7 @@ public void keyPressed() {
         else if (dementiaPuzzleComplete && isHaku) 
           p = PAGE.OCD;
         else 
-          p = PAGE.DEMENTIA;
+        p = PAGE.DEMENTIA;
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings, Yubaba-sama.\nHow can I help you?";
@@ -668,22 +664,22 @@ public void keyPressed() {
 
       break;
     case END:
-      
-    break;
+
+      break;
     default:
       System.out.println("WARNING: unrecongized input (p:" + p + ")");
     }
   }
   if (p == PAGE.SCHIZOPHRENIA)
-      if(key == 'z')
-        sczCurr.dec(sczCurr);
-      else if (key == 'x')
-        sczCurr.inc(sczCurr);
-      else if (key == '\n')
-        sczCurr.isCorrect();
+    if (key == 'z')
+      sczCurr.dec(sczCurr);
+    else if (key == 'x')
+      sczCurr.inc(sczCurr);
+    else if (key == '\n')
+      sczCurr.isCorrect();
   if (sczVar >= 4)
     p = PAGE.END;
-    
+
   if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
@@ -712,21 +708,21 @@ enum PAGE {
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("Well hello there", "What might your name be?", "I'm a colllector of them. \nNames, I mean.", 
     "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
-    "And, once you've met someone, \nyou never really forget them.","That being said, I should \ncheck on my name list",
-    "That being said, I should \ncheck on my name list","Wouldn't want any of them \n*cough to go missing, would we?"), 
+    "And, once you've met someone, \nyou never really forget them.", "That being said, I should \ncheck on my name list", 
+    "That being said, I should \ncheck on my name list", "Wouldn't want any of them \n*cough to go missing, would we?"), 
     HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
-    DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up",  
+    DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up", 
     "I'd hate to lose\nmy names", "Ko- nevermind,", "Wouldn't want him\ntouching my names anyway", "...", 
     "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
-    DEMENTIA2("So it's sorted. Hmph. \nCan't trust anyone these days","That reminds me, I got\na new girl the other day",
-    "Ch- Sen was it","I really do love names","It's getting late, I need\nto get my beauty sleep",
+    DEMENTIA2("So it's sorted. Hmph. \nCan't trust anyone these days", "That reminds me, I got\na new girl the other day", 
+    "Ch- Sen was it", "I really do love names", "It's getting late, I need\nto get my beauty sleep", 
     "Wouldn't want to look like my sister after all"), 
     OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be", 
-    "I feel weighted, drowned even","My memory flees me","My past...","I can't remember",
-    "But no matter, my life is here","I should see if Yubaba needs\nanything."), 
-    SCHIZOPHRENIA(),
+    "I feel weighted, drowned even", "My memory flees me", "My past...", "I can't remember", 
+    "But no matter, my life is here", "I should see if Yubaba needs\nanything."), 
+    SCHIZOPHRENIA(), 
     END("SYSTEM END");
 
 

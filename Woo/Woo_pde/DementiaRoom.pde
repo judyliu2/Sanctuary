@@ -22,6 +22,8 @@ class DementiaRoom implements Room {
     background(bg);
     //draw a door
     rect(270, 230, 70, 150);
-    diffTasks[0].toDo();
+    if (!isHaku) {
+      diffTasks[0].toDo();
+    }
   }
 }
