@@ -540,7 +540,7 @@ public void keyPressed() {
 
 
     case HALLWAY:
-      if (player.isOnDoor(hall1)&& !(hall1.isOpen)) {
+      if (player.isOnDoor(hall1)) {
         if (!isHaku) {
           fill(0);
           rect(100, 10, 500, 100);
@@ -558,6 +558,11 @@ public void keyPressed() {
           testchar = loadImage("Boss.gif");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
+        } else{
+          fill(0);
+          rect(100, 10, 500, 100);
+          fill(175, 238, 238);
+          text("Not yet", 110, 35);
         }
       }
 
@@ -604,7 +609,7 @@ public void keyPressed() {
         hall1.isOpen = true;
       }
       if (player.isOnDoor(hall2) && !presentAppear
-        && (hakuText.equals("I should see if Yubaba needs\n anything") || puzzle2Solved)) {
+        && (hakuText.equals("I should see if Yubaba needs\n anything.") || puzzle2Solved)) {
 
         player.setX((int)hall2.xcor);
         p = PAGE.HALLWAY;
