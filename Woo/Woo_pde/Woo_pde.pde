@@ -1,5 +1,5 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
-PAGE p = PAGE.DEMENTIA;  //DEMENTIA2
+PAGE p = PAGE.START;
 User player;
 NPC witch;
 NPC haku;
@@ -83,7 +83,7 @@ void setup() {
   objectsToClean.add(new Item(loadImage("poop.png"), 100, 310, 120, 70));
   objectsToClean.add(new Item(loadImage("roach.gif"), 140, 200, 160, 160));
   objectsToClean.add(new Item(loadImage("roach.gif"), 200, 200, 160, 160));
-  objectsToClean.add(new Item(loadImage("garbage1.png"),240 , 200, 100, 140 ));
+  objectsToClean.add(new Item(loadImage("garbage1.png"), 240, 200, 100, 140 ));
   objectsToClean.add(new Item(loadImage("poop.png"), 280, 310, 120, 70));
   objectsToClean.add(new Item(loadImage("roach.gif"), 300, 200, 160, 160));
   objectsToClean.add(new Item(loadImage("poop.png"), 400, 310, 120, 60));
@@ -212,7 +212,7 @@ void mousePressed() {
     witch.lengthh = 150;
     witch.widthh = 150;
     witch.display2();
-    
+
     if (player.isNearChar(witch) && !puzzle2Solved) {
 
       fill(0);
@@ -436,8 +436,10 @@ void mousePressed() {
       }
       hall2.displayDoor();
       fill(0);
-      rect(100, 10, 500, 100);
-      fill(175, 238, 238);
+      if (presentAppear || !puzzle2Solved) {
+        rect(100, 10, 500, 100);
+        fill(175, 238, 238);
+      }
       if (presentAppear) {
         image(present, 20, 160, 100, 100);
         text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
