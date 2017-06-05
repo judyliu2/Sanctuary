@@ -313,3 +313,11 @@
         + Character can now re-enter without resetting the room back to the first character
    + Characters are changed to appropriate images
    + Worked on final puzzle
++==============================================================   
++2017-06-05
++Carol ::
+   + Debugged code:
+        + Interaction dialogue with door 1 lasts longer
+	+ Empty text boxes do not linger
+	+ Bubble sort does not appear again if dementia puzzle is completed
+	
