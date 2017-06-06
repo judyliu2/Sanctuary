@@ -172,14 +172,10 @@ void mousePressed() {
     } else {
       background(bg = explainBG);
       fill(255);
-      text("Once upon a time there lived a penguin named\n" +
-        "  <<Supreme Lordess of the UnderWorld>>\n" + 
-        "Every day she lived in a world of frozen hell.\n" +
-        "One day, she found a very pretty rock.\n"+
-        "She, then, built a fortress to protect such rock\n"+
-        "Because of that, other divine beings wanted to steal said rock\n" +
-        "Until finally, the Supreme Lordess captured all the other divine creatures"
-        , 0, 40); 
+      text("The following RPG game is based on a 2001 Japanese\n" +
+      "animated fantasy movie written and directed by Hayao Miyazaki.\n" +
+      "The creators of this game highly recommends you to watch/ rewatch\n" +
+      "this movie. So without furture ado...\n\nEnjoy!", 0, 40); 
     }
   break;
   case HOSPITAL:
@@ -477,7 +473,9 @@ void mousePressed() {
         background(bg = loadImage("black.png"));
         player.toHide(true);
         fill(255);
-        text("\"Some Inspirational Text\" - Supreme Penguin", 50, 50);
+        text("It is not our differences that divide us.\n" +
+        "It is our inability to recognize, accept,\n" +
+        "and celebrate those differences.\n- Audre Lorde", 50, 50);
       break;
       case END:
         background(bg = loadImage("end.jpg"));
