@@ -315,9 +315,24 @@
    + Worked on final puzzle
 +==============================================================   
 +2017-06-05
++Irene ::
+   + More animations/ features!
+   	+ Start page fades away
+   	+ Explanation of Spirited Away movie and game follows Start page to enlighten users who have not watched the movie
+	+ Black timed page separates transition from Haku to Chihiro (2nd and 3rd user)
+	+ Black page for a hope message following Chihiro's task completion
+   + Initial dialogue is now transitioned by 's' as opposed to being timed
+   + Added 'Dementia' on door 2 when Haku's task is complete
+   + Characters are now hidden on the black transition screen for smoother transitions
+   + Fixed bug in OCD room where dialogue in the room repeats every time the user enters
+   + Fixed bug in the Help button to keep the user on the ground in the hallway (as opposed to in the air)
+   + Fixed bug in Schizophrenia where multiple questions and answers could be displayed at once
+   + Code refinement (deleted unnessary code, more in-line comments)
+   + Added end page image with final message 
 +Carol ::
    + Debugged code:
         + Interaction dialogue with door 1 lasts longer
 	+ Empty text boxes do not linger
 	+ Bubble sort does not appear again if dementia puzzle is completed
 	+ Closing statements after solving first puzzle lasts longer
++============================================================== 
