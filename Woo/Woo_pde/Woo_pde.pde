@@ -193,10 +193,10 @@ void mousePressed() {
     } else {
       background(bg = explainBG);
       fill(255);
-      text("The following RPG game is based on a 2001 Japanese\n" +
-        "animated fantasy movie written and directed by Hayao Miyazaki.\n" +
-        "The creators of this game highly recommends you to watch/ rewatch\n" +
-        "this movie. So without furture ado...\n\nEnjoy!", 0, 40);
+      text("The following RPG game is based on a 2001\n Japanese " +
+        "animated fantasy movie written and\n directed by Hayao Miyazaki." +
+        " The creators of \nthis game highly recommend you to watch and \nrewatch" +
+        " this movie. So without further ado...\n\nEnjoy!", 0, 40);
     }
     break;
   case HOSPITAL:
@@ -289,7 +289,7 @@ void mousePressed() {
     }
     else if(player.location == "SCHIZOPHRENIA"){
       fill(0);
-      text("Keys for talking to NPC: \n Z - Up \n X - down \n Enter - choose answer", 40, 8);
+      text("Keys for talking to NPC: \n Z - Up \n X - down \n Enter - choose answer", 40, 40);
     }
     else {
       background(bg = loadImage("helpPage.png"));
