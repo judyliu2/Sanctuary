@@ -1,5 +1,5 @@
 //~~~~~~~~~Tracking Vars~~~~~~~~~~~~~~~
-PAGE p = PAGE.START;
+PAGE p = PAGE.START;    //DEMENTIA2
 User player;
 NPC witch;
 NPC haku;
@@ -11,8 +11,6 @@ Door hall2 = new Door(270, 230, 70, 150, true); //p = HALLWAY to DEMENTIA
 Door hall3 = new Door(520, 230, 70, 150, true); //p = HALLWAY to HOSPITAL (OCD)
 Door dementia1 = new Door(270, 210, 70, 150, true); //p = DEMENTIA to HALLWAY
 
-//ArrayList<PVector> history = new ArrayList();
-
 //~~~~~~~~~~~~~~images~~~~~~~~~~~~~~~~~
 PImage testchar;
 PImage witchchar;
@@ -20,10 +18,10 @@ PImage hakuchar;
 PImage doorClosed;
 PImage doorOpen;
 PImage bg;    // use this for universal background image
+PImage explainBG;
 PImage present;
 NPC[] sczNPC;
 NPC sczCurr;    // current NPC selection in scz room
-boolean ch1, ch2, ch3, ch4;
 ArrayList<Item> objectsToClean;
 
 //~~~~~~~~~Rooms~~~~~~~~~~~
@@ -33,7 +31,8 @@ String dementiaText = "";
 String dementia2Text = "";
 String hakuText = "";
 String lockedRoomText = "";
-float decayVar = 0;
+String hospitalText = "Well hello there";
+float decayVar = 1;
 boolean bx;
 boolean by;
 
@@ -50,7 +49,6 @@ ArrayList<String> biSolution;  // p = DEMENTIA_PUZZLE;
 int biPick = 0;               // p = DEMENTIA_PUZZLE;
 boolean biClicked = false;    // p = DEMENTIA_PUZZLE;
 int biXOffset;        // p = DEMENTIA_PUZZLE;
-int biYOffset;
 boolean lockedRoomDisplay = false;
 boolean dementiaPuzzleComplete = false;
 boolean loadOCD = (p == PAGE.DEMENTIA2 || p == PAGE.OCD);
@@ -67,18 +65,14 @@ void setup() {
   background(bg);
   sczNPC = new NPC[] {
     new NPC(loadImage("DNchibi.png"), 20, 260, "Which one is the real me?", 
-    new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
+      new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
     new NPC(loadImage("DNchibi.png"), 170, 260, "What is my name?", 
-    new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
+      new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
     new NPC(loadImage("DNchibi.png"), 320, 260, "What is Reddit's mascot", 
-    new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
+      new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
     new NPC(loadImage("DNchibi.png"), 470, 260, "QQ", 
-    new String[] {"AA", "BB", "CC", "DD"}, 1)
+      new String[] {"AA", "BB", "CC", "DD"}, 1)
   };
-  ch1 = false;    // What are these?
-  ch2 = false;    // Explain please?
-  ch3 = false;
-  ch4 = false;
   objectsToClean = new ArrayList<Item>();
   objectsToClean.add(new Item(loadImage("roach.gif"), 30, 200, 160, 160));
   objectsToClean.add(new Item(loadImage("garbage1.png"), 80, 200, 100, 140 ));
@@ -99,10 +93,11 @@ void setup() {
   doorOpen = loadImage("doorOpen.gif");
   door1.setLocation("HALLWAY");
   testchar = loadImage("yubaba.png");
+  explainBG = loadImage("DementiaRoom.png");
   player = new User(true);
   player.location = "START";
   present = loadImage("present.png");
-  fill(153, 102, 255);
+  //fill(153, 102, 255);
   //text("Welcome to \n    Our Asylum", 75, 105);
   stroke(255);
   // rect(rectX, rectY, rectXSize, rectYSize);
@@ -120,12 +115,10 @@ void draw() {
   update();
   player.move();
   player.display();
-  if (!(player.location == "START")) {
-    int color1 = 255;
-    int wordColor = 0;
-    fill(color1);
+  if (player.location != "START") {
+    fill(255);
     rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
-    fill(wordColor);
+    fill(0);    // wordColor
     text("Help", 558, 45);
     overBox = overRect(550, 20, 75, 40); //if help is clicked
     // if exit is clicked player is moved back to previous map
@@ -133,44 +126,21 @@ void draw() {
   }
 }
 
-
-/*
- noCursor();
- 
- PVector mouse = new PVector(mouseX, mouseY);
- history.add(mouse);
- if (history.size() > 40)
- history.remove(0);
- for (int i = 0; i <history.size(); i++) {
- noStroke();
- fill(153-i*5, 0, 0);//fill(255 - i*5);//fill(255,255,153);
- PVector position = history.get(i);
- ellipse(position.x, position.y, i, i);
- }  */
 void update() {
   if ( overRect(550, 20, 75, 40)) {
     overBox = false;
     overExit = false;
-  } else {
-    overBox = overExit = false;
-  }
+  } else
+    overBox = overExit = false;    // so overBox and overExit are always false???
 }
 int kk = 0;
 void mousePressed() {
   // HELP BUTTON
-  if (overExit) {
-    //return to previous page
-    if (player.location.equals("DEMENTIA_PUZZLE")) {
-      p = PAGE.DEMENTIA;
-    } else {
-      p = PAGE.HALLWAY;
-    }
-  }
+  if (overExit)  //return to previous page
+    p = (p == PAGE.DEMENTIA_PUZZLE) ? PAGE.DEMENTIA : PAGE.HALLWAY;
   if (overBox) {
-    if (! (player.location == "START")) {
-
+    if (player.location != "START")
       p = PAGE.HELP;
-    }
     //locked = true; 
     //rect(30,30,580,320);
     //fill(255, 255, 255);
@@ -186,9 +156,32 @@ void mousePressed() {
   }
   switch(p) {
   case START: 
-    p = PAGE.HOSPITAL;  // fall through
+    p = PAGE.EXPLAIN;
     break;
-
+  case EXPLAIN:
+    if (decayVar > .5) {
+      background(bg = loadImage("white.png"));
+      decayVar -= 0.01; 
+      tint(255, (int) (255 * decayVar));
+      image(loadImage("startPage.jpg"), 0, 0);
+    } else if (decayVar <= .5 && decayVar > 0) {
+      background(bg = loadImage("white.png"));
+      decayVar -= 0.01; 
+      tint(255, 255 - (int) (255 * decayVar));
+      image(loadImage("DementiaRoom.png"), 0, 0);
+    } else {
+      background(bg = explainBG);
+      fill(255);
+      text("Once upon a time there lived a penguin named\n" +
+        "  <<Supreme Lordess of the UnderWorld>>\n" + 
+        "Every day she lived in a world of frozen hell.\n" +
+        "One day, she found a very pretty rock.\n"+
+        "She, then, built a fortress to protect such rock\n"+
+        "Because of that, other divine beings wanted to steal said rock\n" +
+        "Until finally, the Supreme Lordess captured all the other divine creatures"
+        , 0, 40); 
+    }
+  break;
   case HOSPITAL:
     background(bg = loadImage("helpPage.png"));
     player.location = "HOSPITAL";
@@ -197,14 +190,11 @@ void mousePressed() {
 
     fill(0);
     rect(100, 10, 500, 100);
+    
     fill(255);
-
-    text(p.getNextString(), 110, 35);
-    p.stallIfDialogue();
+    text(hospitalText, 110, 35);
     player.toHide(false);
-
     door1.displayDoor();
-
     break;
   case HOSPITAL2:
     background(bg = loadImage("helpPage.png"));
@@ -215,47 +205,32 @@ void mousePressed() {
     witch.widthh = 150;
     witch.display2();
 
-    if (player.isNearChar(witch) && !puzzle2Solved) {
-
-      fill(0);
-      rect(100, 10, 500, 100);
-      fill(255);
+    fill(0);
+    rect(100, 10, 500, 100);
+    fill(255);
+    if (!puzzle2Solved) 
       text("Disgusting! Somebody sacked my \nroom! Hurry and clean it!", 110, 35);
-    } else if (player.isNearChar(witch) && puzzle2Solved) {
-      fill(0);
-      rect(100, 10, 500, 100);
-      fill(255);
+    else
       text("Hmph, you may now proceed.", 110, 35);
-    }
 
-    for (Item trash : objectsToClean) {
+    for (Item trash : objectsToClean)
       trash.display();
-    }
-    for (int i = 0; i < objectsToClean.size(); i++) {
-      if (mouseX> objectsToClean.get(i).x && mouseX< objectsToClean.get(i).x+ objectsToClean.get(i).wdth && mouseY> objectsToClean.get(i).y && mouseY<objectsToClean.get(i).y+objectsToClean.get(i).hght) {
+    
+    for (int i = 0; i < objectsToClean.size(); i++)
+      if (mouseX> objectsToClean.get(i).x && mouseX< objectsToClean.get(i).x+ objectsToClean.get(i).wdth && mouseY> objectsToClean.get(i).y && mouseY<objectsToClean.get(i).y+objectsToClean.get(i).hght)
         objectsToClean.remove(i);
-      }
-    }
-    if (objectsToClean.size() == 0) {
-      puzzle2Solved = true;
-      presentAppear = true;
-    }
+    
+    if (objectsToClean.isEmpty())
+      puzzle2Solved = presentAppear = true;
 
-    if (puzzle2Solved) { //////////////////////////////////
+    if (puzzle2Solved)
       door1.displayDoor();
-    }
     break;
   case HALLWAY:
-    bg = loadImage("Golden hallway.png");
     player.location = "HALLWAY";
-    background(bg);
-    ////shows all the doors
-    //hall1.displayDoor();
-    //hall2.displayDoor();
-    //hall3.displayDoor();
-    //rect(45, 230, 70, 150);
-    //rect(270, 230, 70, 150);
-    if (lockedRoomDisplay ) {
+    player.baseY = 280; //Keeps the user on the ground
+    background(bg = loadImage("Golden hallway.png"));
+    if (lockedRoomDisplay) {
       fill(0);
       rect(100, 10, 500, 100);
       if (isHaku)
@@ -270,6 +245,12 @@ void mousePressed() {
       fill(255, 0, 0);
       textFont(createFont("SourceCodePro-Regular.ttf", 12));
       text("Obsessive\n Compulsive\nDisorder", 525, 280);
+      textFont(createFont("SourceCodePro-Regular.ttf", 24));
+    }
+    if (puzzle2Solved) {
+      fill(255, 0, 0);
+      textFont(createFont("SourceCodePro-Regular.ttf", 12));
+      text("Dementia", hall2.xcor + 5, 280);
       textFont(createFont("SourceCodePro-Regular.ttf", 24));
     }
     if (loadOCD) {
@@ -289,18 +270,15 @@ void mousePressed() {
       text(text, 40, 80);
       //sorting animation
     } else {
-      bg = loadImage("helpPage.png");
+      background(bg = loadImage("helpPage.png"));
       fill(250);
-      background(bg);
-      String text = "Keys: \n W - Jump \n S - Walk through doors or \n interact with others \n A - Move left \n D - Move right";
-      text(text, 40, 80);
+      text("Keys: \n W - Jump \n S - Walk through doors or \n" + 
+          "interact with others \n A - Move left \n D - Move right", 40, 80);
     }
-
     fill(255);
     rect( 570, 300, 40, 40, 18, 18, 18, 18);
     fill(0);
     text("X", 582, 328);
-
     break;
 
   case DEMENTIA:
@@ -320,15 +298,14 @@ void mousePressed() {
     if (player.getXcor() < 65 && player.getYcor() < 280)
       player.baseY = 200;
     else 
-    player.baseY = 280;    
+      player.baseY = 280;    
     if (player.getXcor()>75 && player.getXcor()<165 && player.getYcor()<170 && !isHaku) {
       fill(12, 23, 34);
       rect(290, 20, 340, 120, 0, 18, 0, 18);    // box text
-      if (dementiaText.equals("Greetings, Yubaba-sama.\nHow can I help you?")) {
-        fill(175, 238, 238);//turquoise
-      } else {
-        fill(255);//white
-      }
+      if (dementiaText.equals("Greetings, Yubaba-sama.\nHow can I help you?"))
+        fill(175, 238, 238);  //turquoise
+      else
+        fill(255);            //white
       text(dementiaText, 295, 45);
       player.baseY = 120;
     }  
@@ -375,18 +352,16 @@ void mousePressed() {
     background(bg = loadImage("spirited_away.jpg"));
     player.toHide(false);
     if (loadOCD) {
-      if (decayVar == 1) {
+      if (decayVar == 1)
         try {
           Thread.sleep(50);
-        }        
-        catch(Exception e) {
-        }
+        } catch(Exception ignored) { }
         decayVar -= 0.001;
-      }
+      
       disableControls = true;
       player.state = 2;
       player.reachx = dementia1.xcor ;
-      if (player.getXcor() == dementia1.xcor) //===================================
+      if (player.getXcor() == dementia1.xcor)
         p = PAGE.HALLWAY;
       decayVar = 1;
     }
@@ -396,17 +371,14 @@ void mousePressed() {
 
     rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
     fill(255);
-    counter += 1;
-    if (counter == 3){
+    if (++counter == 3){
       dementia2Text = p.getNextString();
       counter = 0;
     }
     text(dementia2Text, 265, 45);
     try{
-    Thread.sleep(500);
-    }
-    catch(InterruptedException E){
-    }
+      Thread.sleep(500);
+    } catch(InterruptedException ignored){}
     dementia1.displayDoor();
     //fill(124, 255, 0); //door
     //rect(290, 230, 70, 150);
@@ -419,6 +391,7 @@ void mousePressed() {
     break;
   case OCD:
     if (loadOCD) {
+      player.toHide(true);
       decayVar -= 0.01;
       player.setThickness(120);
       if (decayVar > 0) {
@@ -426,6 +399,7 @@ void mousePressed() {
         tint(255, 255 - (int) (255 * decayVar));
         image(loadImage("black.png"), 0, 0);
       } else {
+        player.toHide(false);
         tint(255, 255);
         background(bg = loadImage("spirited_away.jpg"));
         disableControls = false;
@@ -442,9 +416,9 @@ void mousePressed() {
         player.baseY = 200;
       else 
       player.baseY = 280;    
-      if (player.getXcor()>25 && player.getXcor()<165&& player.getYcor()<170) {
+      if (player.getXcor()>25 && player.getXcor()<165&& player.getYcor()<170)
         player.baseY = 120;
-      }
+      
       hall2.displayDoor();
       fill(0);
       if (presentAppear || !puzzle2Solved) {
@@ -454,53 +428,61 @@ void mousePressed() {
       if (presentAppear) {
         image(present, 20, 160, 100, 100);
         text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
-      } else if (!presentAppear && !puzzle2Solved) {
+      } else if (!presentAppear && !puzzle2Solved)
         text(hakuText, 110, 35);
-      }
-    }  
-
-
+    }
     break;
   case SCHIZOPHRENIA:
-    //background(bg);
-    if (sczVar < 4)
-      for (NPC npp : sczNPC)
-        npp.display();
-    for (NPC n : sczNPC)
-      if (player.isNearChar(n)) { 
-        sczCurr = n;
-        rect(200, 20, 450, 80);
-        fill(250, 128, 114);
-        if (n.hasQuestion) {
-          text(n.getQuestion(), 210, 45);
-          fill(0, 0, 220);
-          rect (n.getXcor() - 2, n.getYcor() - 145 + n.curr * 35, 154, 36, 16, 16, 16, 16);
-
-          fill(0);
-          rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
-          rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
-          fill(255);
-          text(n.getChoices(0), n.getXcor() + 15, n.getYcor() - 123);
-          text(n.getChoices(1), n.getXcor() + 15, n.getYcor() - 88);
-          text(n.getChoices(2), n.getXcor() + 15, n.getYcor() - 53);
-          text(n.getChoices(3), n.getXcor() + 15, n.getYcor() - 18);
-          fill(0);
-        } else {
-          text("Question Solved", 210, 45);
-          continue;
+    if (decayVar > 0) {
+      decayVar -= 0.01;
+      tint(255, 255 - (int) (255 * decayVar));
+      image(loadImage("black.png"), 0, 0);
+    } else {
+      background(bg);
+      player.toHide(false);
+      if (sczVar < 4)
+        for (NPC npp : sczNPC)
+          npp.display();
+      for (NPC n : sczNPC)
+        if (player.isNearChar(n)) { 
+          sczCurr = n;
+          rect(200, 20, 450, 80);
+          fill(250, 128, 114);
+          if (n.hasQuestion) {
+            text(n.getQuestion(), 210, 45);
+            fill(0, 0, 220);
+            rect (n.getXcor() - 2, n.getYcor() - 145 + n.curr * 35, 154, 36, 16, 16, 16, 16);
+  
+            fill(0);
+            rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
+            rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
+            rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
+            rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
+            fill(255);
+            text(n.getChoices(0), n.getXcor() + 15, n.getYcor() - 123);
+            text(n.getChoices(1), n.getXcor() + 15, n.getYcor() - 88);
+            text(n.getChoices(2), n.getXcor() + 15, n.getYcor() - 53);
+            text(n.getChoices(3), n.getXcor() + 15, n.getYcor() - 18);
+            fill(0);
+          } else {
+            text("Question Solved", 210, 45);
+            continue;
+          }
         }
+        if (sczVar >= 4)
+          hall3.displayDoor();
       }
-    if (sczVar >= 4)
-      hall3.displayDoor();
-
-    break;
-  case END:
-    background(bg = loadImage("end.jpg"));
-    player.toHide(true);
-    break;
-  }
+      break;
+      case END_PRE:
+        background(bg = loadImage("black.png"));
+        player.toHide(true);
+        fill(255);
+        text("\"Some Inspirational Text\" - Supreme Penguin", 50, 50);
+      break;
+      case END:
+        background(bg = loadImage("end.jpg"));
+        break;
+    }
 }
 
 void mouseDragged() {
@@ -559,11 +541,14 @@ public void keyPressed() {
     switch(p) {
     case HELP:    
     case START:
+      p = PAGE.EXPLAIN;
+    break;
+    case EXPLAIN:
       p = PAGE.HOSPITAL;
-      break;
-
+    break;
     case HOSPITAL:
-      if (player.isOnDoor(door1) && door1.isOpen)
+      hospitalText = p.getNextString();
+      if (player.isOnDoor(door1) && door1.isOpen && p.getNum() == p.getArrLen())
         p = PAGE.HALLWAY;
       break;
 
@@ -584,6 +569,8 @@ public void keyPressed() {
           lockedRoomText = "The door is locked. \nWhat am I here for?";
           lockedRoomDisplay = true;
         } else if (!presentAppear && puzzle2Solved) {
+          player.toHide(true);
+          decayVar = 1;
           testchar = loadImage("Boss.png");
           p = PAGE.SCHIZOPHRENIA;
           background(bg = loadImage("white.png"));
@@ -638,49 +625,11 @@ public void keyPressed() {
       }
       break;
     case SCHIZOPHRENIA:
-      //sczDisplay = true;
-      //for (NPC n : sczNPC) {
-      //  if (player.isNearChar(n)) {
-      //    rect (n.getXcor(), n.getYcor() - 145, 150, 30, 18, 18, 18, 18);
-      //    rect (n.getXcor(), n.getYcor() - 110, 150, 30, 18, 18, 18, 18);
-      //    rect (n.getXcor(), n.getYcor() -  75, 150, 30, 18, 18, 18, 18);
-      //    rect (n.getXcor(), n.getYcor() -  40, 150, 30, 18, 18, 18, 18);
-      //  }
-      //}
-      if (player.isNearChar(sczNPC[0])) {
-        //text("We were moving. I \nfinally get a bouquet and it's \n a goodbye present. Depressing.",
-        //sczNPC[0].getXcor() + 15, sczNPC[0].getYcor() - 123);
-        ch1 = true;
-      }
-      if (player.isNearChar(sczNPC[1])) {
-        if (ch1) {
-          //text("Being here--all these pigs and talking \n monsters. It's like a dream",
-          //sczNPC[1].getXcor() + 15, sczNPC[1].getYcor() - 123);
-          ch2 = true;
-        } else {
-          //text("Not yet", sczNPC[1].getXcor() + 15, sczNPC[1].getYcor() - 123);
-        }
-      }
-      if (player.isNearChar(sczNPC[2])) {
-        if (ch2) {
-          //text("But I got to meet you. \n You're familiar, you know."
-          //sczNPC[2].getXcor() + 15, sczNPC[2].getYcor() - 123);
-          ch3 = true;
-        } else {
-          //text("Not yet", sczNPC[2].getXcor() + 15, sczNPC[2].getYcor() - 123);
-        }
-      }
-      if (player.isNearChar(sczNPC[3])) {
-        if (ch3) {
-          //text("Your real name is Kohaku. \n You saved me, before. You're \n saving me again.",
-          //sczNPC[3].getXcor() + 15, sczNPC[3].getYcor() - 123);
-          ch4 = true;
-        } else {
-          //text("Not yet", sczNPC[3].getXcor() + 15, sczNPC[3].getYcor() - 123);
-        }
-      }
 
       break;
+    case END_PRE:    
+      p = PAGE.END;
+    break;
     case END:
 
       break;
@@ -689,14 +638,19 @@ public void keyPressed() {
     }
   }
   if (p == PAGE.SCHIZOPHRENIA)
-    if (key == 'z')
-      sczCurr.dec(sczCurr);
-    else if (key == 'x')
-      sczCurr.inc(sczCurr);
-    else if (key == '\n')
-      sczCurr.isCorrect();
-  if (sczVar >= 4)
-    p = PAGE.END;
+    switch(key) {
+      case 'z':
+        sczCurr.dec(sczCurr);
+      break;
+      case 'x':
+        sczCurr.inc(sczCurr);
+      break;
+      case '\n':
+        sczCurr.isCorrect();
+      break;
+    }
+  if (sczVar >= 4 && p != PAGE.END)
+    p = PAGE.END_PRE;
 
   if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
@@ -714,17 +668,12 @@ public void keyPressed() {
 public void keyReleased() {
   player.left = false;    // move left
   player.right = false;   // move right
-  //player.down = false;    
-  //if (key == 'w') {
-  //  //player.up = false;
-  //}
 }
 
 enum PAGE {
-  START(), 
-
+  START(), EXPLAIN(),
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("Well hello there", "What might your name be?", "I'm a collector of them. \nNames, I mean.", 
+    HOSPITAL("What might your name be?", "I'm a collector of them. \nNames, I mean.", 
     "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
     "And, once you've met someone, \nyou never really forget them.", "That being said, I should \ncheck on my name list", 
     "That being said, I should \ncheck on my name list", "Wouldn't want any of them \n*cough to go missing, would we?"), 
@@ -740,9 +689,8 @@ enum PAGE {
     OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be", 
     "I feel weighted, drowned even", "My memory flees me", "My past...", "I can't remember", 
     "But no matter, my life is here", "I should see if Yubaba needs\nanything."), 
-    SCHIZOPHRENIA(), 
+    SCHIZOPHRENIA(), END_PRE(),
     END("SYSTEM END");
-
 
   int pageNum;
   String[] arr;
@@ -763,18 +711,18 @@ enum PAGE {
   void resetPage() {       
     pageNum = 0;
   }
-  void stallIfDialogue() {
-    if (pageNum == 0 || delay)
-      return;
-    try {
-      delay = true;
-      if (pageNum < arr.length)
-        Thread.sleep(2000);
-      delay = false;
-    }  
-    catch (Exception ignored) {
-    }
-  }
+  //void stallIfDialogue() {
+  //  if (pageNum == 0 || delay)
+  //    return;
+  //  try {
+  //    delay = true;
+  //    if (pageNum < arr.length)
+  //      Thread.sleep(2000);
+  //    delay = false;
+  //  }  
+  //  catch (Exception ignored) {
+  //  }
+  //}
 }
 
 class biBox implements Comparable<biBox> {  // for DEMENTIA_PUZZLE class
