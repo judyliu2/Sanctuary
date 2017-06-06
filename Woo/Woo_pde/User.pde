@@ -53,13 +53,7 @@ class User extends Character {
   }
 
   public boolean isNearChar(Character c) {
-    int range = 200;
-    if (x < c.getXcor() + range && x > c.getXcor() - range ) {
-      nearChar = true;
-    } else {
-      nearChar = false;
-    }
-    return nearChar;
+    return (nearChar = x < c.getXcor() + 40 && x > c.getXcor() - 40);
   }
 
   public boolean isNearIem(Item i) {
@@ -110,14 +104,7 @@ class User extends Character {
     if (down && y > 0) {
       background(bg);
     }
-    if (right) {//change image
-    }
-    if (left) {//change image
-    }
-    if (up) {// animation for it?
-    } 
-    if (down) {// animation for it?
-    }
+
   }
   
   void setThickness(int newThickness) {
