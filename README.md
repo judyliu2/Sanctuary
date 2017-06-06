@@ -15,6 +15,8 @@ Keep in mind that the RPG is experienced in first person - that is, completion o
 - W - Jump (with gravity, of course)
 - S - Interact with objects (e.g. entering doors)
 - Mouse - To click help button and exit button 
+- Z - Up (for choices in Schizophrenia Room)
+- X - Down (for choices in Schizophrenia Room)
  
 ## Launch Instructions
 1. Open terminal.
