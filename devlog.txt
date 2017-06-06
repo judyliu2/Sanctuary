@@ -8,7 +8,9 @@
 +------------------------------------------
 +OBSTACLES OVERCOME
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
+
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 +UNRESOLVED ISSUES
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,8 +18,9 @@
     + Moving a letter may be dropped without intention
     + A different letter may be moved instead if the mouse does not first hover over a white space (preferrably above or below the tiles)
     + Letters may cover one another by accident if the user moves a letter
-
+    + When the player presses the 'S' key in the help screen, the player is taken to another location
 +COOL STUFF LEARNED
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 +MID-DEVELOPMENT DESIGN CHANGES
@@ -32,6 +35,11 @@
 
 +LESSONS LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ Use KTS to explain concepts 
++ Plan everything before coding 
++ Before pushing, pull and check if the code is working.
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 + ______   ______   __   __   __       ______   _______     
 +/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
@@ -335,4 +343,12 @@
 	+ Empty text boxes do not linger
 	+ Bubble sort does not appear again if dementia puzzle is completed
 	+ Closing statements after solving first puzzle lasts longer
++Judy ::
+    + Fixed the help button
+    + Fixed coordinates and the sizes of the objects in the OCD room
+    + Added mored to the readme file
 +============================================================== 
++Judy ::
+   + When the player leaves the help screen, he/she returns to the previous location
+   + updated ReadMe file with more about the movie's plot
+   + Updated devlog
