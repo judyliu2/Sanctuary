@@ -30,6 +30,7 @@ ArrayList<Item> objectsToClean;
 Room dementia;
 
 String dementiaText = "";
+String dementia2Text = "";
 String hakuText = "";
 String lockedRoomText = "";
 float decayVar = 0;
@@ -57,6 +58,7 @@ boolean disableControls = false;
 boolean presentAppear = p == PAGE.DEMENTIA2;
 boolean isHaku = p == PAGE.DEMENTIA2;
 int sczVar = 0;        // number of correct answers in scz  0=none  4=all
+int counter = 2; //counts beats for Dementia2 dialogue
 
 void setup() {
   size(640, 360); // Sets the screen to be 640 x 360 (L X H)
@@ -394,8 +396,17 @@ void mousePressed() {
 
     rect(260, 20, 370, 120, 0, 18, 0, 18);    // box text
     fill(255);
-
-    text(p.getNextString(), 265, 45);
+    counter += 1;
+    if (counter == 3){
+      dementia2Text = p.getNextString();
+      counter = 0;
+    }
+    text(dementia2Text, 265, 45);
+    try{
+    Thread.sleep(500);
+    }
+    catch(InterruptedException E){
+    }
     dementia1.displayDoor();
     //fill(124, 255, 0); //door
     //rect(290, 230, 70, 150);
@@ -713,7 +724,7 @@ enum PAGE {
   START(), 
 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
-    HOSPITAL("Well hello there", "What might your name be?", "I'm a colllector of them. \nNames, I mean.", 
+    HOSPITAL("Well hello there", "What might your name be?", "I'm a collector of them. \nNames, I mean.", 
     "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
     "And, once you've met someone, \nyou never really forget them.", "That being said, I should \ncheck on my name list", 
     "That being said, I should \ncheck on my name list", "Wouldn't want any of them \n*cough to go missing, would we?"), 
@@ -725,7 +736,7 @@ enum PAGE {
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
     DEMENTIA2("So it's sorted. Hmph. \nCan't trust anyone these days", "That reminds me, I got\na new girl the other day", 
     "Ch- Sen was it", "I really do love names", "It's getting late, I need\nto get my beauty sleep", 
-    "Wouldn't want to look like my sister after all"), 
+    "Wouldn't want to look \nlike my sister after all"), 
     OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be", 
     "I feel weighted, drowned even", "My memory flees me", "My past...", "I can't remember", 
     "But no matter, my life is here", "I should see if Yubaba needs\nanything."), 
