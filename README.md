@@ -6,6 +6,7 @@ Irene Lam, Judy Liu, Carol Pan
 ### Description
 This is a single-player educational RPG game that aims to educate the user on various mental disorders, coded in Processing. The user is first thrown into a movie called Spirited Away and the player must go follow along the story. The user will have to play as characters such as Yubaba, Haku and Chihiro, the main character of Spirited Away. The user will encounter and must overcome tasks along the way, which require understanding of varius concepts such as bubble sort, OCD, and schizophrenia. Throughout the journey, various hints will aid the user in their pursuits with the use of the help button. Controls for movement of the character is also found when pressing the help button.
 
+Spirited Away is a movie about a 10-year-old girl named Chihiro who moves into a new neighborhood. While driving to a new home the family decides to take a short cut, leading them into a world of spirits. When bewitched by the food of that world, the parents become pigs. Chihiro eventually meets a new friend, Haku, who helps Chihiro by comforting her and getting her a position Yubaba's bathhouse. This new job leads her to find her parent, return them to humans.  
 
 Keep in mind that the RPG is experienced in first person - that is, completion of each task forces the user to assume a different body under the influence of a different disorder. There is no way to lose the game, but winning mandates the completion of all tasks and reaching the end page of the game.
 
