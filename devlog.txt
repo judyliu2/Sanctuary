@@ -57,6 +57,7 @@
 + Before pushing, pull and check if the code is working.
 + Learned how difficult it is to create a game with a story and functions.
 + Having 30+ variables is extremely hard to maintain
++ Discriptive comments are extremely useful, especially when understanding a section you didn't write
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -367,6 +368,7 @@
     + Fixed coordinates and the sizes of the objects in the OCD room
     + Added mored to the readme file
 +============================================================== 
++2017-06-06
 +Irene ::
    + Schizophrenia task augmented
    	+ Based on priority queue
@@ -388,6 +390,7 @@
 	+ Refined code (deleted unnecessary code, comments)
 	+ Removed all answer keys
 	+ Updated Unresolved Issues, Cool Stuff Learned, and Lessons Learned categories of devlog
+	+ Edited readme with more detailed information and fixed grammatical issues
 +Judy ::
    + When the player leaves the help screen, he/she returns to the previous location
    + updated ReadMe file with more about the movie's plot
