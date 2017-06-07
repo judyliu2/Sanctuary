@@ -27,13 +27,17 @@
     + Letters may cover one another by accident if the user moves a letter
 + When the player presses the 'S' key in the help screen, the player is taken to another location
 + Characters are transparent when the user presses 'S' too quickly in the explanation page   
-    
++ User can (technically) answer an undisplayed question in the Schizophrenia task through the same controls
+
 +COOL STUFF LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 + Learned more about mousepressed and how it can be used to presson buttons or drag objects
 + Learned to use pages that are used to hold the characteristics of each room in the game
 + Learned how to change the mouse cursor to a different shape (not in most recent version of the game)
-+ Learned to make flashy transitions between pages
++ Learned to make flashy transitions between pages (fading in and out!)
++ Formatted printing (System.out.printf)
++ Switch statement (numerous cases are much more eye-catching and convenient as opposed to a super large if else)
++ EVERYTHING related to processing (e.g. color, text box, images)
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 +MID-DEVELOPMENT DESIGN CHANGES
@@ -52,6 +56,7 @@
 + Plan everything before coding 
 + Before pushing, pull and check if the code is working.
 + Learned how difficult it is to create a game with a story and functions.
++ Having 30+ variables is extremely hard to maintain
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -362,7 +367,31 @@
     + Fixed coordinates and the sizes of the objects in the OCD room
     + Added mored to the readme file
 +============================================================== 
++Irene ::
+   + Schizophrenia task augmented
+   	+ Based on priority queue
+		+ User can only answer questions from a NPC at top priority
+		+ If a NPC is not at top priority, or already had their question answered, their question will not display
+		+ Priority of the NPC is constant (to maintain importance based on chronology e.g. radish spirit is more important than the river spirit) but positiong is randomized (radish spirit may come before the river spirit in one play of the game, and vice versa in another)
+		+ Only until a question is answered will the next question be addressed
+   	+ Specific questions and answers relating to mental disorders
+	+ All questions must be answered for the end scene to appear
+    + Help button revisions
+    	+ Help button does not show on the end page (prevents unnecessary bugs and blockage of dialogue)
+	+ Removed bug of door in help page (where bubblesort is displayed)
+        + Added unique instructions based on the user's location
+    + General improvements
+	+ Revised grammatics and positioning of \n in dialogue
+	+ Added more explanations, dialogue, additions to the storyline
+	+ Platform in the Dementia room is better coordinated
+	+ Added and resized images for NPC characters, backgrounds, etc.
+	+ Refined code (deleted unnecessary code, comments)
+	+ Removed all answer keys
+	+ Updated Unresolved Issues, Cool Stuff Learned, and Lessons Learned categories of devlog
 +Judy ::
    + When the player leaves the help screen, he/she returns to the previous location
    + updated ReadMe file with more about the movie's plot
    + Updated devlog
++Carol ::
+   + Added various backgrounds 
++============================================================== 
