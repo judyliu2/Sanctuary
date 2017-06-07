@@ -125,10 +125,10 @@ void draw() {
   player.display();
   if (player.location != "START") {
     fill(255);
-    rect(550, 20, 75, 40, 18, 18, 18, 18); //Help button
+    rect(10, 20, 75, 40, 18, 18, 18, 18); //Help button
     fill(0);    // wordColor
-    text("Help", 558, 45);
-    overBox = overRect(550, 20, 75, 40); //if help is clicked
+    text("Help", 20, 45);
+    overBox = overRect(10, 20, 75, 40); //if help is clicked
     // if exit is clicked player is moved back to previous map
     overExit = overRect(570, 300, 40, 40);
   }
