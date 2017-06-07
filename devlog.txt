@@ -8,7 +8,14 @@
 +------------------------------------------
 +OBSTACLES OVERCOME
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
++ Creating different rooms that had different tasks and NPCs
+	+ Solved by creating separate pages for each room
++ Sort method was not sorting properly
+	+ Solved by using a sort method that moves cards left and right horizontally.
++ Creating a plot at suites the mental disorders we planned on presenting about
+	+ Solved by thinking of movies that had charactes that fit into these characterics
++ Dialogue that moves when user moves when the user presses the next button
+	+ Each time the user presses 'S' the next dialogue will show up
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -18,9 +25,15 @@
     + Moving a letter may be dropped without intention
     + A different letter may be moved instead if the mouse does not first hover over a white space (preferrably above or below the tiles)
     + Letters may cover one another by accident if the user moves a letter
-    + When the player presses the 'S' key in the help screen, the player is taken to another location
++ When the player presses the 'S' key in the help screen, the player is taken to another location
++ Characters are transparent when the user presses 'S' too quickly in the explanation page   
+    
 +COOL STUFF LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ Learned more about mousepressed and how it can be used to presson buttons or drag objects
++ Learned to use pages that are used to hold the characteristics of each room in the game
++ Learned how to change the mouse cursor to a different shape (not in most recent version of the game)
++ Learned to make flashy transitions between pages
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 +MID-DEVELOPMENT DESIGN CHANGES
@@ -38,6 +51,7 @@
 + Use KTS to explain concepts 
 + Plan everything before coding 
 + Before pushing, pull and check if the code is working.
++ Learned how difficult it is to create a game with a story and functions.
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
