@@ -65,14 +65,14 @@ void setup() {
   bg = loadImage("startPage.jpg");
   background(bg);
   sczNPC = new NPC[] {
-    new NPC(loadImage("RadishSpirit.png"), 20, 260, "Which one is the real me?", 
-      new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
-    new NPC(loadImage("RiverSpirit.png"), 170, 260, "What is my name?", 
-      new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3),
-    new NPC(loadImage("BleedingHaku.png"), 320, 260, "What is Reddit's mascot", 
-      new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0),
-    new NPC(loadImage("NoFace.png"), 470, 260, "QQ", 
-      new String[] {"AA", "BB", "CC", "DD"}, 1)
+    new NPC(loadImage("RadishSpirit.png"), 20, 260, "Why can't I just act once?", 
+      new String[] {"It's wrong", "Compulsion", "Why ask", "No clue"}, 1), 
+    new NPC(loadImage("RiverSpirit.png"), 170, 260,"Tires shoes dirt.\nClean me yes, thank you", 
+      new String[] {"Schizophrenia","Panic disorder", "Bipolar", "PTSD"}, 0),
+    new NPC(loadImage("BleedingHaku.png"), 320, 260, "Which of the following is\nnot an effect of dementia?", 
+      new String[] {"Memory loss", "Hallucinations", "Apathy","Vertigo"}, 3),
+    new NPC(loadImage("NoFace.png"), 470, 260, "It's dark. Cold. Alone.", 
+      new String[] {"Breathe", "Drink", "Retaliate", "Suicide"}, 0)
   };
   sczOrder = new int[sczNPC.length];
   for (int i = 0; i < sczOrder.length; i++) {
@@ -123,7 +123,7 @@ void draw() {
   update();
   player.move();
   player.display();
-  if (player.location != "START") {
+  if (p != PAGE.START && p != PAGE.EXPLAIN && p != PAGE.END && p != PAGE.END_PRE) {
     fill(255);
     rect(10, 20, 75, 40, 18, 18, 18, 18); //Help button
     fill(0);    // wordColor
@@ -139,13 +139,11 @@ void update() {
     overBox = false;
     overExit = false;
   } else
-    overBox = overExit = false;    // so overBox and overExit are always false???
+    overBox = overExit = false;    
 }
 int kk = 0;
 void mousePressed() {
   // HELP BUTTON
-  // Why use 'player.location' over PAGE enum, when PAGE enum is used to maintain everything?
-  // Should remove player.location, because it is never utilized 
   if (overExit) { //return to previous page
     if (player.location == "HOSPITAL") {
       p = PAGE.HOSPITAL;
@@ -170,7 +168,7 @@ void mousePressed() {
     }
   }
   if (overBox) {
-    if (player.location != "START")
+    if (player.location != "START" && p != PAGE.END && p != PAGE.END_PRE)
       p = PAGE.HELP;
     //locked = true; 
     //rect(30,30,580,320);
@@ -199,14 +197,16 @@ void mousePressed() {
       background(bg = loadImage("white.png"));
       decayVar -= 0.01; 
       tint(255, 255 - (int) (255 * decayVar));
-      image(loadImage("DementiaRoom.png"), 0, 0);
+      image(loadImage("explanation.jpg"), 0, 0);
     } else {
-      background(bg = explainBG);
+      background(bg = loadImage("explanation.jpg"));
       fill(255);
-      text("The following RPG game is based on a 2001\n Japanese " +
-        "animated fantasy movie written and\n directed by Hayao Miyazaki." +
-        " The creators of \nthis game highly recommend you to watch and \nrewatch" +
-        " this movie. So without further ado...\n\nEnjoy!", 0, 40);
+      text("The following RPG game is based on Spirited\n" +
+        "Away, a 2001 Japanese animated fantasy movie\n" +
+        "written and directed by Hayao Miyazaki. The\n" +
+        "creators of this game highly recommend you \n" +
+        "to watch and rewatch this movie. So without \n"+
+        "further ado...\nEnjoy!", 0, 40);
     }
     break;
   case HOSPITAL:
@@ -298,13 +298,19 @@ void mousePressed() {
       //sorting animation
     }
     else if(player.location == "SCHIZOPHRENIA"){
+      background(bg = loadImage("white.png"));
       fill(0);
-      text("Keys for talking to NPC: \n Z - Up \n X - down \n Enter - choose answer", 40, 40);
+      text("\nAnswer to everyone's needs based on\ntheir priority! (Hint: Chronology)\nKeys for talking to NPC: \n Z - Up \n X - down \n Enter - choose answer", 40, 40);
+    }
+    else if (player.location == "HOSPITAL2") {
+      background(bg = loadImage("white.png"));
+      fill(0);
+      text("\nClean the trash!\nHover over the trash to dispense of them", 40, 40);
     }
     else {
       background(bg = loadImage("helpPage.png"));
-      fill(250);
-      text("Keys: \n W - Jump \n S - Walk through doors or \n" + 
+      fill(255);
+      text("\nKeys: \n W - Jump \n S - Walk through doors or \n" + 
         "interact with others \n A - Move left \n D - Move right", 40, 80);
     }
     fill(255);
@@ -380,7 +386,6 @@ void mousePressed() {
 
     break;
   case DEMENTIA2:
-    //player.location = "DEMENTIA2";
     player.location = "DEMENTIA2";
     background(bg = loadImage("spirited_away.jpg"));
     player.toHide(false);
@@ -453,7 +458,7 @@ void mousePressed() {
         player.baseY = 200;
       else 
       player.baseY = 280;    
-      if (player.getXcor()>25 && player.getXcor()<165&& player.getYcor()<170)
+      if (player.getXcor()>80 && player.getXcor()<185&& player.getYcor()<170)
         player.baseY = 120;
 
       hall2.displayDoor();
@@ -464,14 +469,14 @@ void mousePressed() {
       }
       if (presentAppear) {
         image(present, 20, 160, 100, 100);
-        text("I need to see Chihiro. \n I should give her something. \n That present should do.", 110, 35);
+        text("I should visit Chihiro.\nBut I forgot my excuse...", 110, 35);
       } else if (!presentAppear && !puzzle2Solved)
         text(hakuText, 110, 35);
     }
     break;
   case SCHIZOPHRENIA:
     player.location = "SCHIZOPHRENIA";
-    background(255);
+    background(bg = loadImage("somber.jpg"));
     if (decayVar > 0) {
       decayVar -= 0.01;
       tint(255, 255 - (int) (255 * decayVar));
@@ -485,7 +490,7 @@ void mousePressed() {
           npp.display(150 * sczOrder[sczDisplay++] - 130, 230);
       for (int i = 0; i < sczNPC.length; i++) {
         NPC n = sczNPC[i];
-        if (player.isNearChar(n)) { 
+        if (player.isNearChar(n)) {  //<>//
           sczCurr = n;
           rect(200, 20, 450, 80);
           fill(250, 128, 114);
@@ -527,7 +532,7 @@ void mousePressed() {
     fill(255);
     text("It is not our differences that divide us.\n" +
       "It is our inability to recognize, accept,\n" +
-      "and celebrate those differences.\n- Audre Lorde", 50, 50);
+      "and celebrate those differences.\n- Audre Lorde", 20, 80);
     break;
   case END:
     background(bg = loadImage("end.jpg"));
@@ -641,7 +646,7 @@ public void keyPressed() {
         //p = dementiaPuzzleComplete ? PAGE.DEMENTIA2 : PAGE.DEMENTIA;
         p.resetPage();
         dementiaText = "Greetings, Yubaba-sama.\nHow can I help you?";
-        hakuText = "How long have I been here";
+        hakuText = "How long have I been here.";
         decayVar = 1;
       }  
       if (player.isOnDoor(hall3)) 
@@ -724,21 +729,21 @@ enum PAGE {
   START(), EXPLAIN(), 
     HELP("Where am I...", "Who am I...", "What am I...", "Why am I here..."), 
     HOSPITAL("What might your name be?", "I'm a collector of them. \nNames, I mean.", 
-    "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names", 
-    "And, once you've met someone, \nyou never really forget them.", "That being said, I should \ncheck on my name list", 
-    "That being said, I should \ncheck on my name list", "Wouldn't want any of them \n*cough to go missing, would we?"), 
+    "I like to keep everyone close. \nI feel more secure.", "You see, no one makes a mess \nwhen I know their names.", 
+    "And, once you've met someone, \nyou never really forget them.", "That being said, I should \ncheck on my name list.", 
+    "That being said, I should \ncheck on my name list.", "Wouldn't want any of them \n*cough to go missing, would we?"), 
     HOSPITAL2(), 
     HALLWAY("Do we want to go in?"), 
-    DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up", 
-    "I'd hate to lose\nmy names", "Ko- nevermind,", "Wouldn't want him\ntouching my names anyway", "...", 
+    DEMENTIA("How distasteful", "This pile is a \nmess... I need to clean \nthis up.", 
+    "I'd hate to lose\nmy names.", "Ko- nevermind.", "Wouldn't want him\ntouching my names \nanyway.", "They're MINE.","...", 
     "Now that it's sorted, I feel so much better"), 
     DEMENTIA_PUZZLE("Move pieces \n   into order"), 
-    DEMENTIA2("So it's sorted. Hmph. \nCan't trust anyone these days", "That reminds me, I got\na new girl the other day", 
-    "Ch- Sen was it", "I really do love names", "It's getting late, I need\nto get my beauty sleep", 
-    "Wouldn't want to look \nlike my sister after all"), 
-    OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be", 
-    "I feel weighted, drowned even", "My memory flees me", "My past...", "I can't remember", 
-    "But no matter, my life is here", "I should see if Yubaba needs\nanything."), 
+    DEMENTIA2("So it's sorted. Hmph.","Can't trust anyone these\ndays.", "That reminds me, I got\na new girl the other day.", 
+    "Ch- Sen was it.", "I really do love names.", "It's getting late, I need\nto get my beauty sleep.", 
+    "Wouldn't want to look \nlike my sister after all."), 
+    OCD("I don't know how long \nI've been without a name.", "I still want one.", "Not 'Haku' but who I used \nto be.", 
+    "I feel weighted, drowned even.", "My memory flees me.", "My past...", "I can't remember.", 
+    "But no matter, my life is here.", "I should see if Yubaba needs\nanything."), 
     SCHIZOPHRENIA(), END_PRE(), 
     END("SYSTEM END");
 
