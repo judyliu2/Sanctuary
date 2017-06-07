@@ -21,6 +21,7 @@ PImage bg;    // use this for universal background image
 PImage explainBG;
 PImage present;
 NPC[] sczNPC;
+int[] sczOrder;  // order at which sczNPC must be accessed/completed
 NPC sczCurr;    // current NPC selection in scz room
 ArrayList<Item> objectsToClean;
 
@@ -64,15 +65,22 @@ void setup() {
   bg = loadImage("startPage.jpg");
   background(bg);
   sczNPC = new NPC[] {
-    new NPC(loadImage("DNchibi.png"), 20, 260, "Which one is the real me?", 
-    new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
-    new NPC(loadImage("DNchibi.png"), 170, 260, "What is my name?", 
-    new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3), 
-    new NPC(loadImage("DNchibi.png"), 320, 260, "What is Reddit's mascot", 
-    new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0), 
-    new NPC(loadImage("DNchibi.png"), 470, 260, "QQ", 
-    new String[] {"AA", "BB", "CC", "DD"}, 1)
+    new NPC(loadImage("RadishSpirit.png"), 20, 260, "Which one is the real me?", 
+      new String[] {"Is it me?", "Is it me??", "How about me?", "then it is you"}, 1), 
+    new NPC(loadImage("RiverSpirit.png"), 170, 260, "What is my name?", 
+      new String[] {"Haku", "Pandora", "Yubaba", "Light"}, 3),
+    new NPC(loadImage("BleedingHaku.png"), 320, 260, "What is Reddit's mascot", 
+      new String[] {"Snoo", "Reddit Blue", "Supreme Godess", "Trick Question: None"}, 0),
+    new NPC(loadImage("NoFace.png"), 470, 260, "QQ", 
+      new String[] {"AA", "BB", "CC", "DD"}, 1)
   };
+  sczOrder = new int[sczNPC.length];
+  for (int i = 0; i < sczOrder.length; i++) {
+    int pos;
+    while (sczOrder[pos = (int) (Math.random() * sczOrder.length)] != 0);  // EMPTY
+    sczOrder[pos] = i + 1;
+  }
+  //System.out.println("" + sczOrder[0] + " " + sczOrder[1] + " " + sczOrder[2] + " " + sczOrder[3]);
   objectsToClean = new ArrayList<Item>();
   objectsToClean.add(new Item(loadImage("roach.gif"), 30, 200, 160, 160));
   objectsToClean.add(new Item(loadImage("garbage1.png"), 80, 200, 100, 140 ));
@@ -136,6 +144,8 @@ void update() {
 int kk = 0;
 void mousePressed() {
   // HELP BUTTON
+  // Why use 'player.location' over PAGE enum, when PAGE enum is used to maintain everything?
+  // Should remove player.location, because it is never utilized 
   if (overExit) { //return to previous page
     if (player.location == "HOSPITAL") {
       p = PAGE.HOSPITAL;
@@ -469,15 +479,18 @@ void mousePressed() {
     } else {
       background(bg);
       player.toHide(false);
+      int sczDisplay = 0;    // pointer for 
       if (sczVar < 4)
         for (NPC npp : sczNPC)
-          npp.display();
-      for (NPC n : sczNPC)
+          npp.display(150 * sczOrder[sczDisplay++] - 130, 230);
+      for (int i = 0; i < sczNPC.length; i++) {
+        NPC n = sczNPC[i];
         if (player.isNearChar(n)) { 
           sczCurr = n;
           rect(200, 20, 450, 80);
           fill(250, 128, 114);
-          if (n.hasQuestion) {
+
+          if (n.hasQuestion && i == sczOrder[sczVar] -1) { //<>//
             text(n.getQuestion(), 210, 45);
             fill(0, 0, 220);
             rect (n.getXcor() - 2, n.getYcor() - 145 + n.curr * 35, 154, 36, 16, 16, 16, 16);
@@ -494,10 +507,16 @@ void mousePressed() {
             text(n.getChoices(3), n.getXcor() + 15, n.getYcor() - 18);
             fill(0);
           } else {
-            text("Question Solved", 210, 45);
+            //System.out.printf("i = %d, sczVar = %d\n", i, sczVar);
+            //String toPrint = "Someone else needs more help\nPlease help them first";
+            //for (int k = 0; k < sczOrder[sczVar] -1; k++)
+            //  if (i == sczOrder[k])
+            //    toPrint = "Question Solved";
+            text("No question at this time", 210, 45);
             continue;
           }
         }
+      }
       if (sczVar >= 4)
         hall3.displayDoor();
     }
@@ -683,11 +702,11 @@ public void keyPressed() {
   if (sczVar >= 4 && p != PAGE.END)
     p = PAGE.END_PRE;
 
-  if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
+  /*if (key == 'k' && biSolution != null) {    // ANSWER KEY FOR DEMENTIA_PUZZLE
     for (String b : biSolution)
       System.out.print(b + " ");
     System.out.println();
-  }
+  }*/
 
   player.left   = (key == 'a');   // move left
   player.right  = (key == 'd');   // move right

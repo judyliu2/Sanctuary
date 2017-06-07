@@ -25,6 +25,9 @@ class NPC extends Character {
   }
   void display() {
     image(character, x, y, 80, 100);
+  }
+  void display(int posX, int posY) {
+    image(character, posX, posY, 120, 144);
     //image(character, x, y, 120, 100);
   }
   String getQuestion() {
